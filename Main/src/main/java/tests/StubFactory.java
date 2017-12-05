@@ -93,6 +93,7 @@ public class StubFactory
         IAccount stubAccount = mock(IAccount.class);
         when(stubAccount.getAccountType()).thenReturn(accountType);
         when(stubAccount.getUserName()).thenReturn(userName);
+
         return stubAccount;
     }
 
@@ -132,19 +133,19 @@ public class StubFactory
         ArgumentMatcher<IAccount> studentAccount = argument ->
         {
             AccountType type = argument.getAccountType();
-            return !argument.getUserName().equals("notCourseStudent") && type == AccountType.student;
+            return !argument.getUserName().contains("notcoursestudent") && type == AccountType.student;
         };
 
         ArgumentMatcher<IAccount> professorAccount = argument ->
         {
             AccountType type = argument.getAccountType();
-            return !argument.getUserName().equals("notCourseProfessor") && type == AccountType.professor;
+            return !argument.getUserName().equals("notcourseprofessor") && type == AccountType.professor;
         };
 
         ArgumentMatcher<IAccount> taAccount = argument ->
         {
             AccountType type = argument.getAccountType();
-            return argument.getUserName().equals("ta") && type == AccountType.ta;
+            return !argument.getUserName().equals("notcourseta") && type == AccountType.ta;
         };
 
 

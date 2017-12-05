@@ -5,6 +5,7 @@ import model.assignments.classes.Assignment;
 import model.assignments.exceptions.AlreadyGradedException;
 import model.assignments.exceptions.BadGradeException;
 import model.assignments.exceptions.NotCourseStudentException;
+import model.courses.interfaces.IRoster;
 import model.exceptions.NoPermissionException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -22,12 +23,12 @@ public class EnterGrade
 {
     static Iterator<ILoginToken> validRequester_provider()
     {
-        return StubFactory.makeLoginTokenProvider("professor", "admin");
+        return StubFactory.makeLoginTokenProvider("professor", "admin", "ta");
     }
 
     static Iterator<ILoginToken> invalidRequester_provider()
     {
-        return StubFactory.makeLoginTokenProvider("student", "ta", "notCourseProfessor");
+        return StubFactory.makeLoginTokenProvider("student", "notCourseTa", "notCourseProfessor");
     }
 
     @ParameterizedTest(name = "requesting as {arguments}")
@@ -37,6 +38,7 @@ public class EnterGrade
         Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
         IAccount student = StubFactory.makeAccount("student");
         float grade = 20f;
+
         //act
         assignment.enterGrade(validRequester, student, grade);
 
@@ -91,7 +93,7 @@ public class EnterGrade
         Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
         IAccount student = StubFactory.makeAccount("student");
 
-        Assertions.assertThrows(BadGradeException.class, () -> assignment.enterGrade(validRequester, student, (float)badGrade));
+        Assertions.assertThrows(BadGradeException.class, () -> assignment.enterGrade(validRequester, student, (float) badGrade));
     }
 
 }

@@ -5,11 +5,13 @@ import model.assignments.classes.Assignment;
 import model.assignments.exceptions.BadGradeException;
 import model.assignments.exceptions.NotCourseStudentException;
 import model.assignments.exceptions.NotGradedException;
+import model.courses.interfaces.IRoster;
 import model.exceptions.NoPermissionException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import services.login.classes.LoginToken;
 import services.login.interfaces.ILoginToken;
 import tests.StubFactory;
 
@@ -68,6 +70,10 @@ public class ModifyGrade
     {
         Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
         IAccount notInRosterStudent = StubFactory.makeAccount("notCourseStudent");
+        // test
+        ILoginToken admin = StubFactory.makeLoginToken("admin");
+        IRoster roster = StubFactory.makeStubRoster();
+        System.out.println(roster.isStudent(admin, notInRosterStudent));
         ILoginToken validRequester = StubFactory.makeLoginToken("admin");
 
         float newGrade = 20f;
@@ -95,7 +101,9 @@ public class ModifyGrade
         Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
         IAccount student = StubFactory.makeAccount("student");
         ILoginToken validRequester = StubFactory.makeLoginToken("admin");
-
+        ILoginToken grader = StubFactory.makeLoginToken("admin");
+        float grade = 10f;
+        assignment.enterGrade(grader, student, grade);
         //act && assert
         assertThrows(BadGradeException.class, () -> assignment.modifyGrade(validRequester, student, (float) badGrade));
     }
