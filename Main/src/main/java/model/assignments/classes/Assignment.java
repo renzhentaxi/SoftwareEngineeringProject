@@ -11,6 +11,7 @@ import model.courses.interfaces.IRoster;
 import model.exceptions.NoPermissionException;
 import model.courses.interfaces.ICourse;
 import services.login.interfaces.ILoginToken;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -139,7 +140,8 @@ public class Assignment implements IAssignment
     @Override
     public Map<IAccount, Float> getGrades(ILoginToken requester)
     {
-        return Collections.unmodifiableMap(grades);
+        throw new NotImplementedException();
+        // return Collections.unmodifiableMap(grades);
     }
 
     /**
