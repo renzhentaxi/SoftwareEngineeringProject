@@ -42,8 +42,7 @@ public class ClearGrade
         assignment.clearGrade(validRequester, student);
 
         //assert
-        float actual = assignment.getGrade(validRequester, student);
-        Assertions.assertEquals(0, actual);
+        Assertions.assertFalse(assignment.isGraded(validRequester,student));
     }
 
 
