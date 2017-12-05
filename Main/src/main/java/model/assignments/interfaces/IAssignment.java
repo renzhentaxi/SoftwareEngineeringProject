@@ -61,12 +61,12 @@ public interface IAssignment
     /**
      * modifies the grade for the student
      *
-     * @param requester the user who modifies the grade
+     * @param requester the user who modifies the grade. Should be the professor of this course or Admin.
      * @param student   the student whose grade is to be modified
      * @param newGrade  the modified grade for the student
      * @throws NotAStudentException  if the student is not a student of this course
      * @throws NotGradedException    if the student does not have a grade to modify(use enterGrade instead)
-     * @throws NoPermissionException if the requester is not a professor of this course
+     * @throws NoPermissionException if the requester does not have permission to modify the grade
      * @throws BadGradeException if grade is less than 0 or greater than 100
      */
     void modifyGrade(ILoginToken requester, IAccount student, float newGrade);
