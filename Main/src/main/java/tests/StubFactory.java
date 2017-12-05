@@ -1,5 +1,6 @@
 package tests;
 
+import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
 import model.assignments.interfaces.IAssignment;
@@ -9,6 +10,7 @@ import org.mockito.ArgumentMatcher;
 import services.login.interfaces.ILoginToken;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.argThat;
@@ -17,6 +19,39 @@ import static org.mockito.Mockito.when;
 
 public class StubFactory
 {
+    /**
+     * to make it easier to create ILoginToken stubs
+     * this method will take an array of names and converts them into a list of tokens depending on the name
+     * any name contains student will become student
+     * any name contains teacher wll become teacher and etc...
+     * when the name contains both student and teacher or another type, the first occurence will dictate the token's type
+     * @param names a list of names
+     * @return a list of ILoginTokens
+     */
+    public static Iterator<ILoginToken> makeLoginTokenStubProvider(String... names)
+    {
+        List<ILoginToken> stubs = new ArrayList<>();
+        for (String name : names)
+        {
+            stubs.add(makeLoginTokenStub(name));
+        }
+
+        return stubs.iterator();
+    }
+
+    public static ILoginToken makeLoginTokenStub(String name)
+    {
+        name = name.toLowerCase();
+        for (AccountType type : AccountType.values())
+        {
+            if (name.contains(type.name()))
+            {
+                return makeStubLoginToken(name, type);
+            }
+        }
+
+        throw new RuntimeException("!!!! cant not figure out type");
+    }
 
     public static ILoginToken makeStubAdminLoginToken()
     {
@@ -41,11 +76,11 @@ public class StubFactory
     public static ILoginToken makeStubLoginToken(IAccount account)
     {
         AccountType accountType = account.getAccountType();
-
+        String userName = account.getUserName();
         ILoginToken stubLoginToken = mock(ILoginToken.class);
         when(stubLoginToken.getAccount()).thenReturn(account);
         when(stubLoginToken.getAccountType()).thenReturn(accountType);
-
+        when(stubLoginToken.toString()).thenReturn(userName + " : " + accountType.name());
         return stubLoginToken;
     }
 
