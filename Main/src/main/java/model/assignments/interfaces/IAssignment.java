@@ -74,11 +74,10 @@ public interface IAssignment
     /**
      * returns the grade of the student
      *
-     * @param requester the user who requests the grade of the student
+     * @param requester the user who requests the grade of the student. requester should either be the admin, the professor/ta of the course, and the student who owns the course
      * @param student   the student whose grade is being requested
      * @return the grade of the student or -1.f if it is not graded
-     * @throws NoPermissionException if the requester is not the professor or ta of this course or if the requester is not the student who owns the grade.
-     * @throws NotCourseStudentException  if the student is not a student of this course
+     * @throws NoPermissionException if the requester does not have permission to complete the request
      **/
     float getGrade(ILoginToken requester, IAccount student);
 
