@@ -9,9 +9,7 @@ import services.login.interfaces.ILoginToken;
 public class LoginToken implements ILoginToken
 {
     /**
-     * @return the account type of the user who logged in
-     * @throws InvalidLoginTokenException if this login token is invalid
-     * @throws NotLoggedInException       when the requester is no longer logged in.
+     * {@inheritDoc}
      */
     @Override
     public AccountType getAccountType()
@@ -20,9 +18,7 @@ public class LoginToken implements ILoginToken
     }
 
     /**
-     * @return the account of the user who logged in
-     * @throws InvalidLoginTokenException if this login token is invalid
-     * @throws NotLoggedInException       when the requester is no longer logged in.
+     * {@inheritDoc}
      */
     @Override
     public IAccount getAccount()
@@ -31,10 +27,7 @@ public class LoginToken implements ILoginToken
     }
 
     /**
-     * whether the user is still logged in or not
-     *
-     * @return true if the user is still logged in, false otherwise
-     * @throws InvalidLoginTokenException if this login token is invalid
+     * {@inheritDoc}
      */
     @Override
     public boolean isLoggedIn()
@@ -43,9 +36,7 @@ public class LoginToken implements ILoginToken
     }
 
     /**
-     * whether the login was successful or not
-     *
-     * @return true if the user logs in, false otherwise
+     * {@inheritDoc}
      */
     @Override
     public boolean isValid()

@@ -1,20 +1,27 @@
 package model.courses.interfaces;
 
+import model.assignments.interfaces.IAssignment;
 import model.courses.exceptions.AssignmentAlreadyExistException;
 import model.courses.exceptions.AssignmentDoesNotExistException;
 import model.courses.exceptions.GradedAssignmentException;
-import services.login.interfaces.ILoginToken;
-import model.assignments.interfaces.IAssignment;
 import model.exceptions.NoPermissionException;
+import services.login.interfaces.ILoginToken;
 
 import java.util.List;
 
 public interface ICourse {
 
     /**
+     * returns the course name of this course.
+     * the course name is unique within a catalog
+     * @return the course name of this course.
+     */
+    String getCourseName();
+
+    /**
      * returns all assignments for the course
      *
-     * @param requester the user who requests the assignments. The user should be part of the roster(either as a student, professor or ta.
+     * @param requester the user who requests the assignments. The user should be part of the roster(either as a student, professor, ta) or admin.
      * @return a readonly list of all assignments for the course.
      * @throws NoPermissionException when the requester does belong to the course.
      */
@@ -26,7 +33,7 @@ public interface ICourse {
      * @param requester     the user who requests to add the assignment
      * @param newAssignment the assignment to be added
      * @throws AssignmentAlreadyExistException if there is another assignment of the same name in the course already.
-     * @throws NoPermissionException           if the requester is not the professor of the course.
+     * @throws NoPermissionException           if the requester is not the professor of the course or Admi.
      */
     void addAssignment(ILoginToken requester, IAssignment newAssignment);
 
@@ -47,7 +54,7 @@ public interface ICourse {
      *
      * @param requester the user who requests the roster. The user should be either the professor or ta of the course.
      * @return the roster of the class
-     * @throws NoPermissionException when the requester is not the professor or ta of the course.
+     * @throws NoPermissionException when the requester is not the professor or ta of the course or admin.
      */
     IRoster getRoster(ILoginToken requester);
 

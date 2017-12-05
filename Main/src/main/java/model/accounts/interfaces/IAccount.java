@@ -1,8 +1,8 @@
 package model.accounts.interfaces;
 
-import services.login.interfaces.ILoginToken;
-import model.courses.interfaces.ICourse;
 import model.accounts.enums.AccountType;
+import model.courses.interfaces.ICourse;
+import services.login.interfaces.ILoginToken;
 
 import java.util.List;
 

@@ -11,13 +11,7 @@ import services.storage.interfaces.ICatalog;
 public class Catalog implements ICatalog
 {
     /**
-     * finds and returns the course with the courseId
-     *
-     * @param requester the user who attempts to get the course
-     * @param courseId  the id of the course
-     * @return the course
-     * @throws CourseDoesNotExistException if there is no course with the id in the system
-     * @throws NoPermissionException       if the requester does not belong to the course
+     * {@inheritDoc}
      */
     @Override
     public ICourse getCourse(ILoginToken requester, int courseId)
@@ -26,13 +20,7 @@ public class Catalog implements ICatalog
     }
 
     /**
-     * finds and returns the account with the given accountId
-     *
-     * @param requester the user who attempts to get the account
-     * @param accountId the id of the account
-     * @return the account
-     * @throws AccountDoesNotExistException if there is no account with the id in the system
-     * @throws NoPermissionException        if the requester is not a system account
+     * {@inheritDoc}
      */
     @Override
     public IAccount getAccount(ILoginToken requester, int accountId)

@@ -1,9 +1,9 @@
 package services.login.interfaces;
 
-import services.login.exceptions.InvalidLoginTokenException;
-import services.login.exceptions.NotLoggedInException;
 import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
+import services.login.exceptions.InvalidLoginTokenException;
+import services.login.exceptions.NotLoggedInException;
 
 public interface ILoginToken {
 

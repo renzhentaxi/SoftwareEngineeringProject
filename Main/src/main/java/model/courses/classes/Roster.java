@@ -10,11 +10,7 @@ import java.util.List;
 public class Roster implements IRoster
 {
     /**
-     * returns the professor of the course that this roster belongs to
-     *
-     * @param requester the user who requests this information.
-     * @return the account fo the professor of this course
-     * @throws NoPermissionException if the requester is not the professor or the Ta of the course
+     * {@inheritDoc}
      */
     @Override
     public IAccount getProfessor(ILoginToken requester)
@@ -23,11 +19,7 @@ public class Roster implements IRoster
     }
 
     /**
-     * returns the Ta of the course that this roster belongs to
-     *
-     * @param requester the user who requests this information.
-     * @return the account fo the Ta of this course
-     * @throws NoPermissionException if the requester is not the professor or the Ta of the course
+     * {@inheritDoc}
      */
     @Override
     public IAccount getTa(ILoginToken requester)
@@ -36,11 +28,7 @@ public class Roster implements IRoster
     }
 
     /**
-     * returns a readonly list of students for this course
-     *
-     * @param requester the user who requested the list of students
-     * @return a readonly list of students for this course
-     * @throws NoPermissionException if the requester is not the professor or the Ta of the course
+     * {@inheritDoc}
      */
     @Override
     public List<IAccount> getStudents(ILoginToken requester)
@@ -49,12 +37,7 @@ public class Roster implements IRoster
     }
 
     /**
-     * check if the account is the professor of this course
-     *
-     * @param requester the user who requests this information.
-     * @param account   the account that is being checked
-     * @return true if the user is the professor of this course, false otherwise
-     * @throws NoPermissionException if the requester is not the professor or the Ta of the course
+     * {@inheritDoc}
      */
     @Override
     public boolean isProfessor(ILoginToken requester, IAccount account)
@@ -63,12 +46,7 @@ public class Roster implements IRoster
     }
 
     /**
-     * check if the account is the Ta of this course
-     *
-     * @param requester the user who requests this information.
-     * @param account   the account that is being checked
-     * @return true if the user is the Ta of this course, false otherwise
-     * @throws NoPermissionException if the requester is not the professor or the Ta of the course
+     * {@inheritDoc}
      */
     @Override
     public boolean isTa(ILoginToken requester, IAccount account)
@@ -77,12 +55,7 @@ public class Roster implements IRoster
     }
 
     /**
-     * check if the account is a student of this course
-     *
-     * @param requester the user who requests this information.
-     * @param account   the account that is being checked
-     * @return true if the user is a student of this course, false otherwise
-     * @throws NoPermissionException if the requester is not the professor or the Ta of the course
+     * {@inheritDoc}
      */
     @Override
     public boolean isStudent(ILoginToken requester, IAccount account)
@@ -91,10 +64,7 @@ public class Roster implements IRoster
     }
 
     /**
-     * check if the account is a student, ta, or professor of this roster.
-     *
-     * @param account the account that is being checked
-     * @return true if the user is a student of this course, false otherwise
+     * {@inheritDoc}
      */
     @Override
     public boolean isInRoster(IAccount account)

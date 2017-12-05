@@ -27,9 +27,7 @@ public class Account implements IAccount
     }
 
     /**
-     * returns the first name of the account
-     *
-     * @return the first name of the account
+     * {@inheritDoc}
      */
     @Override
     public String getFirstName()
@@ -38,9 +36,7 @@ public class Account implements IAccount
     }
 
     /**
-     * returns the last name of the account
-     *
-     * @return the last name of the account
+     * {@inheritDoc}
      */
     @Override
     public String getLastName()
@@ -49,9 +45,7 @@ public class Account implements IAccount
     }
 
     /**
-     * returns the user name of the account
-     *
-     * @return the user name of the account
+     * {@inheritDoc}
      */
     @Override
     public String getUserName()
@@ -60,11 +54,7 @@ public class Account implements IAccount
     }
 
     /**
-     * returns a readonly list of the courses that are associated with the user
-     *
-     * @param requester the user who requests courseList
-     * @return a readonly list of courses
-     * @throws NoPermissionException if the user who requested does not have the permission to get the course list
+     * {@inheritDoc}
      */
     @Override
     public List<ICourse> getCourseList(ILoginToken requester)
@@ -75,9 +65,7 @@ public class Account implements IAccount
     }
 
     /**
-     * returns the accountType of the account
-     *
-     * @return the accountType of the account
+     * {@inheritDoc}
      */
     @Override
     public AccountType getAccountType()
@@ -86,10 +74,7 @@ public class Account implements IAccount
     }
 
     /**
-     * check if this account is equal to another object.
-     *
-     * @param o the other object
-     * @return true if the other account has the same user name as this account, false otherwise
+     * {@inheritDoc}
      */
     @Override
     public boolean equals(Object o)

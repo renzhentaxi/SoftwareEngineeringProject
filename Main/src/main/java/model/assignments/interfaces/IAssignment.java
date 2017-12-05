@@ -1,8 +1,8 @@
 package model.assignments.interfaces;
 
 import model.accounts.interfaces.IAccount;
-import model.assignments.exceptions.NotAStudentException;
 import model.assignments.exceptions.AlreadyGradedException;
+import model.assignments.exceptions.NotAStudentException;
 import model.assignments.exceptions.NotGradedException;
 import model.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
