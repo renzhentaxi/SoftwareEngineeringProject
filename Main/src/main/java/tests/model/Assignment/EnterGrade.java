@@ -4,7 +4,7 @@ import model.accounts.interfaces.IAccount;
 import model.assignments.classes.Assignment;
 import model.assignments.exceptions.AlreadyGradedException;
 import model.assignments.exceptions.BadGradeException;
-import model.assignments.exceptions.NotAStudentException;
+import model.assignments.exceptions.NotCourseStudentException;
 import model.exceptions.NoPermissionException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -66,7 +66,7 @@ public class EnterGrade
         float grade = 20f;
 
         //assert
-        Assertions.assertThrows(NotAStudentException.class, () -> assignment.enterGrade(validRequester, notAStudentOfThisCourse, grade));
+        Assertions.assertThrows(NotCourseStudentException.class, () -> assignment.enterGrade(validRequester, notAStudentOfThisCourse, grade));
     }
 
     @Test

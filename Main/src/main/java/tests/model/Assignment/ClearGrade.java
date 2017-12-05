@@ -2,7 +2,7 @@ package tests.model.Assignment;
 
 import model.accounts.interfaces.IAccount;
 import model.assignments.classes.Assignment;
-import model.assignments.exceptions.NotAStudentException;
+import model.assignments.exceptions.NotCourseStudentException;
 import model.assignments.exceptions.NotGradedException;
 import model.exceptions.NoPermissionException;
 import org.junit.jupiter.api.Assertions;
@@ -62,7 +62,7 @@ public class ClearGrade
         IAccount notCourseStudent = StubFactory.makeAccount("notCourseStudent");
         Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
 
-        Assertions.assertThrows(NotAStudentException.class, () -> assignment.clearGrade(admin, notCourseStudent));
+        Assertions.assertThrows(NotCourseStudentException.class, () -> assignment.clearGrade(admin, notCourseStudent));
 
     }
 

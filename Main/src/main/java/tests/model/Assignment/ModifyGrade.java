@@ -3,7 +3,7 @@ package tests.model.Assignment;
 import model.accounts.interfaces.IAccount;
 import model.assignments.classes.Assignment;
 import model.assignments.exceptions.BadGradeException;
-import model.assignments.exceptions.NotAStudentException;
+import model.assignments.exceptions.NotCourseStudentException;
 import model.assignments.exceptions.NotGradedException;
 import model.exceptions.NoPermissionException;
 import org.junit.jupiter.api.Test;
@@ -72,7 +72,7 @@ public class ModifyGrade
 
         float newGrade = 20f;
 
-        assertThrows(NotAStudentException.class, () -> assignment.modifyGrade(validRequester, notInRosterStudent, newGrade));
+        assertThrows(NotCourseStudentException.class, () -> assignment.modifyGrade(validRequester, notInRosterStudent, newGrade));
 
     }
 
