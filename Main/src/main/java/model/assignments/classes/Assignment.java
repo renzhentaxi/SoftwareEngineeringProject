@@ -33,7 +33,7 @@ public class Assignment implements IAssignment
     @Override
     public String getDescription(ILoginToken requester)
     {
-        return null;
+        return this.description;
     }
 
     /**
