@@ -2,6 +2,7 @@ package model.assignments.interfaces;
 
 import model.accounts.interfaces.IAccount;
 import model.assignments.exceptions.AlreadyGradedException;
+import model.assignments.exceptions.BadGradeException;
 import model.assignments.exceptions.NotAStudentException;
 import model.assignments.exceptions.NotGradedException;
 import model.exceptions.NoPermissionException;
@@ -10,7 +11,8 @@ import services.login.interfaces.ILoginToken;
 import java.util.Dictionary;
 
 //todo: edit description/edit name feature for the professor
-public interface IAssignment {
+public interface IAssignment
+{
     /**
      * The description of the assignment
      *
@@ -40,6 +42,7 @@ public interface IAssignment {
      * @throws NotAStudentException   if the student is not a student of this course.
      * @throws AlreadyGradedException if there is already a grade for the student
      * @throws NoPermissionException  if the requester is not a Ta or Professor of this course
+     * @throws BadGradeException if grade is less than 0 or greater than 100
      */
     void enterGrade(ILoginToken requester, IAccount student, float grade);
 
@@ -64,6 +67,7 @@ public interface IAssignment {
      * @throws NotAStudentException  if the student is not a student of this course
      * @throws NotGradedException    if the student does not have a grade to modify(use enterGrade instead)
      * @throws NoPermissionException if the requester is not a professor of this course
+     * @throws BadGradeException if grade is less than 0 or greater than 100
      */
     void modifyGrade(ILoginToken requester, IAccount student, float newGrade);
 
@@ -74,11 +78,13 @@ public interface IAssignment {
      * @param student   the student whose grade is being requested
      * @return the grade of the student or -1.f if it is not graded
      * @throws NoPermissionException if the requester is not the professor or ta of this course or if the requester is not the student who owns the grade.
-     */
+     * @throws NotAStudentException  if the student is not a student of this course
+     **/
     float getGrade(ILoginToken requester, IAccount student);
 
     /**
      * returns all grades in this assignment
+     *
      * @param requester the user who requests the grades
      * @return a readonly dictionary of all the grades. -1.f is used to represent the grade of a student that hasn't been graded yet.
      * @throws NoPermissionException if the requester is not the professor or ta of this course
@@ -88,18 +94,21 @@ public interface IAssignment {
 
     /**
      * check if the student has a grade for this assignment
+     *
      * @param requester the user who wants to check the grade
-     * @param student the student of the grade that is being checked
+     * @param student   the student of the grade that is being checked
      * @return true if the student has a grade for this assignment, false otherwise
      * @throws NoPermissionException if the requester is not the professor or ta of this course or if the requester is not the student who owns the grade
+     * @throws NotAStudentException if the student is not a student of this course
      */
     boolean isGraded(ILoginToken requester, IAccount student);
 
     /**
      * check if the assignment has any grades in it.
+     *
      * @param requester the user who wants to check the grade. should be professor, ta of the course or admin
      * @return true if the assignment has any grades, false otherwise
-     * @throws  NoPermissionException if the requester has no permission to perform this action.
+     * @throws NoPermissionException if the requester has no permission to perform this action.
      */
     boolean isGradedAny(ILoginToken requester);
 }
