@@ -1,6 +1,5 @@
 package tests;
 
-import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
 import model.assignments.interfaces.IAssignment;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -25,21 +25,22 @@ public class StubFactory
      * any name contains student will become student
      * any name contains teacher wll become teacher and etc...
      * when the name contains both student and teacher or another type, the first occurence will dictate the token's type
+     *
      * @param names a list of names
      * @return a list of ILoginTokens
      */
-    public static Iterator<ILoginToken> makeLoginTokenStubProvider(String... names)
+    public static Iterator<ILoginToken> makeLoginTokenProvider(String... names)
     {
         List<ILoginToken> stubs = new ArrayList<>();
         for (String name : names)
         {
-            stubs.add(makeLoginTokenStub(name));
+            stubs.add(makeLoginToken(name));
         }
 
         return stubs.iterator();
     }
 
-    public static ILoginToken makeLoginTokenStub(String name)
+    public static ILoginToken makeLoginToken(String name)
     {
         name = name.toLowerCase();
         for (AccountType type : AccountType.values())
@@ -53,9 +54,30 @@ public class StubFactory
         throw new RuntimeException("!!!! cant not figure out type");
     }
 
-    public static ILoginToken makeStubAdminLoginToken()
+
+    public static ICourse makeCourseWithDefaultRoster(String name)
     {
-        return makeStubLoginToken("admin", AccountType.admin);
+        ICourse course = mock(ICourse.class);
+        IRoster roster = makeStubRoster();
+
+        when(course.getCourseName()).thenReturn(name);
+        when(course.getRoster(any())).thenReturn(roster);
+
+        return course;
+    }
+
+    public static IAccount makeAccount(String name)
+    {
+        name = name.toLowerCase();
+        for (AccountType type : AccountType.values())
+        {
+            if (name.contains(type.name()))
+            {
+                return makeStubAccount(name, type);
+            }
+        }
+
+        throw new RuntimeException("!!!! cant not figure out type");
     }
 
     /**

@@ -5,6 +5,7 @@ import model.assignments.classes.Assignment;
 import model.courses.interfaces.ICourse;
 import tests.model.IBuilder;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class AssignmentBuilder implements IBuilder<Assignment>
@@ -12,7 +13,6 @@ public class AssignmentBuilder implements IBuilder<Assignment>
     private String name = "AssignmentName";
     private String description = "AssignmentDescription";
     private ICourse course = null;
-    private Map<IAccount, Float> grades = null;
 
     public AssignmentBuilder setName(String name)
     {
@@ -32,15 +32,9 @@ public class AssignmentBuilder implements IBuilder<Assignment>
         return this;
     }
 
-    public AssignmentBuilder setGrades(Map<IAccount, Float> grades)
-    {
-        this.grades = grades;
-        return this;
-    }
-
     @Override
     public Assignment build()
     {
-        return new Assignment(name, description, course, grades);
+        return new Assignment(name, description, course);
     }
 }
