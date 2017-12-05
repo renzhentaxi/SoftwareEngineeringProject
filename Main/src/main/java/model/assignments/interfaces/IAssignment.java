@@ -8,7 +8,7 @@ import model.assignments.exceptions.NotGradedException;
 import model.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
 
-import java.util.Dictionary;
+import java.util.Map;
 
 //todo: edit description/edit name feature for the professor
 public interface IAssignment
@@ -89,7 +89,7 @@ public interface IAssignment
      * @return a readonly dictionary of all the grades. -1.f is used to represent the grade of a student that hasn't been graded yet.
      * @throws NoPermissionException if the requester is not the professor or ta of this course
      */
-    Dictionary<IAccount, Float> getGrades(ILoginToken requester);
+    Map<IAccount, Float> getGrades(ILoginToken requester);
 
 
     /**
