@@ -1,14 +1,14 @@
-package tests;
+package tests.model;
 
-import model.accounts.Account;
-import model.accounts.IAccount;
+import model.accounts.classes.Account;
+import model.accounts.interfaces.IAccount;
 import model.accounts.enums.AccountType;
-import model.courses.ICourse;
+import model.courses.interfaces.ICourse;
 import model.exceptions.NoPermissionException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import services.login.ILoginToken;
+import services.login.interfaces.ILoginToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +31,7 @@ class AccountTest
         ILoginToken stubNonOwnerToken = makeStubLoginToken(hacker);
 
         assertThrows(NoPermissionException.class, () ->
-        {
-            owner.getCourseList(stubNonOwnerToken);
-        });
-
+                owner.getCourseList(stubNonOwnerToken));
     }
 
     @Test
@@ -67,10 +64,7 @@ class AccountTest
         ILoginToken stubOwnerToken = makeStubLoginToken(owner);
 
         assertThrows(UnsupportedOperationException.class, () ->
-                {
-                    owner.getCourseList(stubOwnerToken).add(null);
-                }
-        );
+                owner.getCourseList(stubOwnerToken).add(null));
     }
 
     private Account makeAccount(String userName, AccountType accountType, List<ICourse> courseList)

@@ -1,10 +1,10 @@
-package model.courses;
+package model.courses.interfaces;
 
 import model.courses.exceptions.AssignmentAlreadyExistException;
 import model.courses.exceptions.AssignmentDoesNotExistException;
 import model.courses.exceptions.GradedAssignmentException;
-import services.login.ILoginToken;
-import model.assignments.IAssignment;
+import services.login.interfaces.ILoginToken;
+import model.assignments.interfaces.IAssignment;
 import model.exceptions.NoPermissionException;
 
 import java.util.List;

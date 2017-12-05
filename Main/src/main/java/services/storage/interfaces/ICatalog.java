@@ -1,11 +1,11 @@
-package storage;
+package services.storage.interfaces;
 
-import model.accounts.IAccount;
-import model.courses.ICourse;
+import model.accounts.interfaces.IAccount;
+import model.courses.interfaces.ICourse;
 import model.exceptions.NoPermissionException;
-import services.login.ILoginToken;
-import storage.exceptions.AccountDoesNotExistException;
-import storage.exceptions.CourseDoesNotExistException;
+import services.login.interfaces.ILoginToken;
+import services.storage.exceptions.AccountDoesNotExistException;
+import services.storage.exceptions.CourseDoesNotExistException;
 
 public interface ICatalog {
 

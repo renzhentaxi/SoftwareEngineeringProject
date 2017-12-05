@@ -1,8 +1,8 @@
-package model.courses;
+package model.courses.interfaces;
 
 import model.exceptions.NoPermissionException;
-import services.login.ILoginToken;
-import model.accounts.IAccount;
+import services.login.interfaces.ILoginToken;
+import model.accounts.interfaces.IAccount;
 
 import java.util.List;
 

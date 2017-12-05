@@ -1,4 +1,4 @@
-package services.login;
+package services.login.interfaces;
 
 import services.login.exceptions.NotLoggedInException;
 
