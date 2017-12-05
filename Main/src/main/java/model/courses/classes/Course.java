@@ -1,10 +1,7 @@
 package model.courses.classes;
 
-import model.assignments.classes.Assignment;
+import model.accounts.enums.AccountType;
 import model.assignments.interfaces.IAssignment;
-import model.courses.exceptions.AssignmentAlreadyExistException;
-import model.courses.exceptions.AssignmentDoesNotExistException;
-import model.courses.exceptions.GradedAssignmentException;
 import model.courses.interfaces.ICourse;
 import model.courses.interfaces.IRoster;
 import model.exceptions.NoPermissionException;
@@ -67,6 +64,10 @@ public class Course implements ICourse
     @Override
     public IRoster getRoster(ILoginToken requester)
     {
-        return null;
+        if (requester.getAccountType().equals(AccountType.admin) || roster.isProfessor(requester,requester.getAccount()) || roster.isTa(requester,requester.getAccount()))
+        {
+            return roster;
+        }
+        throw new NoPermissionException();
     }
 }

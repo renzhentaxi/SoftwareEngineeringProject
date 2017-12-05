@@ -33,7 +33,7 @@ public interface ICourse {
      * @param requester     the user who requests to add the assignment
      * @param newAssignment the assignment to be added
      * @throws AssignmentAlreadyExistException if there is another assignment of the same name in the course already.
-     * @throws NoPermissionException           if the requester is not the professor of the course or Admi.
+     * @throws NoPermissionException           if the requester is not the professor of the course or Admin.
      */
     void addAssignment(ILoginToken requester, IAssignment newAssignment);
 
@@ -45,7 +45,7 @@ public interface ICourse {
      * @param assignmentToRemove the assignment to be removed
      * @throws AssignmentDoesNotExistException if the assignment does not exist in the course
      * @throws GradedAssignmentException       if the assignment is graded
-     * @throws NoPermissionException           if the requester is not the professor of the course
+     * @throws NoPermissionException           if the requester is not the professor of the course or admin
      */
     void removeAssignment(ILoginToken requester, IAssignment assignmentToRemove);
 

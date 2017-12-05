@@ -1,11 +1,7 @@
 package model.assignments.classes;
 
 import model.accounts.interfaces.IAccount;
-import model.assignments.exceptions.AlreadyGradedException;
-import model.assignments.exceptions.NotAStudentException;
-import model.assignments.exceptions.NotGradedException;
 import model.assignments.interfaces.IAssignment;
-import model.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
 
 import java.util.Dictionary;
@@ -80,6 +76,15 @@ public class Assignment implements IAssignment
      */
     @Override
     public boolean isGraded(ILoginToken requester, IAccount student)
+    {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isGradedAny(ILoginToken requester)
     {
         return false;
     }

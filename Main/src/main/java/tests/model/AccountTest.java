@@ -1,7 +1,6 @@
 package tests.model;
 
 import model.accounts.classes.Account;
-import model.accounts.interfaces.IAccount;
 import model.accounts.enums.AccountType;
 import model.courses.interfaces.ICourse;
 import model.exceptions.NoPermissionException;
@@ -10,12 +9,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import services.login.interfaces.ILoginToken;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static tests.StubFactory.makeDummyCourseList;
+import static tests.StubFactory.makeStubLoginToken;
 
 class AccountTest
 {
@@ -57,7 +56,7 @@ class AccountTest
     }
 
     @Test
-    void getCourseList_attemptsToModify_throwsReadonlyException()
+    void getCourseList_attemptsToModify_throwsUnsupportedOperationException()
     {
         List<ICourse> courseList = makeDummyCourseList();
         Account owner = makeAccount("owner", AccountType.student, courseList);
@@ -70,23 +69,5 @@ class AccountTest
     private Account makeAccount(String userName, AccountType accountType, List<ICourse> courseList)
     {
         return new Account("firstName", "lastName", userName, accountType, courseList);
-    }
-
-    private ILoginToken makeStubLoginToken(IAccount account)
-    {
-        ILoginToken stubLoginToken = mock(ILoginToken.class);
-        when(stubLoginToken.getAccount()).thenReturn(account);
-        when(stubLoginToken.getAccountType()).thenReturn(account.getAccountType());
-
-        return stubLoginToken;
-    }
-
-    private List<ICourse> makeDummyCourseList()
-    {
-        ICourse mockCourse = mock(ICourse.class);
-        List<ICourse> courseList = new ArrayList<>();
-        courseList.add(mockCourse);
-
-        return courseList;
     }
 }

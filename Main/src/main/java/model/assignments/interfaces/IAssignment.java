@@ -94,4 +94,12 @@ public interface IAssignment {
      * @throws NoPermissionException if the requester is not the professor or ta of this course or if the requester is not the student who owns the grade
      */
     boolean isGraded(ILoginToken requester, IAccount student);
+
+    /**
+     * check if the assignment has any grades in it.
+     * @param requester the user who wants to check the grade. should be professor, ta of the course or admin
+     * @return true if the assignment has any grades, false otherwise
+     * @throws  NoPermissionException if the requester has no permission to perform this action.
+     */
+    boolean isGradedAny(ILoginToken requester);
 }

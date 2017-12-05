@@ -2,7 +2,6 @@ package model.courses.classes;
 
 import model.accounts.interfaces.IAccount;
 import model.courses.interfaces.IRoster;
-import model.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
 
 import java.util.List;
