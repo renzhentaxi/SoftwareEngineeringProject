@@ -5,5 +5,5 @@ package model.accounts.enums;
  */
 public enum AccountType {
 
-    professor, ta, student, syncAgent, system, admin
+    professor, ta, student, admin
 }
