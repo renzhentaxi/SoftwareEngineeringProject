@@ -191,7 +191,7 @@ class CourseTest
     @Test
     void removeAssignment_assignmentDoesNotExist_throwsAssignmentDoesNotExistException()
     {
-        ILoginToken admin = StubFactory.makeStubAdminLoginToken();
+        ILoginToken admin = StubFactory.makeLoginToken("admin");
 
         Course course = new Course("soft", StubFactory.makeStubRoster(), new ArrayList<>());
 
@@ -201,7 +201,7 @@ class CourseTest
     @Test
     void removeAssignment_assignmentIsGraded_throwsGradedAssignmentException()
     {
-        ILoginToken admin = StubFactory.makeStubAdminLoginToken();
+        ILoginToken admin = StubFactory.makeLoginToken("admin");
 
         Course course = new Course("soft", StubFactory.makeStubRoster(), new ArrayList<>());
 
