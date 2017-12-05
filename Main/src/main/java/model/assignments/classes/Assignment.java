@@ -1,7 +1,9 @@
 package model.assignments.classes;
 
+import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
 import model.assignments.interfaces.IAssignment;
+import model.exceptions.NoPermissionException;
 import model.courses.interfaces.ICourse;
 import services.login.interfaces.ILoginToken;
 
@@ -42,7 +44,7 @@ public class Assignment implements IAssignment
     @Override
     public String getName(ILoginToken requester)
     {
-        return null;
+        return this.name;
     }
 
     /**
@@ -51,16 +53,19 @@ public class Assignment implements IAssignment
     @Override
     public void enterGrade(ILoginToken requester, IAccount student, float grade)
     {
-
+    	if (requester.getAccountType() == AccountType.professor || requester.getAccountType() == AccountType.ta)
+    		grades.put(student, grade);
+    	throw new NoPermissionException();
+    	
     }
-
     /**
      * {@inheritDoc}
      */
     @Override
     public void clearGrade(ILoginToken requester, IAccount student)
     {
-
+    	if (!(isGraded(requester, student)))
+    		grades.remove(student);
     }
 
     /**
@@ -69,7 +74,9 @@ public class Assignment implements IAssignment
     @Override
     public void modifyGrade(ILoginToken requester, IAccount student, float newGrade)
     {
-
+    	if (requester.getAccountType() == AccountType.professor)
+    		if (this.isGraded(requester, student))
+    			grades.put(student, newGrade);
     }
 
     /**
@@ -78,7 +85,10 @@ public class Assignment implements IAssignment
     @Override
     public float getGrade(ILoginToken requester, IAccount student)
     {
-        return 0;
+    	float theGrade = -5;
+    	if (requester.getAccountType() == AccountType.professor || requester.getAccountType() == AccountType.ta)
+    		theGrade = grades.get(student);
+        return theGrade;
     }
 
     /**
@@ -96,7 +106,12 @@ public class Assignment implements IAssignment
     @Override
     public boolean isGraded(ILoginToken requester, IAccount student)
     {
-        return false;
+    	boolean result = false;
+    	if(requester.getAccountType() == AccountType.professor || requester.getAccountType() == AccountType.ta)
+    		if (grades.containsKey(student))
+    			result = true;
+    	
+        return result;
     }
 
     /**
