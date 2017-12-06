@@ -44,7 +44,12 @@ public class LoginManager implements ILoginManager
             {
                 String[] split = currentLine.split(" ");
                 if (split.length != 2) throw new RuntimeException("bad password list format!");
-                map.put(split[0], split[1]);
+                String userName = split[0];
+                String password = split[1];
+
+                if (!Catalog.hasAccount(loginAdminToken, userName))
+                    throw new RuntimeException("no account with that UserName");
+                map.put(userName, password);
             }
         } catch (IOException ex)
         {
