@@ -10,7 +10,7 @@ import model.assignments.interfaces.IAssignment;
 import model.courses.classes.Roster;
 import model.courses.interfaces.ICourse;
 import model.courses.interfaces.IRoster;
-import services.login.classes.Permissions;
+import services.login.permissions.Permissions;
 import services.login.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
 import services.storage.interfaces.IJsonable;

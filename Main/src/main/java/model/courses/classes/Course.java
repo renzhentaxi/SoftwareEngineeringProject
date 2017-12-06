@@ -6,9 +6,9 @@ import model.courses.exceptions.AssignmentDoesNotExistException;
 import model.courses.exceptions.GradedAssignmentException;
 import model.courses.interfaces.ICourse;
 import model.courses.interfaces.IRoster;
-import services.login.classes.Permissions;
+import services.login.permissions.Permissions;
 import services.login.interfaces.ILoginToken;
-import services.login.interfaces.IPermission;
+import services.login.permissions.IPermission;
 
 import java.util.Collections;
 import java.util.List;

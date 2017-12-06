@@ -1,6 +1,6 @@
-package services.login.interfaces;
+package services.login.permissions;
 
-import services.login.classes.Permissions;
+import services.login.interfaces.ILoginToken;
 import services.login.exceptions.NoPermissionException;
 
 public interface IPermission

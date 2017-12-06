@@ -2,7 +2,7 @@ package services.login.exceptions;
 
 
 import services.login.interfaces.ILoginToken;
-import services.login.interfaces.IPermission;
+import services.login.permissions.IPermission;
 
 public class NoPermissionException extends RuntimeException {
 

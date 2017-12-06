@@ -3,9 +3,9 @@ package model.courses.classes;
 import model.accounts.interfaces.IAccount;
 import model.courses.interfaces.IRoster;
 import services.login.exceptions.NoPermissionException;
-import services.login.classes.Permissions;
+import services.login.permissions.Permissions;
 import services.login.interfaces.ILoginToken;
-import services.login.interfaces.IPermission;
+import services.login.permissions.IPermission;
 import services.storage.interfaces.IJsonable;
 
 import javax.json.Json;
