@@ -1,6 +1,6 @@
 package services.login.interfaces;
 
-import services.login.exceptions.NotLoggedInException;
+import services.login.exceptions.LoginExpiredException;
 
 public interface ILoginManager {
 
@@ -16,7 +16,7 @@ public interface ILoginManager {
     /**
      * logs the user out of the system.
      * @param userName the user name of the user who wants to logout
-     * @throws NotLoggedInException if the user is already logged out
+     * @throws LoginExpiredException if the user is already logged out
      */
     void logout(String userName);
 }
