@@ -6,11 +6,16 @@ import model.exceptions.NoPermissionException;
 import services.login.interfaces.IPermission;
 import services.login.classes.Permissions;
 import services.login.interfaces.ILoginToken;
+import services.storage.interfaces.IJsonable;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import java.util.Collections;
 import java.util.List;
 
-public class Roster implements IRoster
+public class Roster implements IRoster,IJsonable
 {
     private IAccount professor;
     private IAccount ta;
@@ -122,5 +127,25 @@ public class Roster implements IRoster
         }
 
         return false;
+    }
+
+    //
+    //    private IAccount professor;
+    //    private IAccount ta;
+    //    private List<IAccount> students;
+    @Override
+    public JsonObject toJson()
+    {
+        JsonArrayBuilder studentsBuilder = Json.createArrayBuilder();
+        for (IAccount student: students)
+        {
+            studentsBuilder.add(student.getUserName());
+        }
+        JsonArray students = studentsBuilder.build();
+
+        return Json.createObjectBuilder()
+                .add("prof", professor.getUserName())
+                .add("ta", ta.getUserName())
+                .build();
     }
 }
