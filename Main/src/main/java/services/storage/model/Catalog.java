@@ -2,26 +2,40 @@ package services.storage.model;
 
 import model.accounts.interfaces.IAccount;
 import model.courses.interfaces.ICourse;
+import model.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
-import services.storage.interfaces.ICatalog;
+import services.storage.exceptions.AccountDoesNotExistException;
+import services.storage.exceptions.CourseDoesNotExistException;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-public class Catalog implements ICatalog
+public class Catalog
 {
     /**
-     * {@inheritDoc}
+     * finds and returns the course with the courseId
+     *
+     * @param requester the user who attempts to get the course
+     * @param courseName  the id of the course
+     * @return the course
+     * @throws CourseDoesNotExistException if there is no course with the id in the system
+     * @throws NoPermissionException       if the requester does not belong to the course
      */
-    @Override
-    public ICourse getCourse(ILoginToken requester, int courseId)
+    public static ICourse getCourse(ILoginToken requester, String courseName)
     {
-        return null;
+        throw new NotImplementedException();
     }
 
+
     /**
-     * {@inheritDoc}
+     * finds and returns the account with the given accountId
+     *
+     * @param requester the user who attempts to get the account
+     * @param userName the id of the account
+     * @return the account
+     * @throws AccountDoesNotExistException if there is no account with the id in the system
+     * @throws NoPermissionException        if the requester is not a system account
      */
-    @Override
-    public IAccount getAccount(ILoginToken requester, int accountId)
+    public static IAccount getAccount(ILoginToken requester, String userName)
     {
-        return null;
+        throw new NotImplementedException();
     }
 }
