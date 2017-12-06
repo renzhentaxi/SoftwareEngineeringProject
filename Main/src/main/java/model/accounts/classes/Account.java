@@ -16,11 +16,11 @@ import java.util.List;
 
 public class Account implements IAccount, IJsonable
 {
-    private String firstName;
-    private String lastName;
-    private String userName;
-    private AccountType accountType;
-    private List<ICourse> courseList;
+    protected String firstName;
+    protected String lastName;
+    protected String userName;
+    protected AccountType accountType;
+    protected List<ICourse> courseList;
 
     public Account(String firstName, String lastName, String userName, AccountType accountType, List<ICourse> courseList)
     {
@@ -31,6 +31,7 @@ public class Account implements IAccount, IJsonable
         this.courseList = courseList;
     }
 
+    protected Account(){}
     /**
      * {@inheritDoc}
      */
@@ -115,5 +116,11 @@ public class Account implements IAccount, IJsonable
                 .add("lastName", lastName)
                 .add("courseList", courseList)
                 .build();
+    }
+
+    @Override
+    public String toString()
+    {
+        return accountType +": "+ userName;
     }
 }
