@@ -109,10 +109,10 @@ public class Account implements IAccount, IJsonable
 
         JsonArray courseList = courseListBuilder.build();
         return Json.createObjectBuilder()
-                .add("firstName", firstName)
-                .add("lastName", lastName)
                 .add("userName", userName)
                 .add("accountType", accountType.name())
+                .add("firstName", firstName)
+                .add("lastName", lastName)
                 .add("courseList", courseList)
                 .build();
     }
