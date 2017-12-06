@@ -4,6 +4,7 @@ import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -27,7 +28,7 @@ public class AccountProvider implements ISmartProvider<IAccount>
         for (AccountType t : AccountType.values())
         {
             if (name.contains(t.name()))
-                return new Account("", "", name, t, null);
+                return new Account("", "", name, t, new ArrayList<>());
         }
         throw new RuntimeException("cant determine type");
     }

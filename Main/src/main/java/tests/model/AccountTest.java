@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import services.login.interfaces.ILoginToken;
+import tests.provider.AccountProvider;
 
+import javax.json.JsonObject;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -69,5 +71,16 @@ class AccountTest
     private Account makeAccount(String userName, AccountType accountType, List<ICourse> courseList)
     {
         return new Account("firstName", "lastName", userName, accountType, courseList);
+    }
+
+    @Test
+    void toJson()
+    {
+        Account a = (Account) AccountProvider.professor;
+
+        JsonObject json = a.toJson();
+        assertEquals("professor", json.getString("userName"));
+        assertEquals(AccountType.professor, AccountType.valueOf(json.getString("accountType")));
+
     }
 }
