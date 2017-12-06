@@ -1,11 +1,10 @@
 package tests.model.Assignment;
 
-import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
 import model.assignments.classes.Assignment;
 import model.assignments.exceptions.AlreadyGradedException;
-import model.assignments.exceptions.NotAStudentException;
-import model.courses.interfaces.ICourse;
+import model.assignments.exceptions.BadGradeException;
+import model.assignments.exceptions.NotCourseStudentException;
 import model.courses.interfaces.IRoster;
 import model.exceptions.NoPermissionException;
 import org.junit.jupiter.api.Assertions;
@@ -13,107 +12,88 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import services.login.interfaces.ILoginToken;
 import tests.StubFactory;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @DisplayName(value = "Assignment.EnterGrade")
 public class EnterGrade
 {
     static Iterator<ILoginToken> validRequester_provider()
     {
-        return StubFactory.makeLoginTokenStubProvider("professor", "admin");
+        return StubFactory.makeLoginTokenProvider("professor", "admin", "ta");
+    }
+
+    static Iterator<ILoginToken> invalidRequester_provider()
+    {
+        return StubFactory.makeLoginTokenProvider("student", "notCourseTa", "notCourseProfessor");
     }
 
     @ParameterizedTest(name = "requesting as {arguments}")
     @MethodSource(names = "validRequester_provider")
     void validRequester_gradeEntered(ILoginToken validRequester)
     {
-        IRoster stubRoster = StubFactory.makeStubRoster();
-        ICourse stubCourse = mock(ICourse.class);
-        IAccount stubStudent = StubFactory.makeStubAccount("student", AccountType.student);
-
-        when(stubCourse.getRoster(validRequester)).thenReturn(stubRoster);
-        Map<IAccount, Float> grades = new HashMap<>();
-        grades.put(stubStudent, -1f);
-
-        Assignment assignment = new AssignmentBuilder()
-                .setCourse(stubCourse)
-                .setGrades(grades)
-                .build();
-
-
+        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
+        IAccount student = StubFactory.makeAccount("student");
         float grade = 20f;
-        assignment.enterGrade(validRequester, stubStudent, grade);
 
-        Assertions.assertEquals(grade, assignment.getGrade(validRequester, stubStudent));
+        //act
+        assignment.enterGrade(validRequester, student, grade);
+
+        //assert
+        Assertions.assertEquals(grade, assignment.getGrade(validRequester, student));
     }
 
-
-    static Iterator<ILoginToken> invalidRequester_provider()
-    {
-        return StubFactory.makeLoginTokenStubProvider("student", "ta", "notCourseProfessor");
-    }
 
     @ParameterizedTest(name = "requesting as {arguments}")
     @MethodSource(names = "invalidRequester_provider")
     void invalidRequester_throwsNoPermissionException(ILoginToken invalidRequester)
     {
-        IRoster stubRoster = StubFactory.makeStubRoster();
-        ICourse stubCourse = mock(ICourse.class);
-        when(stubCourse.getRoster(invalidRequester)).thenReturn(stubRoster);
-        Assignment assignment = new AssignmentBuilder()
-                .setCourse(stubCourse)
-                .build();
+        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
+        IAccount student = StubFactory.makeAccount("student");
+        float grade = 20f;
 
-        Assertions.assertThrows(NoPermissionException.class, () -> assignment.enterGrade(invalidRequester, null, 0));
+        //assert
+        Assertions.assertThrows(NoPermissionException.class, () -> assignment.enterGrade(invalidRequester, student, grade));
     }
 
     @Test
     void studentNotInRoster_throwsNotAStudentException()
     {
-        ILoginToken validRequester = StubFactory.makeLoginTokenStub("admin");
+        ILoginToken validRequester = StubFactory.makeLoginToken("admin");
+        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
+        IAccount notAStudentOfThisCourse = StubFactory.makeAccount("notCourseStudent");
+        float grade = 20f;
 
-        IRoster stubRoster = StubFactory.makeStubRoster();
-        ICourse stubCourse = mock(ICourse.class);
-        when(stubCourse.getRoster(validRequester)).thenReturn(stubRoster);
-
-
-        IAccount notAStudentOfThisCourse = StubFactory.makeStubAccount("not a student", AccountType.student);
-
-
-        Assignment assignment = new AssignmentBuilder()
-                .setCourse(stubCourse)
-                .build();
-
-        Assertions.assertThrows(NotAStudentException.class, ()-> assignment.enterGrade(validRequester, notAStudentOfThisCourse, 0f));
+        //assert
+        Assertions.assertThrows(NotCourseStudentException.class, () -> assignment.enterGrade(validRequester, notAStudentOfThisCourse, grade));
     }
 
     @Test
     void gradedAssignment_throwsAlreadyGradedException()
     {
-        ILoginToken validRequester = StubFactory.makeLoginTokenStub("admin");
+        ILoginToken validRequester = StubFactory.makeLoginToken("admin");
+        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
+        IAccount student = StubFactory.makeAccount("student");
+        float grade = 20f;
 
-        IRoster stubRoster = StubFactory.makeStubRoster();
-        ICourse stubCourse = mock(ICourse.class);
-        when(stubCourse.getRoster(validRequester)).thenReturn(stubRoster);
-
-
-        IAccount student = StubFactory.makeStubAccount("student", AccountType.student);
+        assignment.enterGrade(validRequester, student, grade);
 
 
-        Assignment assignment = new AssignmentBuilder()
-                .setCourse(stubCourse)
-                .build();
-        assignment.enterGrade(validRequester,student,20);
-
-
-        Assertions.assertThrows(AlreadyGradedException.class, ()-> assignment.enterGrade(validRequester, student, 0f));
+        Assertions.assertThrows(AlreadyGradedException.class, () -> assignment.enterGrade(validRequester, student, grade));
     }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {-1d, 101d})
+    void badGrades_throwBadGrade(double badGrade)
+    {
+        ILoginToken validRequester = StubFactory.makeLoginToken("admin");
+        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
+        IAccount student = StubFactory.makeAccount("student");
+
+        Assertions.assertThrows(BadGradeException.class, () -> assignment.enterGrade(validRequester, student, (float) badGrade));
+    }
+
 }

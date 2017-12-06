@@ -1,4 +1,4 @@
-package tests.model;
+package tests;
 
 public interface IBuilder<T>
 {

@@ -1,5 +1,6 @@
 package tests;
 
+import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
 import model.assignments.interfaces.IAssignment;
@@ -92,6 +93,7 @@ public class StubFactory
         IAccount stubAccount = mock(IAccount.class);
         when(stubAccount.getAccountType()).thenReturn(accountType);
         when(stubAccount.getUserName()).thenReturn(userName);
+
         return stubAccount;
     }
 
@@ -114,9 +116,9 @@ public class StubFactory
 
     /**
      * valid requester = professor,ta,admin
-     * IsProfessor returns true when userName = professor
-     * IsStudent returns true when userName = student
-     * IsTa returns true when userName = ta
+     * IsProfessor returns true when userName != notCourseProfessor and type is professor
+     * IsStudent returns true when userName != notCourseStudent and type is student
+     * IsTa returns true when userName != notCourseTa and type is ta
      */
     public static IRoster makeStubRoster()
     {
@@ -128,9 +130,24 @@ public class StubFactory
             String name = argument.getAccount().getUserName();
             return (type.equals(AccountType.professor) && name.equals("professor")) || (type.equals(AccountType.ta) && name.equals("ta") || type.equals(AccountType.admin));
         };
-        ArgumentMatcher<IAccount> studentAccount = argument -> argument.getUserName().equals("student");
-        ArgumentMatcher<IAccount> professorAccount = argument -> argument.getUserName().equals("professor");
-        ArgumentMatcher<IAccount> taAccount = argument -> argument.getUserName().equals("ta");
+        ArgumentMatcher<IAccount> studentAccount = argument ->
+        {
+            AccountType type = argument.getAccountType();
+            return !argument.getUserName().contains("notcoursestudent") && type == AccountType.student;
+        };
+
+        ArgumentMatcher<IAccount> professorAccount = argument ->
+        {
+            AccountType type = argument.getAccountType();
+            return !argument.getUserName().equals("notcourseprofessor") && type == AccountType.professor;
+        };
+
+        ArgumentMatcher<IAccount> taAccount = argument ->
+        {
+            AccountType type = argument.getAccountType();
+            return !argument.getUserName().equals("notcourseta") && type == AccountType.ta;
+        };
+
 
         when(stubRoster.isStudent(argThat(validRequester), argThat(studentAccount))).thenReturn(true);
         when(stubRoster.isProfessor(argThat(validRequester), argThat(professorAccount))).thenReturn(true);

@@ -5,11 +5,16 @@ import model.accounts.interfaces.IAccount;
 import model.courses.interfaces.ICourse;
 import model.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
+import services.storage.interfaces.IJsonable;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import java.util.Collections;
 import java.util.List;
 
-public class Account implements IAccount
+public class Account implements IAccount, IJsonable
 {
     private String firstName;
     private String lastName;
@@ -85,5 +90,30 @@ public class Account implements IAccount
             return this.userName.equals(other.userName);
         }
         return false;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return userName.hashCode();
+    }
+
+    @Override
+    public JsonObject toJson()
+    {
+        JsonArrayBuilder courseListBuilder = Json.createArrayBuilder();
+        for (ICourse course: this.courseList)
+        {
+            courseListBuilder.add(course.getCourseName());
+        }
+
+        JsonArray courseList = courseListBuilder.build();
+        return Json.createObjectBuilder()
+                .add("firstName", firstName)
+                .add("lastName", lastName)
+                .add("userName", userName)
+                .add("accountType", accountType.name())
+                .add("courseList", courseList)
+                .build();
     }
 }

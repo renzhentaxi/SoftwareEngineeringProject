@@ -1,12 +1,8 @@
 package tests.model.Assignment;
 
-import model.accounts.interfaces.IAccount;
 import model.assignments.classes.Assignment;
 import model.courses.interfaces.ICourse;
-import tests.model.IBuilder;
-
-import java.util.HashMap;
-import java.util.Map;
+import tests.IBuilder;
 
 public class AssignmentBuilder implements IBuilder<Assignment>
 {

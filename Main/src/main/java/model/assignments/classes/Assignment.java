@@ -2,12 +2,18 @@ package model.assignments.classes;
 
 import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
+import model.assignments.exceptions.AlreadyGradedException;
+import model.assignments.exceptions.BadGradeException;
+import model.assignments.exceptions.NotCourseStudentException;
+import model.assignments.exceptions.NotGradedException;
 import model.assignments.interfaces.IAssignment;
-import model.exceptions.NoPermissionException;
 import model.courses.interfaces.ICourse;
+import model.courses.interfaces.IRoster;
+import model.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Assignment implements IAssignment
@@ -15,18 +21,19 @@ public class Assignment implements IAssignment
     private String name;
     private String description;
     private ICourse course;
-    private Map<IAccount,Float> grades;
+    private Map<IAccount, Float> grades;
 
     /**
-     * @param name the name of the assignment. This should be unique within a course
+     * @param name        the name of the assignment. This should be unique within a course
      * @param description the description of the assignment
-     * @param course the course that contains this assignment.
+     * @param course      the course that contains this assignment.
      */
     public Assignment(String name, String description, ICourse course)
     {
         this.name = name;
         this.description = description;
         this.course = course;
+        this.grades = new HashMap<>();
     }
 
     /**
@@ -35,6 +42,10 @@ public class Assignment implements IAssignment
     @Override
     public String getDescription(ILoginToken requester)
     {
+        IRoster roster = course.getRoster(requester);
+        IAccount requesterAccount = requester.getAccount();
+        if (requester.getAccountType() != AccountType.admin &&
+                !roster.isInRoster(requester, requesterAccount)) throw new NoPermissionException();
         return this.description;
     }
 
@@ -44,6 +55,11 @@ public class Assignment implements IAssignment
     @Override
     public String getName(ILoginToken requester)
     {
+        IRoster roster = course.getRoster(requester);
+        IAccount requesterAccount = requester.getAccount();
+        if (requester.getAccountType() != AccountType.admin &&
+                !roster.isInRoster(requester,requesterAccount)) throw new NoPermissionException();
+
         return this.name;
     }
 
@@ -53,19 +69,36 @@ public class Assignment implements IAssignment
     @Override
     public void enterGrade(ILoginToken requester, IAccount student, float grade)
     {
-    	if (requester.getAccountType() == AccountType.professor || requester.getAccountType() == AccountType.ta)
-    		grades.put(student, grade);
-    	throw new NoPermissionException();
-    	
+        IRoster roster = course.getRoster(requester);
+        IAccount requesterAccount = requester.getAccount();
+
+        if (requester.getAccountType() != AccountType.admin &&
+                !roster.isProfessor(requester, requesterAccount) &&
+                !roster.isTa(requester, requesterAccount))
+            throw new NoPermissionException();
+
+        if (!roster.isStudent(requester, student)) throw new NotCourseStudentException();
+        if (isGraded(requester, student)) throw new AlreadyGradedException();
+        if (grade < 0 || grade > 100) throw new BadGradeException();
+        grades.put(student, grade);
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void clearGrade(ILoginToken requester, IAccount student)
     {
-    	if (!(isGraded(requester, student)))
-    		grades.remove(student);
+        IRoster roster = course.getRoster(requester);
+        IAccount requesterAccount = requester.getAccount();
+
+        if (requester.getAccountType() != AccountType.admin &&
+                !roster.isProfessor(requester, requesterAccount))
+            throw new NoPermissionException();
+        if (!roster.isStudent(requester, student)) throw new NotCourseStudentException();
+        if (!isGraded(requester, student)) throw new NotGradedException();
+
+        grades.put(student, -1f);
     }
 
     /**
@@ -74,9 +107,13 @@ public class Assignment implements IAssignment
     @Override
     public void modifyGrade(ILoginToken requester, IAccount student, float newGrade)
     {
-    	if (requester.getAccountType() == AccountType.professor)
-    		if (this.isGraded(requester, student))
-    			grades.put(student, newGrade);
+        IRoster roster = course.getRoster(requester);
+        if (requester.getAccountType() != AccountType.admin && !roster.isProfessor(requester, requester.getAccount()))
+            throw new NoPermissionException();
+        if (!roster.isStudent(requester, student)) throw new NotCourseStudentException();
+        if (!isGraded(requester, student)) throw new NotGradedException();
+        if (newGrade < 0 || newGrade > 100) throw new BadGradeException();
+        grades.put(student, newGrade);
     }
 
     /**
@@ -85,19 +122,25 @@ public class Assignment implements IAssignment
     @Override
     public float getGrade(ILoginToken requester, IAccount student)
     {
-    	float theGrade = -5;
-    	if (requester.getAccountType() == AccountType.professor || requester.getAccountType() == AccountType.ta)
-    		theGrade = grades.get(student);
-        return theGrade;
+        IRoster roster = course.getRoster(requester);
+        IAccount requesterAccount = requester.getAccount();
+
+        if (requester.getAccountType() != AccountType.admin &&
+                !roster.isProfessor(requester, requesterAccount) &&
+                !roster.isTa(requester, requesterAccount) &&
+                !(roster.isStudent(requester, requesterAccount) && requesterAccount.equals(student)))
+            throw new NoPermissionException();
+        return grades.get(student);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Dictionary<IAccount, Float> getGrades(ILoginToken requester)
+    public Map<IAccount, Float> getGrades(ILoginToken requester)
     {
-        return null;
+        throw new NotImplementedException();
+        // return Collections.unmodifiableMap(grades);
     }
 
     /**
@@ -106,12 +149,17 @@ public class Assignment implements IAssignment
     @Override
     public boolean isGraded(ILoginToken requester, IAccount student)
     {
-    	boolean result = false;
-    	if(requester.getAccountType() == AccountType.professor || requester.getAccountType() == AccountType.ta)
-    		if (grades.containsKey(student))
-    			result = true;
-    	
-        return result;
+        IRoster roster = course.getRoster(requester);
+        IAccount requesterAccount = requester.getAccount();
+
+        if (requester.getAccountType() != AccountType.admin &&
+                !roster.isProfessor(requester, requesterAccount) &&
+                !roster.isTa(requester, requesterAccount) &&
+                !(roster.isStudent(requester, requesterAccount) && requesterAccount.equals(student)))
+            throw new NoPermissionException();
+        if (!roster.isStudent(requester, student)) throw new NotCourseStudentException();
+
+        return grades.containsKey(student) && grades.get(student) >= 0;
     }
 
     /**
@@ -120,6 +168,10 @@ public class Assignment implements IAssignment
     @Override
     public boolean isGradedAny(ILoginToken requester)
     {
+        for (IAccount student : grades.keySet())
+        {
+            if (isGraded(requester, student)) return true;
+        }
         return false;
     }
 }
