@@ -86,4 +86,10 @@ public class Account implements IAccount
         }
         return false;
     }
+
+    @Override
+    public int hashCode()
+    {
+        return userName.hashCode();
+    }
 }
