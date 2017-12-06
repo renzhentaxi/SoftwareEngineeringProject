@@ -7,13 +7,12 @@ import model.assignments.exceptions.BadGradeException;
 import model.assignments.exceptions.NotCourseStudentException;
 import model.assignments.exceptions.NotGradedException;
 import model.assignments.interfaces.IAssignment;
+import model.courses.interfaces.ICourse;
 import model.courses.interfaces.IRoster;
 import model.exceptions.NoPermissionException;
-import model.courses.interfaces.ICourse;
 import services.login.interfaces.ILoginToken;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +45,7 @@ public class Assignment implements IAssignment
         IRoster roster = course.getRoster(requester);
         IAccount requesterAccount = requester.getAccount();
         if (requester.getAccountType() != AccountType.admin &&
-                !roster.isInRoster(requesterAccount)) throw new NoPermissionException();
+                !roster.isInRoster(requester, requesterAccount)) throw new NoPermissionException();
         return this.description;
     }
 
@@ -59,7 +58,7 @@ public class Assignment implements IAssignment
         IRoster roster = course.getRoster(requester);
         IAccount requesterAccount = requester.getAccount();
         if (requester.getAccountType() != AccountType.admin &&
-                !roster.isInRoster(requesterAccount)) throw new NoPermissionException();
+                !roster.isInRoster(requester,requesterAccount)) throw new NoPermissionException();
 
         return this.name;
     }
