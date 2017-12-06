@@ -1,19 +1,23 @@
 package tests.model;
 
 import model.accounts.enums.AccountType;
+import model.accounts.interfaces.IAccount;
+import model.assignments.classes.Assignment;
 import model.assignments.interfaces.IAssignment;
 import model.courses.classes.Course;
+import model.courses.classes.Roster;
 import model.courses.exceptions.AssignmentAlreadyExistException;
 import model.courses.exceptions.AssignmentDoesNotExistException;
 import model.courses.exceptions.GradedAssignmentException;
-import model.courses.interfaces.IRoster;
-import model.exceptions.NoPermissionException;
+import services.login.exceptions.NoPermissionException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import services.login.interfaces.ILoginToken;
 import tests.StubFactory;
+import tests.provider.AccountProvider;
+import tests.provider.LoginTokenProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,27 +25,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class CourseTest
 {
     static Iterator<ILoginToken> getAssignments_validRequester_provider()
     {
-
-
-        ILoginToken admin = StubFactory.makeStubLoginToken("admin", AccountType.admin);
-        ILoginToken student = StubFactory.makeStubLoginToken("student", AccountType.student);
-        ILoginToken professor = StubFactory.makeStubLoginToken("professor", AccountType.professor);
-        ILoginToken ta = StubFactory.makeStubLoginToken("ta", AccountType.ta);
-
-
-        List<ILoginToken> validRequesters = new ArrayList<>();
-        validRequesters.add(admin);
-        validRequesters.add(student);
-        validRequesters.add(professor);
-        validRequesters.add(ta);
-
-        return validRequesters.iterator();
+        return LoginTokenProvider.provider.provide("admin,student, professor, ta");
     }
 
     @ParameterizedTest
@@ -50,7 +39,7 @@ class CourseTest
     {
         List<IAssignment> assignmentList = StubFactory.makeDummyAssignmentList();
 
-        Course course = new Course("soft", StubFactory.makeStubRoster(), assignmentList);
+        Course course = new Course("soft", StubFactory.makeTestRoster(), assignmentList);
 
         List<IAssignment> actual = course.getAssignments(validRequester);
 
@@ -75,7 +64,7 @@ class CourseTest
     @MethodSource(names = "getAssignments_invalidRequester_provider")
     void getAssignments_invalidRequester_throwsNoPermissionException(ILoginToken invalidRequester)
     {
-        Course course = new Course("soft", StubFactory.makeStubRoster(), null);
+        Course course = new Course("soft", StubFactory.makeTestRoster(), null);
 
         Assertions.assertThrows(NoPermissionException.class, () -> course.getAssignments(invalidRequester));
     }
@@ -83,7 +72,7 @@ class CourseTest
     @Test
     void getAssignments_attemptsToModify_throwsUnsupportedOperation()
     {
-        Course course = new Course("soft", StubFactory.makeStubRoster(), StubFactory.makeDummyAssignmentList());
+        Course course = new Course("soft", StubFactory.makeTestRoster(), StubFactory.makeDummyAssignmentList());
 
         ILoginToken admin = StubFactory.makeStubLoginToken("admin", AccountType.admin);
 
@@ -95,20 +84,17 @@ class CourseTest
 
     static Iterator<ILoginToken> addAssignments_validRequester_provider()
     {
-        ILoginToken admin = StubFactory.makeStubLoginToken("admin", AccountType.admin);
-        ILoginToken professor = StubFactory.makeStubLoginToken("professor", AccountType.professor);
-        return Arrays.asList(new ILoginToken[]{admin, professor}).iterator();
+        return LoginTokenProvider.provider.provide("admin,professor");
     }
 
     @ParameterizedTest
     @MethodSource(names = "addAssignments_validRequester_provider")
     void addAssignment_validRequester_assignmentIsAdded(ILoginToken validRequester)
     {
-        Course course = new Course("soft", StubFactory.makeStubRoster(), StubFactory.makeDummyAssignmentList());
-
-        IAssignment stubAssignment = mock(IAssignment.class);
-        course.addAssignment(validRequester, stubAssignment);
-        Assertions.assertEquals(stubAssignment, course.getAssignments(validRequester).get(1));
+        Course course = new Course("soft", StubFactory.makeTestRoster(), StubFactory.makeDummyAssignmentList());
+        Assignment assignment = new Assignment("assignment", "", course);
+        course.addAssignment(validRequester, assignment);
+        Assertions.assertTrue(course.getAssignments(validRequester).contains(assignment));
     }
 
     static Iterator<ILoginToken> addAssignment_invalidRequester_provider()
@@ -124,7 +110,7 @@ class CourseTest
     @MethodSource(names = "addAssignment_invalidRequester_provider")
     void addAssignment_invalidRequester_throwsNoPermissionException(ILoginToken invalidRequester)
     {
-        Course course = new Course("soft", StubFactory.makeStubRoster(), null);
+        Course course = new Course("soft", StubFactory.makeTestRoster(), null);
 
         Assertions.assertThrows(NoPermissionException.class, () -> course.addAssignment(invalidRequester, null));
     }
@@ -133,10 +119,10 @@ class CourseTest
     @Test
     void addAssignment_assignmentAlreadyExist_throwsAssignmentAlreadyExistException()
     {
-        Course course = new Course("soft", StubFactory.makeStubRoster(), StubFactory.makeDummyAssignmentList());
+        Course course = new Course("soft", StubFactory.makeTestRoster(), StubFactory.makeDummyAssignmentList());
 
         ILoginToken admin = StubFactory.makeStubLoginToken("admin", AccountType.admin);
-        IAssignment assignment = mock(IAssignment.class);
+        IAssignment assignment = new Assignment("assignment", "", course);
 
         Assertions.assertThrows(AssignmentAlreadyExistException.class, () ->
         {
@@ -151,16 +137,16 @@ class CourseTest
         ILoginToken admin = StubFactory.makeStubLoginToken("admin", AccountType.admin);
         ILoginToken professor = StubFactory.makeStubLoginToken("professor", AccountType.professor);
 
-        return Arrays.asList(new ILoginToken[]{admin, professor}).iterator();
+        return LoginTokenProvider.provider.provide("professor,admin");
     }
 
     @ParameterizedTest
     @MethodSource(names = "removeAssignment_validRequester_provider")
     void removeAssignment_validRequester_assignmentIsRemoved(ILoginToken validRequester)
     {
-        Course course = new Course("soft", StubFactory.makeStubRoster(), StubFactory.makeDummyAssignmentList());
+        Course course = new Course("soft", StubFactory.makeTestRoster(), StubFactory.makeDummyAssignmentList());
 
-        IAssignment assignmentToRemove = mock(IAssignment.class);
+        IAssignment assignmentToRemove = new Assignment("assignment", "", course);
         course.addAssignment(validRequester, assignmentToRemove);
         course.removeAssignment(validRequester, assignmentToRemove);
 
@@ -182,7 +168,7 @@ class CourseTest
     @MethodSource(names = "removeAssignment_invalidRequester_provider")
     void removeAssignment_invalidRequester_throwsNoPermissionException(ILoginToken invalidRequester)
     {
-        Course course = new Course("soft", StubFactory.makeStubRoster(), null);
+        Course course = new Course("soft", StubFactory.makeTestRoster(), null);
 
         Assertions.assertThrows(NoPermissionException.class, () -> course.removeAssignment(invalidRequester, null));
     }
@@ -193,7 +179,7 @@ class CourseTest
     {
         ILoginToken admin = StubFactory.makeLoginToken("admin");
 
-        Course course = new Course("soft", StubFactory.makeStubRoster(), new ArrayList<>());
+        Course course = new Course("soft", StubFactory.makeTestRoster(), new ArrayList<>());
 
         Assertions.assertThrows(AssignmentDoesNotExistException.class, () -> course.removeAssignment(admin, mock(IAssignment.class)));
     }
@@ -202,11 +188,12 @@ class CourseTest
     void removeAssignment_assignmentIsGraded_throwsGradedAssignmentException()
     {
         ILoginToken admin = StubFactory.makeLoginToken("admin");
+        IAccount student = AccountProvider.provider.provideSingle("student");
+        Course course = new Course("soft", StubFactory.makeTestRoster(), new ArrayList<>());
 
-        Course course = new Course("soft", StubFactory.makeStubRoster(), new ArrayList<>());
-
-        IAssignment graded = mock(IAssignment.class);
-        when(graded.isGradedAny(admin)).thenReturn(true);
+        IAssignment graded = new Assignment("assignment", "", course);
+        course.addAssignment(admin,graded);
+        graded.enterGrade(admin,student,4f);
 
         Assertions.assertThrows(GradedAssignmentException.class, () -> course.removeAssignment(admin, graded));
     }
@@ -216,25 +203,14 @@ class CourseTest
     @MethodSource(names = "getRosterValidRequesterProvider")
     void getRoster_requesterHasPermission_rosterIsReturned(ILoginToken validRequester)
     {
-        IRoster roster = StubFactory.makeStubRoster();
+        Roster roster = StubFactory.makeTestRoster();
         Course course = new Course("software", roster, null);
         Assertions.assertEquals(roster, course.getRoster(validRequester));
     }
 
     static Iterator<ILoginToken> getRosterValidRequesterProvider()
     {
-        List<ILoginToken> validRequesters = new ArrayList<>();
-
-        ILoginToken admin = StubFactory.makeStubLoginToken("admin", AccountType.admin);
-        ILoginToken professor = StubFactory.makeStubLoginToken("professor", AccountType.professor);
-        ILoginToken ta = StubFactory.makeStubLoginToken("ta", AccountType.ta);
-
-
-        validRequesters.add(admin);
-        validRequesters.add(professor);
-        validRequesters.add(ta);
-
-        return validRequesters.iterator();
+        return LoginTokenProvider.provider.provide("admin, professor, ta");
     }
 
 
@@ -258,8 +234,7 @@ class CourseTest
     @MethodSource(names = "getRosterInvalidRequesterProvider")
     void getRoster_requesterHasNoPermission_throwsNoPermissionException(ILoginToken invalidRequester)
     {
-        IRoster roster = StubFactory.makeStubRoster();
-
+        Roster roster = StubFactory.makeTestRoster();
         Course course = new Course("software", roster, null);
         Assertions.assertThrows(NoPermissionException.class, () -> course.getRoster(invalidRequester));
     }

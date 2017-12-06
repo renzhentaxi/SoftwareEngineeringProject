@@ -2,6 +2,7 @@ package model.accounts.interfaces;
 
 import model.accounts.enums.AccountType;
 import model.courses.interfaces.ICourse;
+import services.login.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public interface IAccount {
      *
      * @param requester the user who requests courseList
      * @return a readonly list of courses
-     * @throws model.exceptions.NoPermissionException if the user who requested does not have the permission to get the course list
+     * @throws NoPermissionException if the user who requested does not have the permission to get the course list
      */
     List<ICourse> getCourseList(ILoginToken requester);
 

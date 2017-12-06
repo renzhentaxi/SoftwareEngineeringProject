@@ -67,4 +67,10 @@ public class LoginToken implements ILoginToken
         }
         return false;
     }
+
+    @Override
+    public String toString()
+    {
+        return account.toString() + " isActive: " + isLoggedIn;
+    }
 }

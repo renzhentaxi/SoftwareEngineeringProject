@@ -6,14 +6,16 @@ import model.assignments.exceptions.BadGradeException;
 import model.assignments.exceptions.NotCourseStudentException;
 import model.assignments.exceptions.NotGradedException;
 import model.courses.interfaces.IRoster;
-import model.exceptions.NoPermissionException;
+import services.login.exceptions.NoPermissionException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import services.login.classes.LoginToken;
 import services.login.interfaces.ILoginToken;
 import tests.StubFactory;
+import tests.provider.AccountProvider;
+import tests.provider.AssignmentProvider;
+import tests.provider.LoginTokenProvider;
 
 import java.util.Iterator;
 
@@ -24,20 +26,20 @@ public class ModifyGrade
 {
     static Iterator<ILoginToken> validRequester_provider()
     {
-        return StubFactory.makeLoginTokenProvider("professor", "admin");
+        return LoginTokenProvider.provider.provide("professor", "admin");
     }
 
     static Iterator<ILoginToken> invalidRequester_provider()
     {
-        return StubFactory.makeLoginTokenProvider("notCourseProfessor", "ta", "student");
+        return LoginTokenProvider.provider.provide("notCourseProfessor", "ta", "student");
     }
 
     @ParameterizedTest
     @MethodSource(names = "validRequester_provider")
     void validRequester_gradeIsModified(ILoginToken validRequester)
     {
-        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
-        IAccount student = StubFactory.makeAccount("student");
+        Assignment assignment = AssignmentProvider.makeTestAssignment();
+        IAccount student = AccountProvider.provider.provideSingle("student");
         float oldGrade = 10f;
         float newGrade = 20f;
 
@@ -54,8 +56,8 @@ public class ModifyGrade
     @MethodSource(names = "invalidRequester_provider")
     void invalidRequester_throwsNoPermissionException(ILoginToken invalidRequester)
     {
-        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
-        IAccount student = StubFactory.makeAccount("student");
+        Assignment assignment = AssignmentProvider.makeTestAssignment();
+        IAccount student = AccountProvider.provider.provideSingle("student");
         ILoginToken validGrader = StubFactory.makeLoginToken("admin");
         float oldGrade = 10f;
         float newGrade = 20f;
@@ -68,11 +70,11 @@ public class ModifyGrade
     @Test
     void studentNotInRoster_throwsNotAStudentException()
     {
-        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
-        IAccount notInRosterStudent = StubFactory.makeAccount("notCourseStudent");
+        Assignment assignment = AssignmentProvider.makeTestAssignment();
+        IAccount notInRosterStudent = AccountProvider.provider.provideSingle("notCourseStudent");
         // test
         ILoginToken admin = StubFactory.makeLoginToken("admin");
-        IRoster roster = StubFactory.makeStubRoster();
+        IRoster roster = StubFactory.makeTestRoster();
         System.out.println(roster.isStudent(admin, notInRosterStudent));
         ILoginToken validRequester = StubFactory.makeLoginToken("admin");
 
@@ -85,8 +87,8 @@ public class ModifyGrade
     @Test
     void ungradedAssignment_throwsNotGradedException()
     {
-        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
-        IAccount student = StubFactory.makeAccount("student");
+        Assignment assignment = AssignmentProvider.makeTestAssignment();
+        IAccount student = AccountProvider.provider.provideSingle("student");
         ILoginToken validRequester = StubFactory.makeLoginToken("admin");
         float newGrade = 20f;
 
@@ -98,8 +100,8 @@ public class ModifyGrade
     @ValueSource(doubles = {-1d, 101d})
     void badGrades_throwBadGradeException(double badGrade)
     {
-        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
-        IAccount student = StubFactory.makeAccount("student");
+        Assignment assignment = AssignmentProvider.makeTestAssignment();
+        IAccount student = AccountProvider.provider.provideSingle("student");
         ILoginToken validRequester = StubFactory.makeLoginToken("admin");
         ILoginToken grader = StubFactory.makeLoginToken("admin");
         float grade = 10f;

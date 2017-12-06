@@ -1,7 +1,8 @@
-package services.storage.model;
+package services.storage.inters;
 
 import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
+import services.storage.model.Catalog;
 
 import javax.json.JsonObject;
 import javax.json.JsonValue;

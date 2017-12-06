@@ -1,20 +1,18 @@
 package tests;
 
-import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
 import model.assignments.interfaces.IAssignment;
+import model.courses.classes.Roster;
 import model.courses.interfaces.ICourse;
-import model.courses.interfaces.IRoster;
-import org.mockito.ArgumentMatcher;
 import services.login.interfaces.ILoginToken;
+import tests.provider.AccountProvider;
+import tests.provider.LoginTokenProvider;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -43,28 +41,7 @@ public class StubFactory
 
     public static ILoginToken makeLoginToken(String name)
     {
-        name = name.toLowerCase();
-        for (AccountType type : AccountType.values())
-        {
-            if (name.contains(type.name()))
-            {
-                return makeStubLoginToken(name, type);
-            }
-        }
-
-        throw new RuntimeException("!!!! cant not figure out type");
-    }
-
-
-    public static ICourse makeCourseWithDefaultRoster(String name)
-    {
-        ICourse course = mock(ICourse.class);
-        IRoster roster = makeStubRoster();
-
-        when(course.getCourseName()).thenReturn(name);
-        when(course.getRoster(any())).thenReturn(roster);
-
-        return course;
+        return LoginTokenProvider.provider.provideSingle(name);
     }
 
     public static IAccount makeAccount(String name)
@@ -120,40 +97,10 @@ public class StubFactory
      * IsStudent returns true when userName != notCourseStudent and type is student
      * IsTa returns true when userName != notCourseTa and type is ta
      */
-    public static IRoster makeStubRoster()
+    public static Roster makeTestRoster()
     {
-        IRoster stubRoster = mock(IRoster.class);
-
-        ArgumentMatcher<ILoginToken> validRequester = (argument) ->
-        {
-            AccountType type = argument.getAccountType();
-            String name = argument.getAccount().getUserName();
-            return (type.equals(AccountType.professor) && name.equals("professor")) || (type.equals(AccountType.ta) && name.equals("ta") || type.equals(AccountType.admin));
-        };
-        ArgumentMatcher<IAccount> studentAccount = argument ->
-        {
-            AccountType type = argument.getAccountType();
-            return !argument.getUserName().contains("notcoursestudent") && type == AccountType.student;
-        };
-
-        ArgumentMatcher<IAccount> professorAccount = argument ->
-        {
-            AccountType type = argument.getAccountType();
-            return !argument.getUserName().equals("notcourseprofessor") && type == AccountType.professor;
-        };
-
-        ArgumentMatcher<IAccount> taAccount = argument ->
-        {
-            AccountType type = argument.getAccountType();
-            return !argument.getUserName().equals("notcourseta") && type == AccountType.ta;
-        };
-
-
-        when(stubRoster.isStudent(argThat(validRequester), argThat(studentAccount))).thenReturn(true);
-        when(stubRoster.isProfessor(argThat(validRequester), argThat(professorAccount))).thenReturn(true);
-        when(stubRoster.isTa(argThat(validRequester), argThat(taAccount))).thenReturn(true);
-
-        return stubRoster;
+        Roster r = new Roster(AccountProvider.professor, AccountProvider.ta, AccountProvider.provider.provideMany("student, student a, student b, student c"));
+        return r;
     }
 
     public static List<ICourse> makeDummyCourseList()
@@ -167,9 +114,7 @@ public class StubFactory
 
     public static List<IAssignment> makeDummyAssignmentList()
     {
-        IAssignment mockAssignment = mock(IAssignment.class);
         List<IAssignment> assignmentList = new ArrayList<>();
-        assignmentList.add(mockAssignment);
         return assignmentList;
     }
 }

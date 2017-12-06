@@ -2,10 +2,10 @@ package model.courses.classes;
 
 import model.accounts.interfaces.IAccount;
 import model.courses.interfaces.IRoster;
-import model.exceptions.NoPermissionException;
-import services.login.interfaces.IPermission;
+import services.login.exceptions.NoPermissionException;
 import services.login.classes.Permissions;
 import services.login.interfaces.ILoginToken;
+import services.login.interfaces.IPermission;
 import services.storage.interfaces.IJsonable;
 
 import javax.json.Json;
@@ -15,15 +15,15 @@ import javax.json.JsonObject;
 import java.util.Collections;
 import java.util.List;
 
-public class Roster implements IRoster,IJsonable
+public class Roster implements IRoster, IJsonable
 {
-    private IAccount professor;
-    private IAccount ta;
-    private List<IAccount> students;
+    protected IAccount professor;
+    protected IAccount ta;
+    protected List<IAccount> students;
 
-    private IPermission isProfessorPerm;
-    private IPermission isTaPerm;
-    private IPermission isStudentPerm;
+    public IPermission isProfessorPerm;
+    public IPermission isTaPerm;
+    public IPermission isStudentPerm;
 
     public Roster(IAccount professor, IAccount ta, List<IAccount> students)
     {
@@ -36,6 +36,10 @@ public class Roster implements IRoster,IJsonable
 
     }
 
+    protected Roster()
+    {
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -137,7 +141,7 @@ public class Roster implements IRoster,IJsonable
     public JsonObject toJson()
     {
         JsonArrayBuilder studentsBuilder = Json.createArrayBuilder();
-        for (IAccount student: students)
+        for (IAccount student : students)
         {
             studentsBuilder.add(student.getUserName());
         }
@@ -146,6 +150,7 @@ public class Roster implements IRoster,IJsonable
         return Json.createObjectBuilder()
                 .add("prof", professor.getUserName())
                 .add("ta", ta.getUserName())
+                .add("students", students)
                 .build();
     }
 }

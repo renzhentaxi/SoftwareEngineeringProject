@@ -1,6 +1,5 @@
 package model.assignments.classes;
 
-import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
 import model.assignments.exceptions.AlreadyGradedException;
@@ -8,9 +7,11 @@ import model.assignments.exceptions.BadGradeException;
 import model.assignments.exceptions.NotCourseStudentException;
 import model.assignments.exceptions.NotGradedException;
 import model.assignments.interfaces.IAssignment;
+import model.courses.classes.Roster;
 import model.courses.interfaces.ICourse;
 import model.courses.interfaces.IRoster;
-import model.exceptions.NoPermissionException;
+import services.login.classes.Permissions;
+import services.login.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
 import services.storage.interfaces.IJsonable;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -23,10 +24,10 @@ import java.util.Map;
 
 public class Assignment implements IAssignment, IJsonable
 {
-    private String name;
-    private String description;
-    private ICourse course;
-    private Map<IAccount, Float> grades;
+    protected String name;
+    protected String description;
+    protected ICourse course;
+    protected Map<IAccount, Float> grades;
 
     /**
      * @param name        the name of the assignment. This should be unique within a course
@@ -39,6 +40,10 @@ public class Assignment implements IAssignment, IJsonable
         this.description = description;
         this.course = course;
         this.grades = new HashMap<>();
+    }
+
+    protected Assignment()
+    {
     }
 
     /**
@@ -63,7 +68,7 @@ public class Assignment implements IAssignment, IJsonable
         IRoster roster = course.getRoster(requester);
         IAccount requesterAccount = requester.getAccount();
         if (requester.getAccountType() != AccountType.admin &&
-                !roster.isInRoster(requester,requesterAccount)) throw new NoPermissionException();
+                !roster.isInRoster(requester, requesterAccount)) throw new NoPermissionException();
 
         return this.name;
     }
@@ -74,13 +79,9 @@ public class Assignment implements IAssignment, IJsonable
     @Override
     public void enterGrade(ILoginToken requester, IAccount student, float grade)
     {
-        IRoster roster = course.getRoster(requester);
-        IAccount requesterAccount = requester.getAccount();
+        Roster roster = (Roster) course.getRoster(requester);
+        Permissions.or(Permissions.isAdmin, roster.isProfessorPerm, roster.isTaPerm).check(requester);
 
-        if (requester.getAccountType() != AccountType.admin &&
-                !roster.isProfessor(requester, requesterAccount) &&
-                !roster.isTa(requester, requesterAccount))
-            throw new NoPermissionException();
 
         if (!roster.isStudent(requester, student)) throw new NotCourseStudentException();
         if (isGraded(requester, student)) throw new AlreadyGradedException();
@@ -127,14 +128,10 @@ public class Assignment implements IAssignment, IJsonable
     @Override
     public float getGrade(ILoginToken requester, IAccount student)
     {
-        IRoster roster = course.getRoster(requester);
-        IAccount requesterAccount = requester.getAccount();
 
-        if (requester.getAccountType() != AccountType.admin &&
-                !roster.isProfessor(requester, requesterAccount) &&
-                !roster.isTa(requester, requesterAccount) &&
-                !(roster.isStudent(requester, requesterAccount) && requesterAccount.equals(student)))
-            throw new NoPermissionException();
+        Roster roster = (Roster) course.getRoster(requester);
+        Permissions.or(Permissions.isAdmin, roster.isProfessorPerm, roster.isTaPerm,roster.isStudentPerm.and(Permissions.accountIs(student))).check(requester);
+
         return grades.get(student);
     }
 
@@ -154,14 +151,10 @@ public class Assignment implements IAssignment, IJsonable
     @Override
     public boolean isGraded(ILoginToken requester, IAccount student)
     {
-        IRoster roster = course.getRoster(requester);
-        IAccount requesterAccount = requester.getAccount();
+        Roster roster = (Roster) course.getRoster(requester);
 
-        if (requester.getAccountType() != AccountType.admin &&
-                !roster.isProfessor(requester, requesterAccount) &&
-                !roster.isTa(requester, requesterAccount) &&
-                !(roster.isStudent(requester, requesterAccount) && requesterAccount.equals(student)))
-            throw new NoPermissionException();
+        Permissions.or(Permissions.isAdmin, roster.isProfessorPerm, roster.isTaPerm,roster.isStudentPerm.and(Permissions.accountIs(student))).check(requester);
+
         if (!roster.isStudent(requester, student)) throw new NotCourseStudentException();
 
         return grades.containsKey(student) && grades.get(student) >= 0;
@@ -185,15 +178,14 @@ public class Assignment implements IAssignment, IJsonable
     {
         JsonObjectBuilder gradeBuilder = Json.createObjectBuilder();
 
-        for(IAccount student: grades.keySet())
+        for (IAccount student : grades.keySet())
         {
             gradeBuilder.add(student.getUserName(), grades.get(student));
         }
-        
+
         JsonObject grade = gradeBuilder.build();
         return Json.createObjectBuilder()
                 .add("name", name)
-                .add("course", course.getCourseName())
                 .add("desc", description)
                 .add("grades", grade)
                 .build();

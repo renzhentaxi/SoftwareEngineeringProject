@@ -1,7 +1,7 @@
 package services.login.interfaces;
 
-import model.exceptions.NoPermissionException;
 import services.login.classes.Permissions;
+import services.login.exceptions.NoPermissionException;
 
 public interface IPermission
 {
@@ -9,7 +9,7 @@ public interface IPermission
 
     default void check(ILoginToken requester)
     {
-        if (!hasPermission(requester)) throw new NoPermissionException();
+        if (!hasPermission(requester)) throw new NoPermissionException(this, requester);
     }
 
     default IPermission and(IPermission permission)

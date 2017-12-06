@@ -1,79 +1,52 @@
 package services.storage.model;
 
 import model.accounts.interfaces.IAccount;
+import model.assignments.interfaces.IAssignment;
+import model.courses.classes.Roster;
 import model.courses.interfaces.ICourse;
-import model.exceptions.NoPermissionException;
-import services.login.interfaces.ILoginToken;
-import services.storage.exceptions.AccountDoesNotExistException;
-import services.storage.exceptions.CourseDoesNotExistException;
+import services.storage.interfaces.ICatalog;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Catalog
 {
-    /**
-     * finds and returns the course with the courseId
-     *
-     * @param requester  the user who attempts to get the course
-     * @param courseName the id of the course
-     * @return the course
-     * @throws CourseDoesNotExistException if there is no course with the id in the system
-     * @throws NoPermissionException       if the requester does not belong to the course
-     */
-    public static ICourse getCourse(ILoginToken requester, String courseName)
+    public static Catalog catalog = new Catalog();
+
+    private ICatalog<IAccount> accountCatalog;
+    private ICatalog<ICourse> courseCatalog;
+    private ICatalog<Roster> rosterCatalog;
+    private ICatalog<IAssignment> assignmentCatalog;
+
+    public Catalog()
+    {
+    }
+
+    public IAccount getAccount(String name)
     {
         throw new NotImplementedException();
     }
 
+    public List<IAccount> getAccounts(List<String> names)
+    {
+        return names.stream().map(this::getAccount).collect(Collectors.toList());
+    }
 
-    /**
-     * finds and returns the account with the given accountId
-     *
-     * @param requester the user who attempts to get the account
-     * @param userName  the id of the account
-     * @return the account
-     * @throws AccountDoesNotExistException if there is no account with the id in the system
-     * @throws NoPermissionException        if the requester is not a system account
-     */
-    public static IAccount getAccount(ILoginToken requester, String userName)
+    public boolean hasAccount(String name)
     {
         throw new NotImplementedException();
     }
 
-    /**
-     * checks if account exist
-     *
-     * @param requester the user who requests this action
-     * @param userName the name of the account to check
-     * @return true if it exist, false otherwise
-     */
-    public static boolean hasAccount(ILoginToken requester, String userName)
+    public ICourse getCourse(String name)
     {
-        try
-        {
-            getAccount(requester, userName);
-        } catch (AccountDoesNotExistException e)
-        {
-            return false;
-        }
-        return true;
+        throw new NotImplementedException();
+
     }
 
-    /**
-     * checks if course exist
-     *
-     * @param requester the user who requests this action
-     * @param courseName the name of the course to check
-     * @return true if it exist, false otherwise
-     */
-    public static boolean hasCourse(ILoginToken requester, String courseName)
+    public boolean hasCouse(String name)
     {
-        try
-        {
-            getCourse(requester, courseName);
-        } catch (CourseDoesNotExistException e)
-        {
-            return false;
-        }
-        return true;
+        throw new NotImplementedException();
+
     }
 }

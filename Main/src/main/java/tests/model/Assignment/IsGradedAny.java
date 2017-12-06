@@ -2,13 +2,15 @@ package tests.model.Assignment;
 
 import model.accounts.interfaces.IAccount;
 import model.assignments.classes.Assignment;
-import model.exceptions.NoPermissionException;
+import services.login.exceptions.NoPermissionException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import services.login.interfaces.ILoginToken;
 import tests.StubFactory;
+import tests.provider.AccountProvider;
+import tests.provider.AssignmentProvider;
 
 import java.util.Iterator;
 
@@ -31,9 +33,9 @@ public class IsGradedAny
     @MethodSource(names = "validRequester_provider")
     void validRequester_returnsBoolean(ILoginToken validRequester)
     {
-        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
+        Assignment assignment = AssignmentProvider.makeTestAssignment();
         ILoginToken validGrader = StubFactory.makeLoginToken("admin");
-        IAccount student = StubFactory.makeAccount("student");
+        IAccount student = AccountProvider.provider.provideSingle("student");
         float grade = 20f;
 
         assignment.enterGrade(validGrader, student, grade);
@@ -46,9 +48,9 @@ public class IsGradedAny
     @MethodSource(names = "invalidRequester_provider")
     void invalidRequester_throwsNoPermissionException(ILoginToken invalidRequester)
     {
-        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
+        Assignment assignment = AssignmentProvider.makeTestAssignment();
         ILoginToken validGrader = StubFactory.makeLoginToken("admin");
-        IAccount student = StubFactory.makeAccount("student");
+        IAccount student = AccountProvider.provider.provideSingle("student");
         float grade = 20f;
 
         assignment.enterGrade(validGrader, student, grade);
@@ -59,10 +61,10 @@ public class IsGradedAny
     @Test
     void atleastOneStudentIsGraded_returnsTrue()
     {
-        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
+        Assignment assignment = AssignmentProvider.makeTestAssignment();
         ILoginToken validGrader = StubFactory.makeLoginToken("admin");
         ILoginToken validRequester = StubFactory.makeLoginToken("admin");
-        IAccount student = StubFactory.makeAccount("student");
+        IAccount student = AccountProvider.provider.provideSingle("student");
         float grade = 20f;
 
         assignment.enterGrade(validGrader, student, grade);
@@ -74,7 +76,7 @@ public class IsGradedAny
     @Test
     void allStudentsNotGraded_returnsFalse()
     {
-        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
+        Assignment assignment = AssignmentProvider.makeTestAssignment();
         ILoginToken validRequester = StubFactory.makeLoginToken("admin");
 
 

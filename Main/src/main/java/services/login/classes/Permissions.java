@@ -1,39 +1,43 @@
 package services.login.classes;
 
+import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
 import services.login.interfaces.IPermission;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Permissions
 {
-    public static IPermission isAdmin = (requester) -> requester.getAccountType().equals(AccountType.admin);
+    public static IPermission isAdmin = typeIs(AccountType.admin);
 
     public static IPermission typeIs(AccountType type)
     {
-        return (requester) -> requester.getAccountType().equals(type);
+        return new TypeIsPermission(type);
     }
 
     public static IPermission accountIs(IAccount account)
     {
-        return (requester) -> requester.getAccount().equals(account);
+        return new AccountIsPermission(account);
     }
 
     public static IPermission accountIsAny(List<IAccount> account)
     {
-        return (requester -> account.contains(requester.getAccount()));
+
+        return new AnyPermission(account
+                .stream()
+                .map(Permissions::accountIs)
+                .toArray(IPermission[]::new));
     }
 
     public static IPermission and(IPermission... permissions)
     {
-        return (requester) -> Arrays.stream(permissions).allMatch(permission -> permission.hasPermission(requester));
+        return new AllPermission(permissions);
     }
 
     public static IPermission or(IPermission... permissions)
     {
-        return (requester) -> Arrays.stream(permissions).anyMatch(permission -> permission.hasPermission(requester));
+        return new AnyPermission(permissions);
     }
 
 }

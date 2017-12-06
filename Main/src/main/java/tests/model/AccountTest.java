@@ -3,7 +3,7 @@ package tests.model;
 import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
 import model.courses.interfaces.ICourse;
-import model.exceptions.NoPermissionException;
+import services.login.exceptions.NoPermissionException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;

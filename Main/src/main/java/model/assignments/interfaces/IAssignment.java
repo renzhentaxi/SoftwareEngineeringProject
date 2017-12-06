@@ -5,7 +5,7 @@ import model.assignments.exceptions.AlreadyGradedException;
 import model.assignments.exceptions.BadGradeException;
 import model.assignments.exceptions.NotCourseStudentException;
 import model.assignments.exceptions.NotGradedException;
-import model.exceptions.NoPermissionException;
+import services.login.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
 
 import java.util.Map;

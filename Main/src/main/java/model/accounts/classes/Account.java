@@ -3,7 +3,7 @@ package model.accounts.classes;
 import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
 import model.courses.interfaces.ICourse;
-import model.exceptions.NoPermissionException;
+import services.login.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
 import services.storage.interfaces.IJsonable;
 

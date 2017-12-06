@@ -3,18 +3,18 @@ package tests.model.Assignment;
 import model.accounts.interfaces.IAccount;
 import model.assignments.classes.Assignment;
 import model.assignments.exceptions.NotCourseStudentException;
-import model.exceptions.NoPermissionException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import services.login.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
 import tests.StubFactory;
+import tests.provider.AccountProvider;
+import tests.provider.AssignmentProvider;
 
 import java.util.Iterator;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class IsGraded
 {
@@ -32,9 +32,9 @@ public class IsGraded
     @MethodSource(names = "validRequester_provider")
     void validRequester_returnsResult(ILoginToken validRequester)
     {
-        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
+        Assignment assignment = AssignmentProvider.makeTestAssignment();
         ILoginToken grader = StubFactory.makeLoginToken("admin");
-        IAccount student = StubFactory.makeAccount("student");
+        IAccount student = AccountProvider.provider.provideSingle("student");
         float grade = 20;
 
         assignment.enterGrade(grader, student, grade);
@@ -47,9 +47,9 @@ public class IsGraded
     @MethodSource(names = "invalidRequester_provider")
     void invalidRequester_throwsNoPermissionException(ILoginToken invalidRequester)
     {
-        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
+        Assignment assignment = AssignmentProvider.makeTestAssignment();
         ILoginToken grader = StubFactory.makeLoginToken("admin");
-        IAccount student = StubFactory.makeAccount("student");
+        IAccount student = AccountProvider.provider.provideSingle("student");
         float grade = 20;
 
         assignment.enterGrade(grader, student, grade);
@@ -60,9 +60,9 @@ public class IsGraded
     @Test
     void studentNotInRoster_throwsNotAStudentException()
     {
-        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
+        Assignment assignment = AssignmentProvider.makeTestAssignment();
         ILoginToken validRequester = StubFactory.makeLoginToken("admin");
-        IAccount notCourseStudent = StubFactory.makeAccount("notCourseStudent");
+        IAccount notCourseStudent = AccountProvider.provider.provideSingle("notCourseStudent");
 
         assertThrows(NotCourseStudentException.class, () -> assignment.isGraded(validRequester, notCourseStudent));
     }
@@ -70,10 +70,10 @@ public class IsGraded
     @Test
     void ungradedAssignment_returnsFalse()
     {
-        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
+        Assignment assignment = AssignmentProvider.makeTestAssignment();
         ILoginToken validRequester = StubFactory.makeLoginToken("admin");
-        IAccount student = StubFactory.makeAccount("student");
-        IAccount student2 = StubFactory.makeAccount("student2");
+        IAccount student = AccountProvider.provider.provideSingle("student");
+        IAccount student2 = AccountProvider.provider.provideSingle("student a");
 
         assertFalse(assignment.isGraded(validRequester, student));
         assertFalse(assignment.isGraded(validRequester, student2));
@@ -83,11 +83,11 @@ public class IsGraded
     @Test
     void gradedAssignment_returnsTrue()
     {
-        Assignment assignment = AssignmentTestHelper.makeDefaultAssignment().build();
+        Assignment assignment = AssignmentProvider.makeTestAssignment();
         ILoginToken grader = StubFactory.makeLoginToken("admin");
         ILoginToken validRequester = StubFactory.makeLoginToken("admin");
-        IAccount student = StubFactory.makeAccount("student");
-        IAccount student2 = StubFactory.makeAccount("student2");
+        IAccount student = AccountProvider.provider.provideSingle("student");
+        IAccount student2 = AccountProvider.provider.provideSingle("student a");
         float grade = 20;
 
         assignment.enterGrade(grader, student, grade);

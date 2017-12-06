@@ -1,7 +1,5 @@
 package services.login.classes;
 
-import model.accounts.classes.Account;
-import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
 import services.login.exceptions.AlreadyLoggedInException;
 import services.login.exceptions.InvalidLoginException;
@@ -22,13 +20,12 @@ import java.util.Set;
 public class LoginManager implements ILoginManager
 {
     private Map<String, String> passwords;
-
     private Set<LoginToken> activeLogins;
-    private Account loginAdmin = new Account("login", "system", "$loginSystem", AccountType.admin, null);
-    private LoginToken loginAdminToken = new LoginToken(loginAdmin);
+    private Catalog catalog;
 
     public LoginManager(Path passwordList)
     {
+        catalog = Catalog.catalog;
         passwords = readPasswordsFromFile(passwordList);
         activeLogins = new LinkedHashSet<>();
 
@@ -47,7 +44,7 @@ public class LoginManager implements ILoginManager
                 String userName = split[0];
                 String password = split[1];
 
-                if (!Catalog.hasAccount(loginAdminToken, userName))
+                if (!catalog.hasAccount(userName))
                     throw new RuntimeException("no account with that UserName");
                 map.put(userName, password);
             }
@@ -68,7 +65,7 @@ public class LoginManager implements ILoginManager
         if (passwords.containsKey(userName) && passwords.get(userName).equals(password))
         {
 
-            LoginToken t = new LoginToken(Catalog.getAccount(loginAdminToken, userName));
+            LoginToken t = new LoginToken(catalog.getAccount(userName));
             if (activeLogins.contains(t)) throw new AlreadyLoggedInException();
             else activeLogins.add(t);
             return t;

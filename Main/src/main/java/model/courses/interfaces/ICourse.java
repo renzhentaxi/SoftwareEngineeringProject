@@ -4,7 +4,7 @@ import model.assignments.interfaces.IAssignment;
 import model.courses.exceptions.AssignmentAlreadyExistException;
 import model.courses.exceptions.AssignmentDoesNotExistException;
 import model.courses.exceptions.GradedAssignmentException;
-import model.exceptions.NoPermissionException;
+import services.login.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
 
 import java.util.List;
