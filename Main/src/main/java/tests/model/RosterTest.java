@@ -1,9 +1,11 @@
 package tests.model;
 
+import org.junit.jupiter.api.Test;
 import services.login.interfaces.ILoginToken;
 
 class RosterTest
 {
+    @Test
     void isProfessor_validRequester()
     {
 
