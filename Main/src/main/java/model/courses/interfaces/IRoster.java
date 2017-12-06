@@ -69,7 +69,7 @@ public interface IRoster {
 
     /**
      * check if the account is a student, ta, or professor of this roster.
-     * @oaram requester the user who requests this information. Should be in the roster or admin.
+     * @param requester the user who requests this information. Should be in the roster or admin.
      * @param account the account that is being checked
      * @return true if the user is a student of this course, false otherwise
      */
