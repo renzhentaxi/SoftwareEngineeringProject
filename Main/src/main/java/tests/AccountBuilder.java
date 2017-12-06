@@ -3,7 +3,6 @@ package tests;
 import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
 import model.courses.interfaces.ICourse;
-import tests.model.IBuilder;
 
 import java.util.List;
 
