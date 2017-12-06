@@ -186,7 +186,7 @@ public class Assignment implements IAssignment, IJsonable
         JsonObject grade = gradeBuilder.build();
         return Json.createObjectBuilder()
                 .add("name", name)
-                .add("desc", description)
+                .add("description", description)
                 .add("grades", grade)
                 .build();
 
