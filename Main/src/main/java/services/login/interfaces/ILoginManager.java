@@ -1,5 +1,7 @@
 package services.login.interfaces;
 
+import services.login.exceptions.AlreadyLoggedInException;
+import services.login.exceptions.InvalidLoginException;
 import services.login.exceptions.LoginExpiredException;
 
 public interface ILoginManager {
@@ -9,7 +11,8 @@ public interface ILoginManager {
      * @param userName the user name of the user who wants to login
      * @param password the password of the user who wants to login
      * @return a loginToken that is used throughout the application to authenticate the user.
-     * The loginToken will be invalid if an account with the userName does not exist or if the password does not match the user's password
+     * @throws InvalidLoginException if there is no account with the userName or if the userName+password does not match what is stored
+     * @throws AlreadyLoggedInException if the account is already logged in
      */
     ILoginToken login(String userName, String password);
 
