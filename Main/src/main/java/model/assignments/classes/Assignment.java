@@ -1,5 +1,6 @@
 package model.assignments.classes;
 
+import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
 import model.assignments.exceptions.AlreadyGradedException;
@@ -11,12 +12,16 @@ import model.courses.interfaces.ICourse;
 import model.courses.interfaces.IRoster;
 import model.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
+import services.storage.interfaces.IJsonable;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Assignment implements IAssignment
+public class Assignment implements IAssignment, IJsonable
 {
     private String name;
     private String description;
@@ -173,5 +178,26 @@ public class Assignment implements IAssignment
             if (isGraded(requester, student)) return true;
         }
         return false;
+    }
+
+    @Override
+    public JsonObject toJson()
+    {
+        JsonObjectBuilder gradeBuilder = Json.createObjectBuilder();
+
+        for(IAccount student: grades.keySet())
+        {
+            gradeBuilder.add(student.getUserName(), grades.get(student));
+        }
+        
+        JsonObject grade = gradeBuilder.build();
+        return Json.createObjectBuilder()
+                .add("name", name)
+                .add("course", course.getCourseName())
+                .add("desc", description)
+                .add("grades", grade)
+                .build();
+
+
     }
 }
