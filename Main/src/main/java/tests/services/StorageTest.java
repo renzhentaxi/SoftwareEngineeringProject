@@ -7,10 +7,8 @@ import model.assignments.classes.Assignment;
 import model.courses.classes.Course;
 import model.courses.classes.Roster;
 import model.courses.interfaces.ICourse;
-import services.storage.inters.AccountInter;
 import services.storage.model.Catalog;
 
-import javax.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +17,8 @@ public class StorageTest
     public static void main(String[] args)
     {
 
-        makeTestObjects("math");
-
+        // makeTestObjects("math");
+        System.out.println(Catalog.catalog.getAccount("mathProfessor").toJson());
 
         Catalog.catalog.commit();
     }

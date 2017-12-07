@@ -40,8 +40,6 @@ public abstract class AbstractCatalog<T extends JsonInter> implements IJsonable
     {
         if (!map.containsKey(name))
         {
-
-
             throw new RuntimeException(name + "is not in catalog");
         }
         return map.get(name);

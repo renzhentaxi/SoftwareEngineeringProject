@@ -104,11 +104,7 @@ public class Catalog
 
     public void commit()
     {
-
-
         courseCatalog.Sync(catalog);
-
-
         accountCatalog.Sync(catalog);
         JsonObject courses = courseCatalog.toJson();
         JsonObject accounts = accountCatalog.toJson();

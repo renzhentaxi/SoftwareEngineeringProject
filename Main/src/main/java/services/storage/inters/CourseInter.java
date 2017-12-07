@@ -18,7 +18,7 @@ public class CourseInter extends Course implements JsonInter<Course>
     public CourseInter(JsonObject object)
     {
         this.courseName = object.getString("courseName");
-        this.rosterInter = new RosterInter(object.getJsonObject("roster"));
+        this.rosterInter = new RosterInter(this, object.getJsonObject("roster"));
         this.assignmentIntersList = object.getJsonArray("assignmentList").stream().map(jsonValue -> new AssignmentInter(this, jsonValue.asJsonObject())).collect(Collectors.toList());
     }
 
@@ -28,7 +28,6 @@ public class CourseInter extends Course implements JsonInter<Course>
         //convert roster
         rosterInter.sync(catalog);
         roster = rosterInter;
-
         //convert assignmentList
         assignmentList = new ArrayList<>();
         assignmentIntersList.forEach(assignmentInter ->
@@ -46,6 +45,7 @@ public class CourseInter extends Course implements JsonInter<Course>
         if (!isSync) throw new RuntimeException("need to sync object before converting");
         return this;
     }
+
     @Override
     public String toString()
     {
