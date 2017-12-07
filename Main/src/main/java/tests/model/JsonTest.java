@@ -34,13 +34,13 @@ public class JsonTest
         try (JsonReader reader = Json.createReader(new FileReader("../Data/account.json")))
         {
             JsonArray obj = reader.readArray();
-            System.out.println(obj);
+
         } catch (IOException e)
         {
 
         }
 
-        Roster roster = (Roster) StubFactory.makeTestRoster();
-        System.out.println(roster.toJson());
+        Roster roster = StubFactory.makeTestRoster();
+
     }
 }

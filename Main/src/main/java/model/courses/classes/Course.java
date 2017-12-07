@@ -116,7 +116,6 @@ public class Course implements ICourse, IJsonable
     public JsonObject toJson()
     {
         JsonArrayBuilder builder = Json.createArrayBuilder();
-
         for (Assignment assignment : assignmentList)
         {
             builder.add(assignment.toJson());
@@ -128,5 +127,11 @@ public class Course implements ICourse, IJsonable
                 .add("roster", roster.toJson())
                 .add("assignmentList", assignmentList)
                 .build();
+    }
+
+    @Override
+    public String toString()
+    {
+        return courseName;
     }
 }

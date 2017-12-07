@@ -75,7 +75,7 @@ public class ModifyGrade
         // test
         ILoginToken admin = StubFactory.makeLoginToken("admin");
         IRoster roster = StubFactory.makeTestRoster();
-        System.out.println(roster.isStudent(admin, notInRosterStudent));
+
         ILoginToken validRequester = StubFactory.makeLoginToken("admin");
 
         float newGrade = 20f;

@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class AccountInter extends Account implements JsonInter<Account>
 {
     private List<String> courseNameList;
-    private boolean isSync;
+    private boolean isSync = false;
 
     public AccountInter(JsonObject object)
     {
@@ -21,7 +21,6 @@ public class AccountInter extends Account implements JsonInter<Account>
         this.userName = object.getString("userName");
         this.accountType = AccountType.valueOf(object.getString("accountType"));
         this.courseNameList = object.getJsonArray("courseList").stream().map(JsonValue::toString).collect(Collectors.toList());
-        isSync = false;
     }
 
 

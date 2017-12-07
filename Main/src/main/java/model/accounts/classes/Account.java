@@ -11,6 +11,7 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,7 +32,9 @@ public class Account implements IAccount, IJsonable
         this.courseList = courseList;
     }
 
-    protected Account(){}
+    protected Account(){
+        courseList = new ArrayList<>();
+    }
     /**
      * {@inheritDoc}
      */

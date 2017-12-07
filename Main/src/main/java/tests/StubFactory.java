@@ -2,7 +2,7 @@ package tests;
 
 import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
-import model.assignments.interfaces.IAssignment;
+import model.assignments.classes.Assignment;
 import model.courses.classes.Roster;
 import model.courses.interfaces.ICourse;
 import services.login.interfaces.ILoginToken;
@@ -112,9 +112,9 @@ public class StubFactory
         return courseList;
     }
 
-    public static List<IAssignment> makeDummyAssignmentList()
+    public static List<Assignment> makeDummyAssignmentList()
     {
-        List<IAssignment> assignmentList = new ArrayList<>();
+        List<Assignment> assignmentList = new ArrayList<>();
         return assignmentList;
     }
 }

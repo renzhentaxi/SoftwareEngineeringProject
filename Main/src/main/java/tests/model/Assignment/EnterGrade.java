@@ -40,7 +40,7 @@ public class EnterGrade
     {
         Assignment assignment = AssignmentProvider.makeTestAssignment();
         Roster r = StubFactory.makeTestRoster();
-        System.out.println(r.isTa(LoginTokenProvider.admin, validRequester.getAccount()));
+
         IAccount student = AccountProvider.provider.provideSingle("student");
         float grade = 20f;
 

@@ -37,7 +37,7 @@ class CourseTest
     @MethodSource(names = "getAssignments_validRequester_provider")
     void getAssignments_validRequester_returnsAssignments(ILoginToken validRequester)
     {
-        List<IAssignment> assignmentList = StubFactory.makeDummyAssignmentList();
+        List<Assignment> assignmentList = StubFactory.makeDummyAssignmentList();
 
         Course course = new Course("soft", StubFactory.makeTestRoster(), assignmentList);
 
