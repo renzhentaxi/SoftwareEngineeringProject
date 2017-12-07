@@ -42,7 +42,6 @@ public class AccountInter extends Account implements JsonInter<Account>
 
     public boolean hasCourse(ICourse course)
     {
-        System.out.println(course);
         return courseNameList.contains(course.getCourseName());
     }
 

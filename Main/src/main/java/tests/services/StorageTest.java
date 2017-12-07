@@ -16,10 +16,6 @@ public class StorageTest
 {
     public static void main(String[] args)
     {
-
-        // makeTestObjects("math");
-        System.out.println(Catalog.catalog.getAccount("mathProfessor").toJson());
-
         Catalog.catalog.commit();
     }
 
