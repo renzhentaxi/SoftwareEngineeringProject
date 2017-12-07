@@ -1,7 +1,7 @@
 package model.accounts.interfaces;
 
 import model.accounts.enums.AccountType;
-import model.courses.interfaces.ICourse;
+import model.courses.classes.Course;
 import services.login.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
 
@@ -37,7 +37,7 @@ public interface IAccount {
      * @return a readonly list of courses
      * @throws NoPermissionException if the user who requested does not have the permission to get the course list
      */
-    List<ICourse> getCourseList(ILoginToken requester);
+    List<Course> getCourseList(ILoginToken requester);
 
     /**
      * returns the accountType of the account

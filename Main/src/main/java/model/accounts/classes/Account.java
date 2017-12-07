@@ -2,6 +2,7 @@ package model.accounts.classes;
 
 import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
+import model.courses.classes.Course;
 import model.courses.interfaces.ICourse;
 import services.login.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
@@ -21,9 +22,9 @@ public class Account implements IAccount, IJsonable
     protected String lastName;
     protected String userName;
     protected AccountType accountType;
-    protected List<ICourse> courseList;
+    protected List<Course> courseList;
 
-    public Account(String firstName, String lastName, String userName, AccountType accountType, List<ICourse> courseList)
+    public Account(String firstName, String lastName, String userName, AccountType accountType, List<Course> courseList)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -66,7 +67,7 @@ public class Account implements IAccount, IJsonable
      * {@inheritDoc}
      */
     @Override
-    public List<ICourse> getCourseList(ILoginToken requester)
+    public List<Course> getCourseList(ILoginToken requester)
     {
         if (this.equals(requester.getAccount()) || requester.getAccountType() == AccountType.admin)
             return Collections.unmodifiableList(courseList);

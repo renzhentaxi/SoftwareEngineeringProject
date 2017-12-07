@@ -2,6 +2,7 @@ package tests;
 
 import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
+import model.courses.classes.Course;
 import model.courses.interfaces.ICourse;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public class AccountBuilder implements IBuilder<Account>
     private String userName = "userName";
     private String lastName = "lastName";
     private String firstName = "firstName";
-    private List<ICourse> courseList = null;
+    private List<Course> courseList = null;
     private AccountType accountType = null;
 
     public AccountBuilder setFirstName(String firstName)
@@ -39,7 +40,7 @@ public class AccountBuilder implements IBuilder<Account>
         return this;
     }
 
-    public AccountBuilder setCourseList(List<ICourse> courseList)
+    public AccountBuilder setCourseList(List<Course> courseList)
     {
         this.courseList = courseList;
         return this;

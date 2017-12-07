@@ -49,7 +49,7 @@ public class CourseInter extends Course implements JsonInter<Course>
     @Override
     public String toString()
     {
-        return "inter: " + super.toString();
+        return super.toString();
     }
 
 }

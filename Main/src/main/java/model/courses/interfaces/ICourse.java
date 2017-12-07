@@ -1,5 +1,6 @@
 package model.courses.interfaces;
 
+import model.assignments.classes.Assignment;
 import model.assignments.interfaces.IAssignment;
 import model.courses.exceptions.AssignmentAlreadyExistException;
 import model.courses.exceptions.AssignmentDoesNotExistException;
@@ -25,7 +26,7 @@ public interface ICourse {
      * @return a readonly list of all assignments for the course.
      * @throws NoPermissionException when the requester does belong to the course.
      */
-    List<IAssignment> getAssignments(ILoginToken requester);
+    List<Assignment> getAssignments(ILoginToken requester);
 
     /**
      * adds a new assignment to the course

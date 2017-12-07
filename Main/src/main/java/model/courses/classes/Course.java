@@ -54,7 +54,7 @@ public class Course implements ICourse, IJsonable
      * {@inheritDoc}
      */
     @Override
-    public List<IAssignment> getAssignments(ILoginToken requester)
+    public List<Assignment> getAssignments(ILoginToken requester)
     {
         getAssignPermission.or(Permissions.isAdmin).check(requester);
         return Collections.unmodifiableList(assignmentList);

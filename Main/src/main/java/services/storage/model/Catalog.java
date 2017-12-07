@@ -3,7 +3,6 @@ package services.storage.model;
 import model.accounts.classes.Account;
 import model.accounts.interfaces.IAccount;
 import model.courses.classes.Course;
-import model.courses.interfaces.ICourse;
 import services.storage.inters.AccountInter;
 import services.storage.inters.CourseInter;
 
@@ -80,7 +79,7 @@ public class Catalog
         return accountCatalog.has(name);
     }
 
-    public ICourse getCourse(String name)
+    public Course getCourse(String name)
     {
         return courseCatalog.get(name);
 

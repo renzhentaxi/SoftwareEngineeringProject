@@ -2,6 +2,7 @@ package tests.model;
 
 import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
+import model.courses.classes.Course;
 import model.courses.interfaces.ICourse;
 import services.login.exceptions.NoPermissionException;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,7 @@ class AccountTest
     @Test
     void getCourseList_requestAsOwner_returnsList()
     {
-        List<ICourse> courseList = makeDummyCourseList();
+        List<Course> courseList = makeDummyCourseList();
         Account owner = makeAccount("owner", AccountType.student, courseList);
         ILoginToken stubOwnerToken = makeStubLoginToken(owner);
 
@@ -48,7 +49,7 @@ class AccountTest
     @Test
     void getCourseList_requestAsAdmin_returnsList()
     {
-        List<ICourse> courseList = makeDummyCourseList();
+        List<Course> courseList = makeDummyCourseList();
         Account owner = makeAccount("owner", AccountType.student, courseList);
         Account admin = makeAccount("admin", AccountType.admin, null);
 
@@ -60,7 +61,7 @@ class AccountTest
     @Test
     void getCourseList_attemptsToModify_throwsUnsupportedOperationException()
     {
-        List<ICourse> courseList = makeDummyCourseList();
+        List<Course> courseList = makeDummyCourseList();
         Account owner = makeAccount("owner", AccountType.student, courseList);
         ILoginToken stubOwnerToken = makeStubLoginToken(owner);
 
@@ -68,7 +69,7 @@ class AccountTest
                 owner.getCourseList(stubOwnerToken).add(null));
     }
 
-    private Account makeAccount(String userName, AccountType accountType, List<ICourse> courseList)
+    private Account makeAccount(String userName, AccountType accountType, List<Course> courseList)
     {
         return new Account("firstName", "lastName", userName, accountType, courseList);
     }

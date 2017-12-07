@@ -1,54 +1,151 @@
 {
-  "mathProfessor": {
-    "userName": "mathProfessor",
-    "accountType": "professor",
-    "firstName": "promathfirst",
-    "lastName": "promathlast",
+  "adam": {
+    "userName": "adam",
+    "accountType": "student",
+    "firstName": "michael",
+    "lastName": "adam",
+    "courseList": [
+      "math",
+      "sci"
+    ]
+  },
+  "don": {
+    "userName": "don",
+    "accountType": "ta",
+    "firstName": "les",
+    "lastName": "don",
     "courseList": [
       "math"
     ]
+  },
+  "student": {
+    "userName": "student",
+    "accountType": "student",
+    "firstName": "student",
+    "lastName": "student",
+    "courseList": [
+      "math",
+      "sci"
+    ]
+  },
+  "taxco": {
+    "userName": "taxco",
+    "accountType": "student",
+    "firstName": "les",
+    "lastName": "taxco",
+    "courseList": []
   },
   "taxi": {
     "userName": "taxi",
-    "accountType": "admin",
-    "firstName": "overpowered",
-    "lastName": "gg",
+    "accountType": "student",
+    "firstName": "james",
+    "lastName": "taxi",
+    "courseList": [
+      "math",
+      "sci"
+    ]
+  },
+  "melissa": {
+    "userName": "melissa",
+    "accountType": "student",
+    "firstName": "les",
+    "lastName": "melissa",
     "courseList": []
   },
-  "mathTa": {
-    "userName": "mathTa",
+  "charles": {
+    "userName": "charles",
+    "accountType": "student",
+    "firstName": "mary",
+    "lastName": "charles",
+    "courseList": []
+  },
+  "juan": {
+    "userName": "juan",
     "accountType": "ta",
-    "firstName": "tamathfirst",
-    "lastName": "tamathlast",
+    "firstName": "mary",
+    "lastName": "juan",
     "courseList": [
-      "math"
+      "sci"
     ]
   },
-  "s2mathstudent": {
-    "userName": "s2mathstudent",
-    "accountType": "student",
-    "firstName": "s2mathfirst",
-    "lastName": "s2mathlast",
+  "admin": {
+    "userName": "admin",
+    "accountType": "admin",
+    "firstName": "admin",
+    "lastName": "admin",
+    "courseList": []
+  },
+  "baerde": {
+    "userName": "baerde",
+    "accountType": "professor",
+    "firstName": "robert",
+    "lastName": "baerde",
     "courseList": [
-      "math"
+      "math",
+      "sci"
     ]
   },
-  "s3mathstudent": {
-    "userName": "s3mathstudent",
+  "bruh": {
+    "userName": "bruh",
     "accountType": "student",
-    "firstName": "s3mathfirst",
-    "lastName": "s3mathlast",
-    "courseList": [
-      "math"
-    ]
+    "firstName": "les",
+    "lastName": "bruh",
+    "courseList": []
   },
-  "s1mathstudent": {
-    "userName": "s1mathstudent",
+  "ta": {
+    "userName": "ta",
+    "accountType": "ta",
+    "firstName": "ta",
+    "lastName": "ta",
+    "courseList": []
+  },
+  "dylee": {
+    "userName": "dylee",
+    "accountType": "ta",
+    "firstName": "les",
+    "lastName": "dylee",
+    "courseList": []
+  },
+  "kaylee": {
+    "userName": "kaylee",
     "accountType": "student",
-    "firstName": "s1mathfirst",
-    "lastName": "s1mathlast",
-    "courseList": [
-      "math"
-    ]
+    "firstName": "les",
+    "lastName": "kaylee",
+    "courseList": []
+  },
+  "professor": {
+    "userName": "professor",
+    "accountType": "professor",
+    "firstName": "professor",
+    "lastName": "professor",
+    "courseList": []
+  },
+  "han": {
+    "userName": "han",
+    "accountType": "student",
+    "firstName": "john",
+    "lastName": "han",
+    "courseList": []
+  },
+  "beach": {
+    "userName": "beach",
+    "accountType": "professor",
+    "firstName": "les",
+    "lastName": "beach",
+    "courseList": []
+  },
+  "siri": {
+    "userName": "siri",
+    "accountType": "student",
+    "firstName": "michael",
+    "lastName": "siri",
+    "courseList": []
+  },
+  "yoo": {
+    "userName": "yoo",
+    "accountType": "professor",
+    "firstName": "les",
+    "lastName": "yoo",
+    "courseList": []
   }
 }

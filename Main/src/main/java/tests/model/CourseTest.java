@@ -41,7 +41,7 @@ class CourseTest
 
         Course course = new Course("soft", StubFactory.makeTestRoster(), assignmentList);
 
-        List<IAssignment> actual = course.getAssignments(validRequester);
+        List<Assignment> actual = course.getAssignments(validRequester);
 
         Assertions.assertEquals(assignmentList, actual);
     }
@@ -76,7 +76,7 @@ class CourseTest
 
         ILoginToken admin = StubFactory.makeStubLoginToken("admin", AccountType.admin);
 
-        List<IAssignment> assignmentList = course.getAssignments(admin);
+        List<Assignment> assignmentList = course.getAssignments(admin);
 
         Assertions.assertThrows(UnsupportedOperationException.class, () -> assignmentList.add(null));
 
@@ -150,7 +150,7 @@ class CourseTest
         course.addAssignment(validRequester, assignmentToRemove);
         course.removeAssignment(validRequester, assignmentToRemove);
 
-        List<IAssignment> assignmentList = course.getAssignments(validRequester);
+        List<Assignment> assignmentList = course.getAssignments(validRequester);
 
         Assertions.assertFalse(assignmentList.contains(assignmentToRemove));
     }

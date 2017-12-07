@@ -5,7 +5,6 @@ import services.login.exceptions.AlreadyLoggedInException;
 import services.login.exceptions.InvalidLoginException;
 import services.login.exceptions.LoginExpiredException;
 import services.login.interfaces.ILoginManager;
-import services.login.interfaces.ILoginToken;
 import services.storage.model.Catalog;
 
 import java.io.BufferedReader;
@@ -65,7 +64,7 @@ public class LoginManager implements ILoginManager
      * {@inheritDoc}
      */
     @Override
-    public ILoginToken login(String userName, String password)
+    public LoginToken login(String userName, String password)
     {
         if (passwords.containsKey(userName) && passwords.get(userName).equals(password))
         {

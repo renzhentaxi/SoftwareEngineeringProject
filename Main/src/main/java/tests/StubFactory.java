@@ -1,10 +1,11 @@
 package tests;
 
+import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
 import model.assignments.classes.Assignment;
+import model.courses.classes.Course;
 import model.courses.classes.Roster;
-import model.courses.interfaces.ICourse;
 import services.login.interfaces.ILoginToken;
 import tests.provider.AccountProvider;
 import tests.provider.LoginTokenProvider;
@@ -65,16 +66,16 @@ public class StubFactory
      * @param accountType the accountType that is returned by getAccountType
      * @return a stub account object
      */
-    public static IAccount makeStubAccount(String userName, AccountType accountType)
+    public static Account makeStubAccount(String userName, AccountType accountType)
     {
-        IAccount stubAccount = mock(IAccount.class);
+        Account stubAccount = mock(Account.class);
         when(stubAccount.getAccountType()).thenReturn(accountType);
         when(stubAccount.getUserName()).thenReturn(userName);
 
         return stubAccount;
     }
 
-    public static ILoginToken makeStubLoginToken(IAccount account)
+    public static ILoginToken makeStubLoginToken(Account account)
     {
         AccountType accountType = account.getAccountType();
         String userName = account.getUserName();
@@ -87,7 +88,7 @@ public class StubFactory
 
     public static ILoginToken makeStubLoginToken(String userName, AccountType accountType)
     {
-        IAccount stubAccount = makeStubAccount(userName, accountType);
+        Account stubAccount = makeStubAccount(userName, accountType);
         return makeStubLoginToken(stubAccount);
     }
 
@@ -103,10 +104,10 @@ public class StubFactory
         return r;
     }
 
-    public static List<ICourse> makeDummyCourseList()
+    public static List<Course> makeDummyCourseList()
     {
-        ICourse mockCourse = mock(ICourse.class);
-        List<ICourse> courseList = new ArrayList<>();
+        Course mockCourse = mock(Course.class);
+        List<Course> courseList = new ArrayList<>();
         courseList.add(mockCourse);
 
         return courseList;

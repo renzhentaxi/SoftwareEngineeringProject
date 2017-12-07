@@ -6,14 +6,11 @@ import services.login.exceptions.InvalidLoginException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class LoginPanel extends JPanel
+public class LoginPanel extends AcmePanel
 {
 
     private LoginManager loginManager;
-    private App app;
 
     private JTextField userNameField;
     private JPasswordField passwordField;
@@ -25,9 +22,16 @@ public class LoginPanel extends JPanel
 
     public LoginPanel(App app, LoginManager loginManager)
     {
-        super(new GridBagLayout());
-        this.app = app;
+        super(app, new GridBagLayout());
+
         this.loginManager = loginManager;
+
+        assemble();
+    }
+
+    @Override
+    public void assemble()
+    {
 
         constraint = new GridBagConstraints();
         constraint.fill = GridBagConstraints.HORIZONTAL;
@@ -51,7 +55,6 @@ public class LoginPanel extends JPanel
         quitButton = new JButton("Quit");
         add(quitButton, 0, 3, 3);
         quitButton.addActionListener(this::OnQuit);
-
     }
 
     private void add(Component component, int x, int y, int width)
@@ -62,8 +65,10 @@ public class LoginPanel extends JPanel
         add(component, constraint);
     }
 
-    private void reset()
+    public void reset()
     {
+        passwordField.setText("");
+        userNameField.setText("");
     }
 
     private String getUserName()
@@ -78,15 +83,27 @@ public class LoginPanel extends JPanel
 
     private void OnLogin(ActionEvent e)
     {
-        System.out.println(loginManager);
-        try
+        String userName = getUserName();
+        String password = getPassword();
+        if (userName.equals(""))
         {
-            loginManager.login(getUserName(), getPassword());
-            System.out.println("good login");
+            JOptionPane.showMessageDialog(this, "UserName cant not be empty");
+        } else if (password.equals(""))
+        {
+            JOptionPane.showMessageDialog(this, "Password cant not be empty");
+        } else
+        {
+            try
+            {
+                app.OnLoginSuccess(loginManager.login(userName, password));
+                System.out.println("good Login");
 
-        } catch (InvalidLoginException exceptions)
-        {
-            System.out.println("bad Login");
+            } catch (InvalidLoginException exceptions)
+            {
+                System.out.println("bad Login");
+                passwordField.setText("");
+                JOptionPane.showMessageDialog(this, "Login Failed!!!! \nReasons could be: \n1. An Account with the name " + userName + " does not exist\n2. Wrong Password");
+            }
         }
     }
 

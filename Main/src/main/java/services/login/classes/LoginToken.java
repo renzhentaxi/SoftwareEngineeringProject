@@ -1,16 +1,16 @@
 package services.login.classes;
 
+import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
-import model.accounts.interfaces.IAccount;
 import services.login.exceptions.LoginExpiredException;
 import services.login.interfaces.ILoginToken;
 
 public class LoginToken implements ILoginToken
 {
-    private IAccount account;
+    private Account account;
     private boolean isLoggedIn;
 
-    public LoginToken(IAccount account)
+    public LoginToken(Account account)
     {
         this.account = account;
         isLoggedIn = true;
@@ -30,7 +30,7 @@ public class LoginToken implements ILoginToken
      * {@inheritDoc}
      */
     @Override
-    public IAccount getAccount()
+    public Account getAccount()
     {
         if (!isLoggedIn) throw new LoginExpiredException();
         return account;

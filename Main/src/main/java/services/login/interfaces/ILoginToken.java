@@ -1,7 +1,7 @@
 package services.login.interfaces;
 
+import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
-import model.accounts.interfaces.IAccount;
 import services.login.exceptions.LoginExpiredException;
 
 public interface ILoginToken
@@ -17,7 +17,7 @@ public interface ILoginToken
      * @return the account of the user who logged in
      * @throws LoginExpiredException when the requester is no longer logged in.
      */
-    IAccount getAccount();
+    Account getAccount();
 
     /**
      * whether the user is still logged in or not
