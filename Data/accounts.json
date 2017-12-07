@@ -1,0 +1,54 @@
+{
+  "mathProfessor": {
+    "userName": "mathProfessor",
+    "accountType": "professor",
+    "firstName": "promathfirst",
+    "lastName": "promathlast",
+    "courseList": [
+      "math"
+    ]
+  },
+  "taxi": {
+    "userName": "taxi",
+    "accountType": "admin",
+    "firstName": "overpowered",
+    "lastName": "gg",
+    "courseList": []
+  },
+  "mathTa": {
+    "userName": "mathTa",
+    "accountType": "ta",
+    "firstName": "tamathfirst",
+    "lastName": "tamathlast",
+    "courseList": [
+      "math"
+    ]
+  },
+  "s2mathstudent": {
+    "userName": "s2mathstudent",
+    "accountType": "student",
+    "firstName": "s2mathfirst",
+    "lastName": "s2mathlast",
+    "courseList": [
+      "math"
+    ]
+  },
+  "s3mathstudent": {
+    "userName": "s3mathstudent",
+    "accountType": "student",
+    "firstName": "s3mathfirst",
+    "lastName": "s3mathlast",
+    "courseList": [
+      "math"
+    ]
+  },
+  "s1mathstudent": {
+    "userName": "s1mathstudent",
+    "accountType": "student",
+    "firstName": "s1mathfirst",
+    "lastName": "s1mathlast",
+    "courseList": [
+      "math"
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "math": {
+    "courseName": "math",
+    "roster": {
+      "prof": "mathProfessor",
+      "ta": "mathTa",
+      "students": [
+        "s1mathstudent",
+        "s2mathstudent",
+        "s3mathstudent"
+      ]
+    },
+    "assignmentList": [
+      {
+        "name": "assign1",
+        "description": "assign1mathdescription",
+        "grades": {}
+      },
+      {
+        "name": "assign2",
+        "description": "assign2mathdescription",
+        "grades": {}
+      }
+    ]
+  }
+}
