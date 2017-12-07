@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -28,7 +29,11 @@ public class LoginManager implements ILoginManager
         catalog = Catalog.catalog;
         passwords = readPasswordsFromFile(passwordList);
         activeLogins = new LinkedHashSet<>();
+    }
 
+    public LoginManager(String passwordlist)
+    {
+        this(Paths.get(passwordlist));
     }
 
     private Map<String, String> readPasswordsFromFile(Path file)
