@@ -9,8 +9,8 @@
       "sci"
     ]
   },
-  "don": {
-    "userName": "don",
+  "ta": {
+    "userName": "ta",
     "accountType": "ta",
     "firstName": "les",
     "lastName": "don",
@@ -35,8 +35,8 @@
     "lastName": "taxco",
     "courseList": []
   },
-  "taxi": {
-    "userName": "taxi",
+  "stud": {
+    "userName": "stud",
     "accountType": "student",
     "firstName": "james",
     "lastName": "taxi",
@@ -75,8 +75,8 @@
     "lastName": "admin",
     "courseList": []
   },
-  "baerde": {
-    "userName": "baerde",
+  "prof": {
+    "userName": "prof",
     "accountType": "professor",
     "firstName": "robert",
     "lastName": "baerde",

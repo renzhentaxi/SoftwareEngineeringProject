@@ -2,12 +2,12 @@
   "sci": {
     "courseName": "sci",
     "roster": {
-      "prof": "baerde",
+      "prof": "prof",
       "ta": "juan",
       "students": [
         "adam",
         "student",
-        "taxi"
+        "stud"
       ]
     },
     "assignmentList": [
@@ -26,12 +26,12 @@
   "math": {
     "courseName": "math",
     "roster": {
-      "prof": "baerde",
-      "ta": "don",
+      "prof": "prof",
+      "ta": "ta",
       "students": [
         "adam",
         "student",
-        "taxi"
+        "stud"
       ]
     },
     "assignmentList": [
