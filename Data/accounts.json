@@ -1,1 +1,151 @@
-{"adam":{"userName":"adam","accountType":"student","firstName":"michael","lastName":"adam","courseList":["math","sci"]},"don":{"userName":"don","accountType":"ta","firstName":"les","lastName":"don","courseList":["math"]},"student":{"userName":"student","accountType":"student","firstName":"student","lastName":"student","courseList":["math","sci"]},"taxco":{"userName":"taxco","accountType":"student","firstName":"les","lastName":"taxco","courseList":[]},"taxi":{"userName":"taxi","accountType":"student","firstName":"james","lastName":"taxi","courseList":["math","sci"]},"melissa":{"userName":"melissa","accountType":"student","firstName":"les","lastName":"melissa","courseList":[]},"charles":{"userName":"charles","accountType":"student","firstName":"mary","lastName":"charles","courseList":[]},"juan":{"userName":"juan","accountType":"ta","firstName":"mary","lastName":"juan","courseList":["sci"]},"admin":{"userName":"admin","accountType":"admin","firstName":"admin","lastName":"admin","courseList":[]},"baerde":{"userName":"baerde","accountType":"professor","firstName":"robert","lastName":"baerde","courseList":["math","sci"]},"bruh":{"userName":"bruh","accountType":"student","firstName":"les","lastName":"bruh","courseList":[]},"ta":{"userName":"ta","accountType":"ta","firstName":"ta","lastName":"ta","courseList":[]},"dylee":{"userName":"dylee","accountType":"ta","firstName":"les","lastName":"dylee","courseList":[]},"kaylee":{"userName":"kaylee","accountType":"student","firstName":"les","lastName":"kaylee","courseList":[]},"professor":{"userName":"professor","accountType":"professor","firstName":"professor","lastName":"professor","courseList":[]},"han":{"userName":"han","accountType":"student","firstName":"john","lastName":"han","courseList":[]},"beach":{"userName":"beach","accountType":"professor","firstName":"les","lastName":"beach","courseList":[]},"siri":{"userName":"siri","accountType":"student","firstName":"michael","lastName":"siri","courseList":[]},"yoo":{"userName":"yoo","accountType":"professor","firstName":"les","lastName":"yoo","courseList":[]}}
+{
+  "adam": {
+    "userName": "adam",
+    "accountType": "student",
+    "firstName": "michael",
+    "lastName": "adam",
+    "courseList": [
+      "math",
+      "sci"
+    ]
+  },
+  "don": {
+    "userName": "don",
+    "accountType": "ta",
+    "firstName": "les",
+    "lastName": "don",
+    "courseList": [
+      "math"
+    ]
+  },
+  "student": {
+    "userName": "student",
+    "accountType": "student",
+    "firstName": "student",
+    "lastName": "student",
+    "courseList": [
+      "math",
+      "sci"
+    ]
+  },
+  "taxco": {
+    "userName": "taxco",
+    "accountType": "student",
+    "firstName": "les",
+    "lastName": "taxco",
+    "courseList": []
+  },
+  "taxi": {
+    "userName": "taxi",
+    "accountType": "student",
+    "firstName": "james",
+    "lastName": "taxi",
+    "courseList": [
+      "math",
+      "sci"
+    ]
+  },
+  "melissa": {
+    "userName": "melissa",
+    "accountType": "student",
+    "firstName": "les",
+    "lastName": "melissa",
+    "courseList": []
+  },
+  "charles": {
+    "userName": "charles",
+    "accountType": "student",
+    "firstName": "mary",
+    "lastName": "charles",
+    "courseList": []
+  },
+  "juan": {
+    "userName": "juan",
+    "accountType": "ta",
+    "firstName": "mary",
+    "lastName": "juan",
+    "courseList": [
+      "sci"
+    ]
+  },
+  "admin": {
+    "userName": "admin",
+    "accountType": "admin",
+    "firstName": "admin",
+    "lastName": "admin",
+    "courseList": []
+  },
+  "baerde": {
+    "userName": "baerde",
+    "accountType": "professor",
+    "firstName": "robert",
+    "lastName": "baerde",
+    "courseList": [
+      "math",
+      "sci"
+    ]
+  },
+  "bruh": {
+    "userName": "bruh",
+    "accountType": "student",
+    "firstName": "les",
+    "lastName": "bruh",
+    "courseList": []
+  },
+  "ta": {
+    "userName": "ta",
+    "accountType": "ta",
+    "firstName": "ta",
+    "lastName": "ta",
+    "courseList": []
+  },
+  "dylee": {
+    "userName": "dylee",
+    "accountType": "ta",
+    "firstName": "les",
+    "lastName": "dylee",
+    "courseList": []
+  },
+  "kaylee": {
+    "userName": "kaylee",
+    "accountType": "student",
+    "firstName": "les",
+    "lastName": "kaylee",
+    "courseList": []
+  },
+  "professor": {
+    "userName": "professor",
+    "accountType": "professor",
+    "firstName": "professor",
+    "lastName": "professor",
+    "courseList": []
+  },
+  "han": {
+    "userName": "han",
+    "accountType": "student",
+    "firstName": "john",
+    "lastName": "han",
+    "courseList": []
+  },
+  "beach": {
+    "userName": "beach",
+    "accountType": "professor",
+    "firstName": "les",
+    "lastName": "beach",
+    "courseList": []
+  },
+  "siri": {
+    "userName": "siri",
+    "accountType": "student",
+    "firstName": "michael",
+    "lastName": "siri",
+    "courseList": []
+  },
+  "yoo": {
+    "userName": "yoo",
+    "accountType": "professor",
+    "firstName": "les",
+    "lastName": "yoo",
+    "courseList": []
+  }
+}

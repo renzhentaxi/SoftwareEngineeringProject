@@ -11,7 +11,7 @@ public abstract class AcmePanel extends JPanel
     {
         super(layout);
         this.app = app;
-        setPreferredSize(new Dimension(400,500));
+        setPreferredSize(new Dimension(400, 500));
     }
 
     public AcmePanel(App app)
@@ -22,5 +22,9 @@ public abstract class AcmePanel extends JPanel
 
     public abstract void assemble();
 
-    public abstract void reset();
+    public void reload()
+    {
+        removeAll();
+        assemble();
+    }
 }

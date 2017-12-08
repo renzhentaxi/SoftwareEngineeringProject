@@ -25,7 +25,6 @@ public class LoginPanel extends AcmePanel
         super(app, new GridBagLayout());
 
         this.loginManager = loginManager;
-
         assemble();
     }
 
@@ -63,12 +62,6 @@ public class LoginPanel extends AcmePanel
         constraint.gridy = y;
         constraint.gridwidth = width;
         add(component, constraint);
-    }
-
-    public void reset()
-    {
-        passwordField.setText("");
-        userNameField.setText("");
     }
 
     private String getUserName()

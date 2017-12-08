@@ -1,69 +1,58 @@
 package Presentation;
 
-import model.accounts.classes.Account;
-import model.accounts.enums.AccountType;
 import model.courses.classes.Course;
 import services.login.interfaces.ILoginToken;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.util.List;
 
 public class CourseListPanel extends MainPanel
 {
-    List<Course> courses;
-    Account account;
-    String name;
+    private List<Course> courses;
 
     public CourseListPanel(App app, ILoginToken token)
     {
-        super(app, token);
-        this.account = token.getAccount();
-        this.name = account.getUserName();
-        this.courses = account.getCourseList(token);
+        super(app, token, null);
+        this.courses = userAccount.getCourseList(token);
         assemble();
     }
 
-    private DefaultListModel<String> listModel;
 
     @Override
     public void assemble()
     {
-        listModel = new DefaultListModel<>();
-        courses.forEach(course -> listModel.addElement(course.toString()));
-        JList<String> courseJList = new JList<>(listModel);
-        add(courseJList);
+        //tell super to assemble too
+        super.assemble();
+
+        // create the list model
+        DefaultListModel<Course> listModel = new DefaultListModel<>();
+        courses.forEach(listModel::addElement);
+        //create the list view
+        courseJList = new JList<>(listModel);
         courseJList.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+        add(courseJList);
 
-        JButton button = new JButton("View Selected Course");
-        button.addActionListener(actionEvent ->
-        {
-            int index = courseJList.getSelectedIndex();
-            if (index != -1)
-            {
-                Course course = courses.get(index);
-                AccountType type = token.getAccountType();
-                switch (type)
-                {
-                    case admin:
-                    case professor:
-                    case student:
-                    case ta:
-                        app.present(new AssignmentListPanel(app, token, course));
-                        break;
-                }
-                System.out.println("Viewing " + course + " as " + type);
-            } else
-            {
-                System.out.println("You havent selected anything");
-            }
-        });
 
-        addToMenu(button);
+        //adding view course button
+        JButton viewCourse = new JButton("View Selected Course");
+        viewCourse.addActionListener(this::OnViewCourse);
+        addToMenu(viewCourse);
     }
 
-    @Override
-    public void reset()
-    {
+    private JList<Course> courseJList;
 
+    private void OnViewCourse(ActionEvent event)
+    {
+        Course selectedCourse = courseJList.getSelectedValue();
+
+        if (selectedCourse != null)
+        {
+            app.present(new AssignmentListPanel(app, token, this, selectedCourse));
+            System.out.println(userName + " is viewing course " + selectedCourse + " as " + userType);
+        } else
+        {
+            JOptionPane.showMessageDialog(this, "Please select a course first");
+        }
     }
 }

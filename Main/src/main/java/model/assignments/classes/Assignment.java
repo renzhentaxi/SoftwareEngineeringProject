@@ -10,9 +10,9 @@ import model.assignments.interfaces.IAssignment;
 import model.courses.classes.Roster;
 import model.courses.interfaces.ICourse;
 import model.courses.interfaces.IRoster;
-import services.login.permissions.Permissions;
 import services.login.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
+import services.login.permissions.Permissions;
 import services.storage.interfaces.IJsonable;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -130,7 +130,7 @@ public class Assignment implements IAssignment, IJsonable
     {
 
         Roster roster = (Roster) course.getRoster(requester);
-        Permissions.or(Permissions.isAdmin, roster.isProfessorPerm, roster.isTaPerm,roster.isStudentPerm.and(Permissions.accountIs(student))).check(requester);
+        Permissions.or(Permissions.isAdmin, roster.isProfessorPerm, roster.isTaPerm, roster.isStudentPerm.and(Permissions.accountIs(student))).check(requester);
 
         return grades.get(student);
     }
@@ -153,7 +153,7 @@ public class Assignment implements IAssignment, IJsonable
     {
         Roster roster = (Roster) course.getRoster(requester);
 
-        Permissions.or(Permissions.isAdmin, roster.isProfessorPerm, roster.isTaPerm,roster.isStudentPerm.and(Permissions.accountIs(student))).check(requester);
+        Permissions.or(Permissions.isAdmin, roster.isProfessorPerm, roster.isTaPerm, roster.isStudentPerm.and(Permissions.accountIs(student))).check(requester);
 
         if (!roster.isStudent(requester, student)) throw new NotCourseStudentException();
 
@@ -196,4 +196,5 @@ public class Assignment implements IAssignment, IJsonable
     {
         return name;
     }
+
 }

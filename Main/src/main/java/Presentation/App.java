@@ -21,9 +21,7 @@ public class App extends JFrame
         initSystems();
 
         createScreens();
-        setSize(400, 500);
-        setMinimumSize(new Dimension(400, 500));
-        setResizable(false);
+        setMinimumSize(new Dimension(800, 480));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
@@ -44,7 +42,7 @@ public class App extends JFrame
 
     public void present(AcmePanel panel)
     {
-        panel.reset();
+        panel.reload();
         getContentPane().removeAll();
         getContentPane().add(panel, BorderLayout.CENTER);
         validate();
