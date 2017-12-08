@@ -17,7 +17,7 @@ public class AddAssignmentForm extends MainPanel
 
 
     private JTextField assignmentNameTextField;
-    private JTextField assignmentDescTextField;
+    private JTextArea assignmentDescTextField;
     private GridBagConstraints constraint;
 
     @Override
@@ -37,17 +37,17 @@ public class AddAssignmentForm extends MainPanel
 
         //description field
         JLabel assignDescLabel = new JLabel("Assignment Description:");
-        assignmentDescTextField = new JTextField(20);
+        assignmentDescTextField = new JTextArea(40,40);
         add(assignDescLabel, 0, 2, 2);
         add(assignmentDescTextField, 0, 3, 2);
 
         //submit button
         JButton submitButton = new JButton("Submit");
-        add(submitButton, 0,4,1);
+        add(submitButton, 0,4,2);
         //cancel button
         JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(this::goBack);
-        add(cancelButton, 1, 4, 1);
+        add(cancelButton, 0, 5, 2);
 
     }
 
