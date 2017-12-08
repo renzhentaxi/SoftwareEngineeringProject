@@ -37,7 +37,6 @@ public class AssignmentListPanel extends MainPanel
         add(assignmentListModel);
 
         setVisible(true);
-        System.out.println("here");
 
     }
 

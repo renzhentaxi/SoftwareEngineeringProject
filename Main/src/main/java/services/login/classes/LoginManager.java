@@ -49,7 +49,7 @@ public class LoginManager implements ILoginManager
                 String password = split[1];
 
                 if (!catalog.hasAccount(userName))
-                    throw new RuntimeException("no account with that UserName");
+                    throw new RuntimeException("no account with that UserName" + userName);
                 map.put(userName, password);
             }
         } catch (IOException ex)

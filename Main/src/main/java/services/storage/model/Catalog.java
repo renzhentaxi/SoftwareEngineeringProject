@@ -30,8 +30,6 @@ public class Catalog
         courseCatalog = LoadCourses();
         accountCatalog.Sync(this);
         courseCatalog.Sync(this);
-
-
     }
 
     private static AccountCatalog LoadAccounts()
@@ -41,7 +39,7 @@ public class Catalog
             return new AccountCatalog(reader.readObject());
         } catch (FileNotFoundException e)
         {
-
+            System.out.println("can not find account catalog");
         }
 
 
@@ -64,8 +62,6 @@ public class Catalog
 
     public Account getAccount(String name)
     {
-
-
         return accountCatalog.get(name);
     }
 

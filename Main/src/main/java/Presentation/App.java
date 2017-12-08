@@ -42,7 +42,7 @@ public class App extends JFrame
         present(loginScreen);
     }
 
-    private void present(AcmePanel panel)
+    public void present(AcmePanel panel)
     {
         panel.reset();
         getContentPane().removeAll();

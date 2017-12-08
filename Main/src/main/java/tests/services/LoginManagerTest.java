@@ -14,7 +14,7 @@ public class LoginManagerTest
     void login()
     {
 
-        Path p = Paths.get(".." + File.separator + "Data" + File.separator + "passwordList");
+        Path p = Paths.get("Data" + File.separator + "passwordList");
         LoginManager manager = new LoginManager(p);
     }
 }

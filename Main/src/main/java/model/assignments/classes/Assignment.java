@@ -189,7 +189,11 @@ public class Assignment implements IAssignment, IJsonable
                 .add("description", description)
                 .add("grades", grade)
                 .build();
+    }
 
-
+    @Override
+    public String toString()
+    {
+        return name;
     }
 }

@@ -30,9 +30,8 @@ public class Course implements ICourse, IJsonable
         this.courseName = courseName;
         this.roster = roster;
         this.assignmentList = assignmentList;
+        System.out.println("hello");
 
-        getRosterPermission = Permissions.or(roster.isProfessorPerm, roster.isTaPerm);
-        getAssignPermission = Permissions.or(roster.isTaPerm, roster.isProfessorPerm, roster.isStudentPerm);
     }
 
     protected Course()
@@ -48,15 +47,13 @@ public class Course implements ICourse, IJsonable
         return courseName;
     }
 
-    private IPermission getAssignPermission;
-
     /**
      * {@inheritDoc}
      */
     @Override
     public List<Assignment> getAssignments(ILoginToken requester)
     {
-        getAssignPermission.or(Permissions.isAdmin).check(requester);
+        Permissions.or(roster.isTaPerm, roster.isProfessorPerm, roster.isStudentPerm, Permissions.isAdmin).check(requester);
         return Collections.unmodifiableList(assignmentList);
     }
 
@@ -108,7 +105,7 @@ public class Course implements ICourse, IJsonable
     @Override
     public IRoster getRoster(ILoginToken requester)
     {
-        getRosterPermission.or(Permissions.isAdmin).check(requester);
+        Permissions.or(roster.isProfessorPerm, roster.isTaPerm, Permissions.isAdmin).check(requester);
         return roster;
     }
 

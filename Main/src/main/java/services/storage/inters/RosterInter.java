@@ -2,6 +2,7 @@ package services.storage.inters;
 
 import model.accounts.interfaces.IAccount;
 import model.courses.classes.Roster;
+import services.login.permissions.Permissions;
 import services.storage.model.Catalog;
 
 import javax.json.JsonObject;
@@ -39,6 +40,9 @@ public class RosterInter extends Roster implements JsonInter<Roster>
         sync(catalog, ta);
         students = catalog.getAccounts(studentNameList);
         students.forEach(iAccount -> sync(catalog, iAccount));
+        isProfessorPerm = Permissions.accountIs(professor);
+        isTaPerm = Permissions.accountIs(ta);
+        isStudentPerm = Permissions.accountIsAny(students);
         isSync = true;
     }
 
@@ -50,6 +54,7 @@ public class RosterInter extends Roster implements JsonInter<Roster>
             accountInter.addCourse(course);
             accountInter.sync(catalog);
         }
+
     }
 
     @Override
