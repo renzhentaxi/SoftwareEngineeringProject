@@ -106,6 +106,6 @@ public class AssignmentListPanel extends MainPanel
     private void onAddAssignment(ActionEvent event)
     {
         System.out.println(userName + " is attempting to add a new assignment as " + userType);
-        app.present(new AddAssignmentForm(app, token, this));
+        app.present(new AddAssignmentForm(app, token, this, course));
     }
 }

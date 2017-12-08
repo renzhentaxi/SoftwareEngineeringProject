@@ -99,10 +99,10 @@ public class Catalog
 
     public void commit()
     {
-        courseCatalog.Sync(catalog);
-        accountCatalog.Sync(catalog);
         JsonObject courses = courseCatalog.toJson();
         JsonObject accounts = accountCatalog.toJson();
+        courseCatalog.Sync(catalog);
+        accountCatalog.Sync(catalog);
         write(courses, "Data/courses.json");
 
         write(accounts, "Data/accounts.json");

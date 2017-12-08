@@ -11,6 +11,7 @@ import services.login.interfaces.ILoginToken;
 import services.login.permissions.IPermission;
 import services.login.permissions.Permissions;
 import services.storage.interfaces.IJsonable;
+import services.storage.model.Catalog;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -73,6 +74,7 @@ public class Course implements ICourse, IJsonable
             }
         }
         assignmentList.add((Assignment) newAssignment);
+        Catalog.catalog.commit();
     }
 
     /**
