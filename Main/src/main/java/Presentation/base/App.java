@@ -1,5 +1,7 @@
-package Presentation;
+package Presentation.base;
 
+import Presentation.LoginPanel;
+import Presentation.accounts.CourseListPanel;
 import services.login.classes.LoginManager;
 import services.login.classes.LoginToken;
 
@@ -47,6 +49,7 @@ public class App extends JFrame
         getContentPane().add(panel, BorderLayout.CENTER);
         validate();
         repaint();
+        pack();
     }
 
     public void OnLoginSuccess(LoginToken token)

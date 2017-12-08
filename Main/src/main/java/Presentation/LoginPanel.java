@@ -1,5 +1,7 @@
 package Presentation;
 
+import Presentation.base.AcmePanel;
+import Presentation.base.App;
 import services.login.classes.LoginManager;
 import services.login.exceptions.InvalidLoginException;
 

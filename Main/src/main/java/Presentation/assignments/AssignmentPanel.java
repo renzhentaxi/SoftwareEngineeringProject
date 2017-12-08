@@ -1,5 +1,7 @@
-package Presentation;
+package Presentation.assignments;
 
+import Presentation.base.App;
+import Presentation.base.MainPanel;
 import model.assignments.classes.Assignment;
 import services.login.interfaces.ILoginToken;
 

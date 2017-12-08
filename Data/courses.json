@@ -1,1 +1,50 @@
-{"sci":{"courseName":"sci","roster":{"prof":"baerde","ta":"juan","students":["adam","student","taxi"]},"assignmentList":[{"name":"assign1","description":"assign1mathdescription","grades":{}},{"name":"assign2","description":"assign2mathdescription","grades":{}}]},"math":{"courseName":"math","roster":{"prof":"baerde","ta":"don","students":["adam","student","taxi"]},"assignmentList":[{"name":"assign1","description":"assign1mathdescription","grades":{}},{"name":"assign2","description":"assign2mathdescription","grades":{}}]}}
+{
+  "sci": {
+    "courseName": "sci",
+    "roster": {
+      "prof": "baerde",
+      "ta": "juan",
+      "students": [
+        "adam",
+        "student",
+        "taxi"
+      ]
+    },
+    "assignmentList": [
+      {
+        "name": "assign1",
+        "description": "assign1mathdescription",
+        "grades": {}
+      },
+      {
+        "name": "assign2",
+        "description": "assign2mathdescription",
+        "grades": {}
+      }
+    ]
+  },
+  "math": {
+    "courseName": "math",
+    "roster": {
+      "prof": "baerde",
+      "ta": "don",
+      "students": [
+        "adam",
+        "student",
+        "taxi"
+      ]
+    },
+    "assignmentList": [
+      {
+        "name": "assign1",
+        "description": "assign1mathdescription",
+        "grades": {}
+      },
+      {
+        "name": "assign2",
+        "description": "assign2mathdescription",
+        "grades": {}
+      }
+    ]
+  }
+}

@@ -1,4 +1,4 @@
-package Presentation;
+package Presentation.base;
 
 import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
@@ -49,12 +49,12 @@ public abstract class MainPanel extends AcmePanel
         if (prevPanel != null)
         {
             JButton backButton = new JButton("Back");
-            backButton.addActionListener(this::onBack);
+            backButton.addActionListener(this::goBack);
             addToMenu(backButton);
         }
     }
 
-    private void onBack(ActionEvent event)
+    protected void goBack(ActionEvent event)
     {
         app.present(prevPanel);
     }
@@ -62,6 +62,11 @@ public abstract class MainPanel extends AcmePanel
     protected void addToMenu(Component component)
     {
         menuPanel.add(component);
+    }
+
+    protected void clearMenu()
+    {
+        menuPanel.removeAll();
     }
 
 }

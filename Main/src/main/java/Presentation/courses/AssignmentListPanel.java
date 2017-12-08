@@ -1,5 +1,10 @@
-package Presentation;
+package Presentation.courses;
 
+import Presentation.accounts.CourseListPanel;
+import Presentation.assignments.AddAssignmentForm;
+import Presentation.assignments.AssignmentPanel;
+import Presentation.base.App;
+import Presentation.base.MainPanel;
 import model.accounts.enums.AccountType;
 import model.assignments.classes.Assignment;
 import model.courses.classes.Course;
@@ -100,5 +105,6 @@ public class AssignmentListPanel extends MainPanel
     private void onAddAssignment(ActionEvent event)
     {
         System.out.println(userName + " is attempting to add a new assignment as " + userType);
+        app.present(new AddAssignmentForm(app, token, this));
     }
 }
