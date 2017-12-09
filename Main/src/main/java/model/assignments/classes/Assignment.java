@@ -105,6 +105,7 @@ public class Assignment implements IAssignment, IJsonable
         if (!isGraded(requester, student)) throw new NotGradedException();
 
         grades.put(student, -1f);
+        Catalog.catalog.commit();
     }
 
     /**
@@ -120,7 +121,7 @@ public class Assignment implements IAssignment, IJsonable
         if (!isGraded(requester, student)) throw new NotGradedException();
         if (newGrade < 0 || newGrade > 100) throw new BadGradeException();
         grades.put(student, newGrade);
-
+        Catalog.catalog.commit();
     }
 
     /**

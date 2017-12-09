@@ -21,7 +21,9 @@
       {
         "name": "assign2",
         "description": "The second assignment of science",
-        "grades": {}
+        "grades": {
+          "adam": 6.0
+        }
       },
       {
         "name": "make me",
@@ -50,17 +52,12 @@
       {
         "name": "assignment4",
         "description": "HELLLOOOOOO world",
-        "grades": {
-          "stud": 34.0
-        }
+        "grades": {}
       },
       {
         "name": "hi",
         "description": "",
-        "grades": {
-          "adam": 100.0,
-          "student": 5.0
-        }
+        "grades": {}
       },
       {
         "name": "ez Assignment",
