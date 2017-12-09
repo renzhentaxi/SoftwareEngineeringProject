@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Account implements IAccount, IJsonable
+public class Account implements IAccount, IJsonable, Comparable<IAccount>
 {
     protected String firstName;
     protected String lastName;
@@ -33,9 +33,11 @@ public class Account implements IAccount, IJsonable
         this.courseList = courseList;
     }
 
-    protected Account(){
+    protected Account()
+    {
         courseList = new ArrayList<>();
     }
+
     /**
      * {@inheritDoc}
      */
@@ -107,7 +109,7 @@ public class Account implements IAccount, IJsonable
     public JsonObject toJson()
     {
         JsonArrayBuilder courseListBuilder = Json.createArrayBuilder();
-        for (ICourse course: this.courseList)
+        for (ICourse course : this.courseList)
         {
             courseListBuilder.add(course.getCourseName());
         }
@@ -125,6 +127,14 @@ public class Account implements IAccount, IJsonable
     @Override
     public String toString()
     {
-        return accountType +": "+ userName;
+        return accountType + ": " + userName;
+    }
+
+
+
+    @Override
+    public int compareTo(IAccount iAccount)
+    {
+        return iAccount.getFirstName().compareTo(lastName);
     }
 }

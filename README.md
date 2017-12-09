@@ -21,9 +21,7 @@ In order to login to the app, you must provide a userName + password entry in Da
 
 
 #What is needed to be done?
-* view all grades for ta/professor  [Taxi is working on this right now]
-* enter grade function for ta/professor
-* modify grade for professor
+* modify grade for professor [Taxi]
 * clear grade for professor 
   
 * roster view [Han is working on this right now]

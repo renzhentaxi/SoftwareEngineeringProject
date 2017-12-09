@@ -9,7 +9,6 @@ import services.login.interfaces.ILoginToken;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.Map;
 
 public class AssignmentPanel extends MainPanel
 {
@@ -63,22 +62,29 @@ public class AssignmentPanel extends MainPanel
 
         if (userType == AccountType.professor || userType == AccountType.ta)
         {
-            ListModel<Map.Entry<String, Float>> gradeListModel = new DefaultListModel<>();
-            JList<Map.Entry<String,Float>> gradeListView = new JList<>();
+            gradeListModel = new DefaultListModel<>();
+            assignment.getGrades(token).entrySet().stream().<Grade>map(Grade::new).forEach(gradeListModel::addElement);
 
+            gradeListView = new JList<>(gradeListModel);
+            add(gradeListView);
             JButton enterGradeButton = new JButton("Enter Grade");
+            enterGradeButton.addActionListener(this::onEnter);
             addToMenu(enterGradeButton);
         }
 
         if (userType == AccountType.professor)
         {
             JButton modifyGradeButton = new JButton("Modify");
+            modifyGradeButton.addActionListener(this::onModify);
             JButton clearGradeButton = new JButton("Clear");
-
+            clearGradeButton.addActionListener(this::onClear);
             addToMenu(modifyGradeButton);
             addToMenu(clearGradeButton);
         }
     }
+
+    JList<Grade> gradeListView;
+    DefaultListModel<Grade> gradeListModel;
 
     private void onViewDescription(ActionEvent event)
     {
@@ -95,8 +101,41 @@ public class AssignmentPanel extends MainPanel
 
     }
 
+    private void reloadData()
+    {
+        gradeListModel.clear();
+        assignment.getGrades(token).entrySet().stream().<Grade>map(Grade::new).forEach(gradeListModel::addElement);
+    }
+
     private void onEnter(ActionEvent event)
     {
-
+        Grade grade = gradeListView.getSelectedValue();
+        if (grade == null)
+        {
+            JOptionPane.showMessageDialog(this, "Please select a student first");
+        } else if (grade.isGraded())
+        {
+            JOptionPane.showMessageDialog(this, "It is already graded!!");
+        } else
+        {
+            try
+            {
+                float newGrade = Float.valueOf(JOptionPane.showInputDialog(this, "Enter the grade"));
+                if (newGrade < 0 || newGrade > 100)
+                {
+                    JOptionPane.showMessageDialog(this, "Please enter a number between 0-100");
+                } else
+                {
+                    assignment.enterGrade(token, grade.account, newGrade);
+                    reloadData();
+                    System.out.println(userName + " entered " + newGrade + " for " + grade.account.getUserName() + " on assignment: " + assignment);
+                }
+            } catch (NumberFormatException e)
+            {
+                JOptionPane.showMessageDialog(this, "Please enter numbers only");
+            } catch (NullPointerException ignored)
+            {
+            }
+        }
     }
 }

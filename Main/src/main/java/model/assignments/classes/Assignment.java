@@ -14,13 +14,12 @@ import services.login.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
 import services.login.permissions.Permissions;
 import services.storage.interfaces.IJsonable;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import services.storage.model.Catalog;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Assignment implements IAssignment, IJsonable
 {
@@ -87,6 +86,7 @@ public class Assignment implements IAssignment, IJsonable
         if (isGraded(requester, student)) throw new AlreadyGradedException();
         if (grade < 0 || grade > 100) throw new BadGradeException();
         grades.put(student, grade);
+        Catalog.catalog.commit();
     }
 
     /**
@@ -120,6 +120,7 @@ public class Assignment implements IAssignment, IJsonable
         if (!isGraded(requester, student)) throw new NotGradedException();
         if (newGrade < 0 || newGrade > 100) throw new BadGradeException();
         grades.put(student, newGrade);
+
     }
 
     /**
@@ -140,9 +141,20 @@ public class Assignment implements IAssignment, IJsonable
     @Override
     public Map<IAccount, Float> getGrades(ILoginToken requester)
     {
-        throw new NotImplementedException();
-        // return Collections.unmodifiableMap(grades);
+
+        IRoster roster = course.getRoster(requester);
+        List<IAccount> students = roster.getStudents(requester);
+        Map<IAccount, Float> grades = new TreeMap<>(this.grades);
+        for (IAccount student : students)
+        {
+            if (!this.grades.containsKey(student))
+            {
+                grades.put(student, -1f);
+            }
+        }
+        return Collections.unmodifiableMap(grades);
     }
+
 
     /**
      * {@inheritDoc}
@@ -179,7 +191,12 @@ public class Assignment implements IAssignment, IJsonable
 
         for (IAccount student : grades.keySet())
         {
-            gradeBuilder.add(student.getUserName(), grades.get(student));
+            Float grade = grades.get(student);
+
+            if (grade != -1f)
+            {
+                gradeBuilder.add(student.getUserName(), grades.get(student));
+            }
         }
 
         JsonObject grade = gradeBuilder.build();

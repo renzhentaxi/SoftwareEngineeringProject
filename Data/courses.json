@@ -50,12 +50,17 @@
       {
         "name": "assignment4",
         "description": "HELLLOOOOOO world",
-        "grades": {}
+        "grades": {
+          "stud": 34.0
+        }
       },
       {
         "name": "hi",
         "description": "",
-        "grades": {}
+        "grades": {
+          "adam": 100.0,
+          "student": 5.0
+        }
       },
       {
         "name": "ez Assignment",
