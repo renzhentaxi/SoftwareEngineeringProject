@@ -7,7 +7,8 @@ import services.login.interfaces.ILoginToken;
 
 import java.util.List;
 
-public interface IAccount {
+public interface IAccount
+{
 
     /**
      * returns the first name of the account

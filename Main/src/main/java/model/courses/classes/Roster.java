@@ -17,13 +17,12 @@ import java.util.List;
 
 public class Roster implements IRoster, IJsonable
 {
-    protected IAccount professor;
-    protected IAccount ta;
-    protected List<IAccount> students;
-
     public IPermission isProfessorPerm;
     public IPermission isTaPerm;
     public IPermission isStudentPerm;
+    protected IAccount professor;
+    protected IAccount ta;
+    protected List<IAccount> students;
 
     public Roster(IAccount professor, IAccount ta, List<IAccount> students)
     {

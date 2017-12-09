@@ -22,7 +22,7 @@ import java.util.Iterator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ModifyGrade
+class ModifyGrade
 {
     static Iterator<ILoginToken> validRequester_provider()
     {

@@ -6,23 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JsonHelper
+class JsonHelper
 {
-    public interface IToString<T>
-    {
-        String toString(T object);
-    }
-
-    public interface  Converter<F, T>
-    {
-        T convert(F from);
-    }
-    public interface StringConverter<T>
-    {
-        T convert(String s);
-    }
-
-
     public static <T> JsonArray toJsonArray(List<T> list, IToString<T> toStringMethod)
     {
         JsonArrayBuilder builder = Json.createArrayBuilder();
@@ -37,7 +22,6 @@ public class JsonHelper
         return builder.build();
     }
 
-
     public static <T> List<T> toList(JsonArray array, StringConverter<T> converter)
     {
         List<T> list = new ArrayList<>();
@@ -45,11 +29,27 @@ public class JsonHelper
         return list;
     }
 
-
     public static <V> Map<String, V> toMap(JsonObject object, StringConverter<V> converter)
     {
         Map<String, V> map = new HashMap<>();
         object.forEach((s, jsonValue) -> map.put(s, converter.convert(jsonValue.toString())));
         return map;
+    }
+
+    interface IToString<T>
+    {
+        String toString(T object);
+    }
+
+
+    interface Converter<F, T>
+    {
+        T convert(F from);
+    }
+
+
+    public interface StringConverter<T>
+    {
+        T convert(String s);
     }
 }

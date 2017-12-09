@@ -131,7 +131,6 @@ public class Account implements IAccount, IJsonable, Comparable<IAccount>
     }
 
 
-
     @Override
     public int compareTo(IAccount iAccount)
     {

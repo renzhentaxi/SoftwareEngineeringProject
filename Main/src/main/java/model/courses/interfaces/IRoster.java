@@ -6,7 +6,8 @@ import services.login.interfaces.ILoginToken;
 
 import java.util.List;
 
-public interface IRoster {
+public interface IRoster
+{
 
 
     /**
@@ -30,6 +31,7 @@ public interface IRoster {
     /**
      * returns a readonly list of students for this course
      * if requester is student, a list of only one IAccount is returned. the Iaccount being the student itself.
+     *
      * @param requester the user who requested the list of students. should be professor,ta,student of the course or admin
      * @return a readonly list of students for this course
      * @throws NoPermissionException if the requester does not have the permission to complete this request
@@ -40,7 +42,7 @@ public interface IRoster {
      * check if the account is the professor of this course
      *
      * @param requester the user who requests this information. Requester should be the professor,ta of the course or admin
-     * @param account the account that is being checked
+     * @param account   the account that is being checked
      * @return true if the user is the professor of this course, false otherwise
      * @throws NoPermissionException if the requester does not have the permission to complete this request
      */
@@ -50,7 +52,7 @@ public interface IRoster {
      * check if the account is the Ta of this course
      *
      * @param requester the user who requests this information. Requester should be the professor,ta of the course or admin
-     * @param account the account that is being checked
+     * @param account   the account that is being checked
      * @return true if the user is the Ta of this course, false otherwise
      * @throws NoPermissionException if the requester does not have the permission to complete this request
      */
@@ -60,7 +62,7 @@ public interface IRoster {
      * check if the account is a student of this course
      *
      * @param requester the user who requests this information.   should be professor,ta,student of the course or admin
-     * @param account the account that is being checked
+     * @param account   the account that is being checked
      * @return true if the user is a student of this course, false otherwise
      * @throws NoPermissionException if the requester does not have the permission to complete this request
      */
@@ -69,8 +71,9 @@ public interface IRoster {
 
     /**
      * check if the account is a student, ta, or professor of this roster.
+     *
      * @param requester the user who requests this information. Should be in the roster or admin.
-     * @param account the account that is being checked
+     * @param account   the account that is being checked
      * @return true if the user is a student of this course, false otherwise
      */
     boolean isInRoster(ILoginToken requester, IAccount account);

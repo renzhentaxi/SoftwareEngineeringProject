@@ -1,5 +1,6 @@
 package model.assignments.exceptions;
 
-public class NotCourseStudentException extends RuntimeException {
+public class NotCourseStudentException extends RuntimeException
+{
 
 }

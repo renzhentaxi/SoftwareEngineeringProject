@@ -17,8 +17,9 @@ public abstract class MainPanel extends AcmePanel
     protected String userName;
 
     private MainPanel prevPanel;
+    private JPanel menuPanel;
 
-    public MainPanel(App app, ILoginToken token, MainPanel prevPanel)
+    protected MainPanel(App app, ILoginToken token, MainPanel prevPanel)
     {
         super(app);
         this.token = token;
@@ -28,8 +29,6 @@ public abstract class MainPanel extends AcmePanel
 
         this.prevPanel = prevPanel;
     }
-
-    private JPanel menuPanel;
 
     @Override
     public void assemble()

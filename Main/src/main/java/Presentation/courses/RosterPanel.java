@@ -14,10 +14,12 @@ import java.util.stream.Collectors;
 
 public class RosterPanel extends MainPanel
 {
+    private JPanel content;
     private IRoster roster;
     private String professor;
     private String ta;
     private List<String> students;
+    private GridBagConstraints constraint;
 
     public RosterPanel(App app, ILoginToken token, MainPanel prevPanel, Course course)
     {
@@ -32,8 +34,6 @@ public class RosterPanel extends MainPanel
 
         assemble();
     }
-
-    private GridBagConstraints constraint;
 
     @Override
     public void assemble()
@@ -53,8 +53,6 @@ public class RosterPanel extends MainPanel
         area.setText(builder.toString());
         add(area, BorderLayout.CENTER);
     }
-
-    JPanel content;
 
     private void add(Component component, int x, int y, int width)
     {

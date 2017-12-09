@@ -46,10 +46,4 @@ public class CourseInter extends Course implements JsonInter<Course>
         return this;
     }
 
-    @Override
-    public String toString()
-    {
-        return super.toString();
-    }
-
 }

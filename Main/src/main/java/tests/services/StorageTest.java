@@ -7,15 +7,15 @@ import services.storage.model.Catalog;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class StorageTest
+class StorageTest
 {
-    static String[] firstNames = new String[]{"james", "john", "robert", "michael", "mary", "les"};
+    private static String[] firstNames = new String[]{"james", "john", "robert", "michael", "mary", "les"};
     static String[] students = new String[]{"taxi", "charles", "han", "melissa", "kaylee", "bruh", "taxco", "adam", "siri"};
     static String[] professors = new String[]{"baerde", "beach", "yoo"};
     static String[] tas = new String[]{"don", "juan", "dylee"};
     static String[] courses = new String[]{"math", "sci", "chem", "calc", "art", "music"};
     static String[] assignments = new String[]{"hw1", "hello world", "homewoooooork", "assssignment", "proooject"};
-    static Random random = new Random(0);
+    private static Random random = new Random(0);
 
     public static void main(String[] args)
     {

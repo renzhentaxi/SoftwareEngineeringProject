@@ -17,7 +17,7 @@ import java.util.Iterator;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
-public class IsGradedAny
+class IsGradedAny
 {
     static Iterator<ILoginToken> validRequester_provider()
     {

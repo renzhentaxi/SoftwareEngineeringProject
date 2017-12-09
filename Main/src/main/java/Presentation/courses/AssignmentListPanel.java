@@ -16,16 +16,13 @@ import java.util.List;
 public class AssignmentListPanel extends MainPanel
 {
     private Course course;
-
+    private JList<Assignment> assignmentJList;
+    private DefaultListModel<Assignment> assignListModel;
     public AssignmentListPanel(App app, ILoginToken token, CourseListPanel coursePanel, Course course)
     {
         super(app, token, coursePanel);
         this.course = course;
     }
-
-
-    private JList<Assignment> assignmentJList;
-    private DefaultListModel<Assignment> assignListModel;
 
     @Override
     public void assemble()

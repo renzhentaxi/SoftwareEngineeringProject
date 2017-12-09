@@ -10,11 +10,13 @@ import services.login.interfaces.ILoginToken;
 
 import java.util.List;
 
-public interface ICourse {
+public interface ICourse
+{
 
     /**
      * returns the course name of this course.
      * the course name is unique within a catalog
+     *
      * @return the course name of this course.
      */
     String getCourseName();

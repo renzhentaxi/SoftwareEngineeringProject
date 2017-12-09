@@ -7,9 +7,9 @@ import java.util.Map;
 /**
  * a simply class that "wraps" a map.entry object to allow custom toString method that is used by JList
  */
-public class Grade
+class Grade
 {
-    public float grade;
+    private float grade;
     public IAccount account;
 
     public Grade(Map.Entry<IAccount, Float> grade)
@@ -21,7 +21,7 @@ public class Grade
     @Override
     public String toString()
     {
-        return account.getFirstName() + " " + account.getLastName() + " : " + (isGraded()? grade: "ungraded");
+        return account.getFirstName() + " " + account.getLastName() + " : " + (isGraded() ? grade : "ungraded");
     }
 
     public boolean isGraded()

@@ -12,15 +12,14 @@ import java.awt.event.ActionEvent;
 public class LoginPanel extends AcmePanel
 {
 
+    private GridBagConstraints constraint;
     private LoginManager loginManager;
-
     private JTextField userNameField;
     private JPasswordField passwordField;
     private JLabel userNameLabel;
     private JLabel passwordLabel;
     private JButton loginButton;
     private JButton quitButton;
-    GridBagConstraints constraint;
 
     public LoginPanel(App app, LoginManager loginManager)
     {

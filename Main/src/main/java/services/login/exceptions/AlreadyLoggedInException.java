@@ -1,4 +1,5 @@
 package services.login.exceptions;
 
-public class AlreadyLoggedInException extends RuntimeException{
+public class AlreadyLoggedInException extends RuntimeException
+{
 }

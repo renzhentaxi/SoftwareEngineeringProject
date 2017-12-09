@@ -16,8 +16,8 @@ public class App extends JFrame
     private LoginPanel loginScreen;
     private LoginToken token;
 
-//asdtlksadj
-    public App()
+    //asdtlksadj
+    private App()
     {
         super("Acme");
         initSystems();
@@ -29,6 +29,10 @@ public class App extends JFrame
         setVisible(true);
     }
 
+    public static void main(String[] args)
+    {
+        App app = new App();
+    }
 
     private void initSystems()
     {
@@ -62,10 +66,5 @@ public class App extends JFrame
     {
         loginManager.logout(token.getAccount().getUserName());
         present(loginScreen);
-    }
-
-    public static void main(String[] args)
-    {
-        App app = new App();
     }
 }

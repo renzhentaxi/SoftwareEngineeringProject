@@ -1,5 +1,6 @@
 package model.courses.exceptions;
 
-public class GradedAssignmentException extends RuntimeException {
+public class GradedAssignmentException extends RuntimeException
+{
 
 }

@@ -26,6 +26,7 @@ public class Course implements ICourse, IJsonable
     protected String courseName;
     protected Roster roster;
     protected List<Assignment> assignmentList;
+    private IPermission getRosterPermission;
 
     public Course(String courseName, Roster roster, List<Assignment> assignmentList)
     {
@@ -98,8 +99,6 @@ public class Course implements ICourse, IJsonable
         }
         throw new AssignmentDoesNotExistException();
     }
-
-    private IPermission getRosterPermission;
 
     /**
      * {@inheritDoc}

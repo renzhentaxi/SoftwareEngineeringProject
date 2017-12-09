@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class AllPermission implements IPermission
 {
-    List<IPermission> permissions;
+    private List<IPermission> permissions;
 
     public AllPermission(IPermission... permissions)
     {

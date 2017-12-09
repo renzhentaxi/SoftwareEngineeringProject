@@ -33,19 +33,6 @@ class CourseTest
         return LoginTokenProvider.provider.provide("admin,student, professor, ta");
     }
 
-    @ParameterizedTest
-    @MethodSource(names = "getAssignments_validRequester_provider")
-    void getAssignments_validRequester_returnsAssignments(ILoginToken validRequester)
-    {
-        List<Assignment> assignmentList = StubFactory.makeDummyAssignmentList();
-
-        Course course = new Course("soft", StubFactory.makeTestRoster(), assignmentList);
-
-        List<Assignment> actual = course.getAssignments(validRequester);
-
-        Assertions.assertEquals(assignmentList, actual);
-    }
-
     static Iterator<ILoginToken> getAssignments_invalidRequester_provider()
     {
         ILoginToken notCourseStudent = StubFactory.makeStubLoginToken("notCourseStudent", AccountType.student);
@@ -58,6 +45,71 @@ class CourseTest
         invalidRequesters.add(notCourseTa);
 
         return invalidRequesters.iterator();
+    }
+
+    static Iterator<ILoginToken> addAssignments_validRequester_provider()
+    {
+        return LoginTokenProvider.provider.provide("admin,professor");
+    }
+
+    static Iterator<ILoginToken> addAssignment_invalidRequester_provider()
+    {
+        ILoginToken notCourseProfessor = StubFactory.makeStubLoginToken("notCourseProfessor", AccountType.professor);
+        ILoginToken student = StubFactory.makeStubLoginToken("student", AccountType.student);
+        ILoginToken ta = StubFactory.makeStubLoginToken("ta", AccountType.ta);
+
+        return Arrays.asList(new ILoginToken[]{notCourseProfessor, student, ta}).iterator();
+    }
+
+    static Iterator<ILoginToken> removeAssignment_validRequester_provider()
+    {
+        ILoginToken admin = StubFactory.makeStubLoginToken("admin", AccountType.admin);
+        ILoginToken professor = StubFactory.makeStubLoginToken("professor", AccountType.professor);
+
+        return LoginTokenProvider.provider.provide("professor,admin");
+    }
+
+    static Iterator<ILoginToken> removeAssignment_invalidRequester_provider()
+    {
+        ILoginToken notCourseProfessor = StubFactory.makeStubLoginToken("notCourseProfessor", AccountType.professor);
+        ILoginToken student = StubFactory.makeStubLoginToken("student", AccountType.student);
+        ILoginToken ta = StubFactory.makeStubLoginToken("ta", AccountType.ta);
+
+        return Arrays.asList(new ILoginToken[]{notCourseProfessor, student, ta}).iterator();
+    }
+
+    static Iterator<ILoginToken> getRosterValidRequesterProvider()
+    {
+        return LoginTokenProvider.provider.provide("admin, professor, ta");
+    }
+
+    static Iterator<ILoginToken> getRosterInvalidRequesterProvider()
+    {
+        List<ILoginToken> invalidRequesters = new ArrayList<>();
+
+
+        ILoginToken notCourseProfessor = StubFactory.makeStubLoginToken("notCourseProfessor", AccountType.professor);
+        ILoginToken notCourseTa = StubFactory.makeStubLoginToken("notCourseTa", AccountType.ta);
+        ILoginToken student = StubFactory.makeStubLoginToken("student", AccountType.student);
+
+
+        invalidRequesters.add(notCourseProfessor);
+        invalidRequesters.add(notCourseTa);
+        invalidRequesters.add(student);
+        return invalidRequesters.iterator();
+    }
+
+    @ParameterizedTest
+    @MethodSource(names = "getAssignments_validRequester_provider")
+    void getAssignments_validRequester_returnsAssignments(ILoginToken validRequester)
+    {
+        List<Assignment> assignmentList = StubFactory.makeDummyAssignmentList();
+
+        Course course = new Course("soft", StubFactory.makeTestRoster(), assignmentList);
+
+        List<Assignment> actual = course.getAssignments(validRequester);
+
+        Assertions.assertEquals(assignmentList, actual);
     }
 
     @ParameterizedTest
@@ -82,11 +134,6 @@ class CourseTest
 
     }
 
-    static Iterator<ILoginToken> addAssignments_validRequester_provider()
-    {
-        return LoginTokenProvider.provider.provide("admin,professor");
-    }
-
     @ParameterizedTest
     @MethodSource(names = "addAssignments_validRequester_provider")
     void addAssignment_validRequester_assignmentIsAdded(ILoginToken validRequester)
@@ -95,15 +142,6 @@ class CourseTest
         Assignment assignment = new Assignment("assignment", "", course);
         course.addAssignment(validRequester, assignment);
         Assertions.assertTrue(course.getAssignments(validRequester).contains(assignment));
-    }
-
-    static Iterator<ILoginToken> addAssignment_invalidRequester_provider()
-    {
-        ILoginToken notCourseProfessor = StubFactory.makeStubLoginToken("notCourseProfessor", AccountType.professor);
-        ILoginToken student = StubFactory.makeStubLoginToken("student", AccountType.student);
-        ILoginToken ta = StubFactory.makeStubLoginToken("ta", AccountType.ta);
-
-        return Arrays.asList(new ILoginToken[]{notCourseProfessor, student, ta}).iterator();
     }
 
     @ParameterizedTest
@@ -131,15 +169,6 @@ class CourseTest
         });
     }
 
-
-    static Iterator<ILoginToken> removeAssignment_validRequester_provider()
-    {
-        ILoginToken admin = StubFactory.makeStubLoginToken("admin", AccountType.admin);
-        ILoginToken professor = StubFactory.makeStubLoginToken("professor", AccountType.professor);
-
-        return LoginTokenProvider.provider.provide("professor,admin");
-    }
-
     @ParameterizedTest
     @MethodSource(names = "removeAssignment_validRequester_provider")
     void removeAssignment_validRequester_assignmentIsRemoved(ILoginToken validRequester)
@@ -153,15 +182,6 @@ class CourseTest
         List<Assignment> assignmentList = course.getAssignments(validRequester);
 
         Assertions.assertFalse(assignmentList.contains(assignmentToRemove));
-    }
-
-    static Iterator<ILoginToken> removeAssignment_invalidRequester_provider()
-    {
-        ILoginToken notCourseProfessor = StubFactory.makeStubLoginToken("notCourseProfessor", AccountType.professor);
-        ILoginToken student = StubFactory.makeStubLoginToken("student", AccountType.student);
-        ILoginToken ta = StubFactory.makeStubLoginToken("ta", AccountType.ta);
-
-        return Arrays.asList(new ILoginToken[]{notCourseProfessor, student, ta}).iterator();
     }
 
     @ParameterizedTest
@@ -192,12 +212,11 @@ class CourseTest
         Course course = new Course("soft", StubFactory.makeTestRoster(), new ArrayList<>());
 
         IAssignment graded = new Assignment("assignment", "", course);
-        course.addAssignment(admin,graded);
-        graded.enterGrade(admin,student,4f);
+        course.addAssignment(admin, graded);
+        graded.enterGrade(admin, student, 4f);
 
         Assertions.assertThrows(GradedAssignmentException.class, () -> course.removeAssignment(admin, graded));
     }
-
 
     @ParameterizedTest
     @MethodSource(names = "getRosterValidRequesterProvider")
@@ -206,28 +225,6 @@ class CourseTest
         Roster roster = StubFactory.makeTestRoster();
         Course course = new Course("software", roster, null);
         Assertions.assertEquals(roster, course.getRoster(validRequester));
-    }
-
-    static Iterator<ILoginToken> getRosterValidRequesterProvider()
-    {
-        return LoginTokenProvider.provider.provide("admin, professor, ta");
-    }
-
-
-    static Iterator<ILoginToken> getRosterInvalidRequesterProvider()
-    {
-        List<ILoginToken> invalidRequesters = new ArrayList<>();
-
-
-        ILoginToken notCourseProfessor = StubFactory.makeStubLoginToken("notCourseProfessor", AccountType.professor);
-        ILoginToken notCourseTa = StubFactory.makeStubLoginToken("notCourseTa", AccountType.ta);
-        ILoginToken student = StubFactory.makeStubLoginToken("student", AccountType.student);
-
-
-        invalidRequesters.add(notCourseProfessor);
-        invalidRequesters.add(notCourseTa);
-        invalidRequesters.add(student);
-        return invalidRequesters.iterator();
     }
 
     @ParameterizedTest

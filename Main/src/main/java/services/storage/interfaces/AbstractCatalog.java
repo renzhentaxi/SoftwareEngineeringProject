@@ -11,9 +11,9 @@ import java.util.Map;
 
 public abstract class AbstractCatalog<T extends JsonInter> implements IJsonable
 {
-    protected Map<String, T> map;
+    private Map<String, T> map;
 
-    public AbstractCatalog(JsonObject data)
+    protected AbstractCatalog(JsonObject data)
     {
         map = new HashMap<>();
 
@@ -33,7 +33,7 @@ public abstract class AbstractCatalog<T extends JsonInter> implements IJsonable
         return builder.build();
     }
 
-    public abstract T convert(JsonObject object);
+    protected abstract T convert(JsonObject object);
 
 
     public T get(String name)

@@ -22,7 +22,7 @@ import tests.provider.LoginTokenProvider;
 import java.util.Iterator;
 
 @DisplayName(value = "Assignment.EnterGrade")
-public class EnterGrade
+class EnterGrade
 {
     static Iterator<ILoginToken> validRequester_provider()
     {

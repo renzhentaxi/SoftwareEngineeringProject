@@ -66,7 +66,7 @@ public class StubFactory
      * @param accountType the accountType that is returned by getAccountType
      * @return a stub account object
      */
-    public static Account makeStubAccount(String userName, AccountType accountType)
+    private static Account makeStubAccount(String userName, AccountType accountType)
     {
         Account stubAccount = mock(Account.class);
         when(stubAccount.getAccountType()).thenReturn(accountType);
@@ -100,8 +100,7 @@ public class StubFactory
      */
     public static Roster makeTestRoster()
     {
-        Roster r = new Roster(AccountProvider.professor, AccountProvider.ta, AccountProvider.provider.provideMany("student, student a, student b, student c"));
-        return r;
+        return new Roster(AccountProvider.professor, AccountProvider.ta, AccountProvider.provider.provideMany("student, student a, student b, student c"));
     }
 
     public static List<Course> makeDummyCourseList()
@@ -115,7 +114,6 @@ public class StubFactory
 
     public static List<Assignment> makeDummyAssignmentList()
     {
-        List<Assignment> assignmentList = new ArrayList<>();
-        return assignmentList;
+        return new ArrayList<>();
     }
 }

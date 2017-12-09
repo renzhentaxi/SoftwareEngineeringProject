@@ -45,6 +45,7 @@ class RosterTest
     {
         return LoginTokenProvider.provider.provide("student a, student b, student c");
     }
+
     @ParameterizedTest
     @MethodSource(names = "getProfessor_valid_provider")
     void getProfessor_validRequester_returnsProfessor(ILoginToken requester)

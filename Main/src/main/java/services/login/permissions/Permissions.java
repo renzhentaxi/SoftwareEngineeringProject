@@ -9,7 +9,7 @@ public class Permissions
 {
     public static IPermission isAdmin = typeIs(AccountType.admin);
 
-    public static IPermission typeIs(AccountType type)
+    private static IPermission typeIs(AccountType type)
     {
         return new TypeIsPermission(type);
     }

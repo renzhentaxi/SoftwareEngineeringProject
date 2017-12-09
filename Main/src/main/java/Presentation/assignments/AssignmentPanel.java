@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 
 public class AssignmentPanel extends MainPanel
 {
+    private JList<Grade> gradeListView;
+    private DefaultListModel<Grade> gradeListModel;
     private Assignment assignment;
     private String assignmentName;
     private String assignmentDesc;
@@ -63,7 +65,7 @@ public class AssignmentPanel extends MainPanel
         if (userType == AccountType.professor || userType == AccountType.ta)
         {
             gradeListModel = new DefaultListModel<>();
-            assignment.getGrades(token).entrySet().stream().<Grade>map(Grade::new).forEach(gradeListModel::addElement);
+            assignment.getGrades(token).entrySet().stream().map(Grade::new).forEach(gradeListModel::addElement);
 
             gradeListView = new JList<>(gradeListModel);
             add(gradeListView);
@@ -82,9 +84,6 @@ public class AssignmentPanel extends MainPanel
             addToMenu(clearGradeButton);
         }
     }
-
-    JList<Grade> gradeListView;
-    DefaultListModel<Grade> gradeListModel;
 
     private void onViewDescription(ActionEvent event)
     {
@@ -143,7 +142,7 @@ public class AssignmentPanel extends MainPanel
     private void reloadData()
     {
         gradeListModel.clear();
-        assignment.getGrades(token).entrySet().stream().<Grade>map(Grade::new).forEach(gradeListModel::addElement);
+        assignment.getGrades(token).entrySet().stream().map(Grade::new).forEach(gradeListModel::addElement);
     }
 
     private void onEnter(ActionEvent event)

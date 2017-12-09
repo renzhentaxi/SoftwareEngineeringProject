@@ -18,7 +18,7 @@ import tests.provider.LoginTokenProvider;
 import java.util.Iterator;
 
 
-public class ClearGrade
+class ClearGrade
 {
 
 

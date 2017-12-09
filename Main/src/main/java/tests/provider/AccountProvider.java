@@ -30,7 +30,7 @@ public class AccountProvider implements ISmartProvider<IAccount>
             if (name.contains(t.name()))
                 return new Account("", "", name, t, new ArrayList<>());
         }
-        throw new RuntimeException("cant determine type: "+ name);
+        throw new RuntimeException("cant determine type: " + name);
     }
 
 }

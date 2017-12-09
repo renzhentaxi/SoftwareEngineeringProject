@@ -1,4 +1,5 @@
 package services.storage.exceptions;
 
-public class AccountDoesNotExistException extends RuntimeException {
+class AccountDoesNotExistException extends RuntimeException
+{
 }

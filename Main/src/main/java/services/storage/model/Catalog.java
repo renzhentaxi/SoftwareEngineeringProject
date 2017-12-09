@@ -21,10 +21,10 @@ public class Catalog
 {
     public static Catalog catalog = new Catalog();
 
-    public AccountCatalog accountCatalog;
-    public CourseCatalog courseCatalog;
+    private AccountCatalog accountCatalog;
+    private CourseCatalog courseCatalog;
 
-    public Catalog()
+    private Catalog()
     {
         accountCatalog = LoadAccounts();
         courseCatalog = LoadCourses();
@@ -58,6 +58,17 @@ public class Catalog
 
 
         return new CourseCatalog(Json.createObjectBuilder().build());
+    }
+
+    private static void write(JsonObject object, String path)
+    {
+        try (JsonWriter writer = Json.createWriter(new FileWriter(path)))
+        {
+            writer.write(object);
+        } catch (IOException e)
+        {
+
+        }
     }
 
     public Account getAccount(String name)
@@ -103,17 +114,6 @@ public class Catalog
 
         write(courses, "Data/courses.json");
         write(accounts, "Data/accounts.json");
-    }
-
-    private static void write(JsonObject object, String path)
-    {
-        try (JsonWriter writer = Json.createWriter(new FileWriter(path)))
-        {
-            writer.write(object);
-        } catch (IOException e)
-        {
-
-        }
     }
 
 }

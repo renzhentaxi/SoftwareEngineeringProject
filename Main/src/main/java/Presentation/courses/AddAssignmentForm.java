@@ -16,18 +16,15 @@ public class AddAssignmentForm extends MainPanel
 {
     private List<String> existingAssignmentNames;
     private Course course;
-
+    private JTextField assignmentNameTextField;
+    private JTextArea assignmentDescTextField;
+    private GridBagConstraints constraint;
     public AddAssignmentForm(App app, ILoginToken token, MainPanel prevPanel, Course course)
     {
         super(app, token, prevPanel);
         this.existingAssignmentNames = course.getAssignments(token).stream().map(Object::toString).collect(Collectors.toList());
         this.course = course;
     }
-
-
-    private JTextField assignmentNameTextField;
-    private JTextArea assignmentDescTextField;
-    private GridBagConstraints constraint;
 
     @Override
     public void assemble()

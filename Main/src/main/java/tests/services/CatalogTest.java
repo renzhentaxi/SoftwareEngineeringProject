@@ -1,6 +1,6 @@
 package tests.services;
 
-public class CatalogTest
+class CatalogTest
 {
 
 }

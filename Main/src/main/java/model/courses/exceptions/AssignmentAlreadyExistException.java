@@ -1,5 +1,6 @@
 package model.courses.exceptions;
 
-public class AssignmentAlreadyExistException extends RuntimeException {
+public class AssignmentAlreadyExistException extends RuntimeException
+{
 
 }

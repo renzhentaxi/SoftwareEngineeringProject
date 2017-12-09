@@ -13,6 +13,8 @@ import java.util.List;
 public class CourseListPanel extends MainPanel
 {
     private List<Course> courses;
+    private JList<Course> courseJList;
+
 
     public CourseListPanel(App app, ILoginToken token)
     {
@@ -20,7 +22,6 @@ public class CourseListPanel extends MainPanel
         this.courses = userAccount.getCourseList(token);
         assemble();
     }
-
 
     @Override
     public void assemble()
@@ -42,8 +43,6 @@ public class CourseListPanel extends MainPanel
         viewCourse.addActionListener(this::OnViewCourse);
         addToMenu(viewCourse);
     }
-
-    private JList<Course> courseJList;
 
     private void OnViewCourse(ActionEvent event)
     {
