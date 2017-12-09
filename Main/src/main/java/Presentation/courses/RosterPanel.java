@@ -2,7 +2,6 @@ package Presentation.courses;
 
 import Presentation.base.App;
 import Presentation.base.MainPanel;
-import model.accounts.classes.Account;
 import model.accounts.interfaces.IAccount;
 import model.courses.classes.Course;
 import model.courses.interfaces.IRoster;
@@ -17,8 +16,9 @@ public class RosterPanel extends MainPanel
 {
     private IRoster roster;
     private String professor;
-    private  String ta;
+    private String ta;
     private List<String> students;
+
     public RosterPanel(App app, ILoginToken token, MainPanel prevPanel, Course course)
     {
         super(app, token, prevPanel);
@@ -39,24 +39,19 @@ public class RosterPanel extends MainPanel
     public void assemble()
     {
         super.assemble();
-        constraint = new GridBagConstraints();
-        content = new JPanel();
-        add(content);
-        content.setLayout(new GridBagLayout());
 
-        //name field
-        JLabel professorLabel = new JLabel("Professor:");
+        JTextArea area = new JTextArea();
+        area.setEditable(false);
+        StringBuilder builder = new StringBuilder();
+        builder.append("Professor: ").append(professor).append("\n");
+        builder.append("Ta:").append(ta).append("\n");
+        for (String stud : students)
+        {
+            builder.append(stud).append("\n");
+        }
 
-        JLabel professorNameLabel = new JLabel(professor);
-        JLabel taLabel = new JLabel("Ta: ");
-        JLabel studentsLabel = new JLabel("Students: ");
-
-        add(professorLabel, 0, 0, 1);
-        add(professorNameLabel, 1, 0, 1);
-        add(taLabel, 0, 1, 1);
-
-        add(studentsLabel, 0, 2, 0);
-
+        area.setText(builder.toString());
+        add(area, BorderLayout.CENTER);
     }
 
     JPanel content;
@@ -68,4 +63,5 @@ public class RosterPanel extends MainPanel
         constraint.gridwidth = width;
         content.add(component, constraint);
     }
+
 }
