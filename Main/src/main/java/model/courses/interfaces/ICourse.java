@@ -53,9 +53,9 @@ public interface ICourse {
     /**
      * returns the roster of the class
      *
-     * @param requester the user who requests the roster. The user should be either the professor or ta of the course.
+     * @param requester the user who requests the roster. The user should be part of the roster or an admin
      * @return the roster of the class
-     * @throws NoPermissionException when the requester is not the professor or ta of the course or admin.
+     * @throws NoPermissionException when the requester is not within the roster or is not admin.
      */
     IRoster getRoster(ILoginToken requester);
 

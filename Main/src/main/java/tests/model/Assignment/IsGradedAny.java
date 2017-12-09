@@ -26,7 +26,7 @@ public class IsGradedAny
 
     static Iterator<ILoginToken> invalidRequester_provider()
     {
-        return StubFactory.makeLoginTokenProvider("notCourseProfessor", "notCourseTa", "student");
+        return StubFactory.makeLoginTokenProvider("notCourseProfessor", "notCourseTa");
     }
 
     @ParameterizedTest
