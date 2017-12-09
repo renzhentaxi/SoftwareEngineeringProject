@@ -84,7 +84,6 @@ public class Catalog
     public boolean hasCourse(String name)
     {
         return courseCatalog.has(name);
-
     }
 
     public void addAccount(String name, Account account)
@@ -101,10 +100,8 @@ public class Catalog
     {
         JsonObject courses = courseCatalog.toJson();
         JsonObject accounts = accountCatalog.toJson();
-        courseCatalog.Sync(catalog);
-        accountCatalog.Sync(catalog);
-        write(courses, "Data/courses.json");
 
+        write(courses, "Data/courses.json");
         write(accounts, "Data/accounts.json");
     }
 
