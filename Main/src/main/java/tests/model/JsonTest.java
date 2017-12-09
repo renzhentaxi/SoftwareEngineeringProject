@@ -6,12 +6,13 @@ import org.junit.jupiter.api.Test;
 import tests.StubFactory;
 import tests.provider.AccountProvider;
 
-import javax.json.*;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonReader;
+import javax.json.JsonWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonTest
 {

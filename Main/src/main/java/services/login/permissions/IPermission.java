@@ -1,7 +1,7 @@
 package services.login.permissions;
 
-import services.login.interfaces.ILoginToken;
 import services.login.exceptions.NoPermissionException;
+import services.login.interfaces.ILoginToken;
 
 public interface IPermission
 {

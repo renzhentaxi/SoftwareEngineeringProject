@@ -4,10 +4,10 @@ import Presentation.base.App;
 import Presentation.base.MainPanel;
 import model.courses.classes.Roster;
 import services.login.interfaces.ILoginToken;
-import java.util.List;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class RosterPanel extends MainPanel
 {

@@ -2,9 +2,9 @@ package tests.model;
 
 import model.accounts.interfaces.IAccount;
 import model.courses.classes.Roster;
-import services.login.exceptions.NoPermissionException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import services.login.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
 import tests.provider.AccountProvider;
 import tests.provider.LoginTokenProvider;

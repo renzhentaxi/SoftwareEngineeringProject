@@ -4,7 +4,6 @@ import services.storage.interfaces.AbstractCatalog;
 import services.storage.inters.CourseInter;
 
 import javax.json.JsonObject;
-import java.util.Map;
 
 public class CourseCatalog extends AbstractCatalog<CourseInter>
 {

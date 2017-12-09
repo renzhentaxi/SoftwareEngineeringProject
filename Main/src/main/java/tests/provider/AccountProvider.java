@@ -5,7 +5,6 @@ import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * syntax
