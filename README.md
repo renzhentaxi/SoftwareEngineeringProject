@@ -22,6 +22,4 @@ In order to login to the app, you must provide a userName + password entry in Da
 
 #What is needed to be done?
 *check that we pass all the tests
-  
-* roster view [Han is working on this right now]
-
+ 
