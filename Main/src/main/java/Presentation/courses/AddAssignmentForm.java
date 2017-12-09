@@ -1,4 +1,4 @@
-package Presentation.assignments;
+package Presentation.courses;
 
 import Presentation.base.App;
 import Presentation.base.MainPanel;
@@ -51,7 +51,7 @@ public class AddAssignmentForm extends MainPanel
         add(assignmentDescTextField, 0, 3, 2);
 
         //submit button
-        JButton submitButton = new JButton("Submit");`
+        JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(this::onSubmit);
         add(submitButton, 0, 4, 2);
         //cancel button

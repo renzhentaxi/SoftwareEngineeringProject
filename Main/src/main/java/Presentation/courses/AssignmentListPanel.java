@@ -1,7 +1,6 @@
 package Presentation.courses;
 
 import Presentation.accounts.CourseListPanel;
-import Presentation.assignments.AddAssignmentForm;
 import Presentation.assignments.AssignmentPanel;
 import Presentation.base.App;
 import Presentation.base.MainPanel;
@@ -17,25 +16,24 @@ import java.util.List;
 public class AssignmentListPanel extends MainPanel
 {
     private Course course;
-    private List<Assignment> assignmentList;
 
     public AssignmentListPanel(App app, ILoginToken token, CourseListPanel coursePanel, Course course)
     {
         super(app, token, coursePanel);
         this.course = course;
-        this.assignmentList = course.getAssignments(token);
     }
 
 
     private JList<Assignment> assignmentJList;
+    private DefaultListModel<Assignment> assignListModel;
 
     @Override
     public void assemble()
     {
         super.assemble();
-
+        List<Assignment> assignmentList = course.getAssignments(token);
         //make assignment list model
-        DefaultListModel<Assignment> assignListModel = new DefaultListModel<>();
+        assignListModel = new DefaultListModel<>();
         assignmentList.forEach(assignListModel::addElement);
         //make assignment list view
         assignmentJList = new JList<>(assignListModel);
@@ -97,6 +95,15 @@ public class AssignmentListPanel extends MainPanel
         if (selectedAssignment != null)
         {
             System.out.println(userName + " is attempting to remove assignment " + selectedAssignment + " as " + userType);
+            if (selectedAssignment.isGradedAny(token))
+            {
+                JOptionPane.showMessageDialog(this, "Can not remove this assignment because it has been graded");
+            } else
+            {
+                course.removeAssignment(token, selectedAssignment);
+                System.out.println("Assignment is removed");
+                assignListModel.removeElement(selectedAssignment);
+            }
         } else
         {
             JOptionPane.showMessageDialog(this, "Please select an assignment first!!!");

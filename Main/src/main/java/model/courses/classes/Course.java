@@ -7,6 +7,7 @@ import model.courses.exceptions.AssignmentDoesNotExistException;
 import model.courses.exceptions.GradedAssignmentException;
 import model.courses.interfaces.ICourse;
 import model.courses.interfaces.IRoster;
+import services.login.exceptions.NoPermissionException;
 import services.login.interfaces.ILoginToken;
 import services.login.permissions.IPermission;
 import services.login.permissions.Permissions;
@@ -31,8 +32,6 @@ public class Course implements ICourse, IJsonable
         this.courseName = courseName;
         this.roster = roster;
         this.assignmentList = assignmentList;
-        System.out.println("hello");
-
     }
 
     protected Course()
@@ -93,6 +92,7 @@ public class Course implements ICourse, IJsonable
                 if (assignment.isGradedAny(requester)) throw new GradedAssignmentException();
 
                 assignmentList.remove(i);
+                Catalog.catalog.commit();
                 return;
             }
         }
@@ -107,8 +107,11 @@ public class Course implements ICourse, IJsonable
     @Override
     public IRoster getRoster(ILoginToken requester)
     {
-        Permissions.or(roster.isProfessorPerm, roster.isTaPerm, Permissions.isAdmin).check(requester);
-        return roster;
+        if (roster.isInRoster(requester, requester.getAccount()) || Permissions.isAdmin.hasPermission(requester))
+        {
+            return roster;
+        }
+        throw new NoPermissionException();
     }
 
     @Override

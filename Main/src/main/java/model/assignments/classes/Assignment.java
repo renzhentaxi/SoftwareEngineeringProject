@@ -131,7 +131,6 @@ public class Assignment implements IAssignment, IJsonable
 
         Roster roster = (Roster) course.getRoster(requester);
         Permissions.or(Permissions.isAdmin, roster.isProfessorPerm, roster.isTaPerm, roster.isStudentPerm.and(Permissions.accountIs(student))).check(requester);
-
         return grades.get(student);
     }
 
