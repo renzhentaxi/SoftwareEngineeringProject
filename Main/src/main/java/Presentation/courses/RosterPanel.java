@@ -45,6 +45,8 @@ public class RosterPanel extends MainPanel
         StringBuilder builder = new StringBuilder();
         builder.append("Professor: ").append(professor).append("\n");
         builder.append("Ta:").append(ta).append("\n");
+        builder.append("Students:").append("\n");
+
         for (String stud : students)
         {
             builder.append(stud).append("\n");
