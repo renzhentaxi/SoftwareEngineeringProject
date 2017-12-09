@@ -10,6 +10,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * displays an assignment
+ * depending on the user type the functionality of this window is changed
+ * for a student, it will only display a grade if the assignment is graded + a view description button
+ * for ta, they will have access to enter grade
+ * for prof, they will have access to enter grade/modify grade/ clear grade
+ */
 public class AssignmentPanel extends MainPanel
 {
     private JList<Grade> gradeListView;

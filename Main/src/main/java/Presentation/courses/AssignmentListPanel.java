@@ -13,6 +13,10 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
+/**
+ * shows the list of assignments for a lsit
+ * for prof you will also be given the add/del assignment buttons
+ */
 public class AssignmentListPanel extends MainPanel
 {
     private Course course;

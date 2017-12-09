@@ -3,6 +3,7 @@ package tests.model.Account;
 import model.accounts.classes.Account;
 import model.accounts.enums.AccountType;
 import model.accounts.interfaces.IAccount;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,7 +13,7 @@ import javax.json.JsonObject;
 import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+@Tag("account")
 public class toJsonTest
 {
 

@@ -9,6 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
+/**
+ * the main entry point
+ * displays login window first
+ */
 public class App extends JFrame
 {
     private LoginManager loginManager;
@@ -16,7 +20,6 @@ public class App extends JFrame
     private LoginPanel loginScreen;
     private LoginToken token;
 
-    //asdtlksadj
     private App()
     {
         super("Acme");
@@ -46,6 +49,10 @@ public class App extends JFrame
         present(loginScreen);
     }
 
+    /**
+     * allows the app to display the given panel
+     * @param panel the panel to display
+     */
     public void present(AcmePanel panel)
     {
         panel.reload();

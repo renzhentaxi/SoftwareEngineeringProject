@@ -10,6 +10,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
+/**
+ * displays course list
+ */
 public class CourseListPanel extends MainPanel
 {
     private List<Course> courses;

@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * a basic class that has builtin logout and back functionality
+ */
 public abstract class MainPanel extends AcmePanel
 {
 
@@ -58,11 +61,18 @@ public abstract class MainPanel extends AcmePanel
         app.present(prevPanel);
     }
 
+    /**
+     * add a button to the menu
+     * @param component the button
+     */
     protected void addToMenu(Component component)
     {
         menuPanel.add(component);
     }
 
+    /**
+     * clear the menu
+     */
     protected void clearMenu()
     {
         menuPanel.removeAll();

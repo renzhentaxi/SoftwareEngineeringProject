@@ -12,6 +12,9 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * a form to add an assignment to a course
+ */
 public class AddAssignmentForm extends MainPanel
 {
     private List<String> existingAssignmentNames;

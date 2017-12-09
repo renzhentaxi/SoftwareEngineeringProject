@@ -20,8 +20,14 @@ public abstract class AcmePanel extends JPanel
         this.app = app;
     }
 
+    /**
+     * used to create the different components and display them
+     */
     protected abstract void assemble();
 
+    /*
+    resets the panel by calling assemble again
+     */
     public void reload()
     {
         removeAll();

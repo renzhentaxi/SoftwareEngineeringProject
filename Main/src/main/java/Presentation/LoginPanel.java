@@ -9,6 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * first screen displayed
+ * allows user to login
+ */
 public class LoginPanel extends AcmePanel
 {
 

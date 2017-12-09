@@ -6,6 +6,9 @@ import services.login.interfaces.ILoginToken;
 
 import javax.swing.*;
 
+/**
+ * displays the assignment name and description of an assignment
+ */
 public class AssignmentDescriptionPanel extends MainPanel
 {
     private String assignmentName;
