@@ -39,14 +39,14 @@ public class Roster implements IRoster, IJsonable
     protected Roster()
     {
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public IAccount getProfessor(ILoginToken requester)
     {
-        Permissions.or(isProfessorPerm, Permissions.isAdmin).check(requester);
+        Permissions.or(Permissions.accountIs(professor), Permissions.accountIs(ta), Permissions.isAdmin).check(requester);
 
         return professor;
     }
@@ -58,7 +58,7 @@ public class Roster implements IRoster, IJsonable
     @Override
     public IAccount getTa(ILoginToken requester)
     {
-        Permissions.or(isTaPerm, Permissions.isAdmin).check(requester);
+        Permissions.or(isTaPerm, isProfessorPerm, Permissions.isAdmin).check(requester);
         return ta;
     }
 

@@ -84,7 +84,7 @@ public class AssignmentListPanel extends MainPanel
 
     private void onViewRoster(ActionEvent event)
     {
-        app.present(new RosterPanel(app, token, this));
+        app.present(new RosterPanel(app, token, this, course));
         System.out.println(userName + " is viewing roster of " + course + "as " + userType);
     }
 

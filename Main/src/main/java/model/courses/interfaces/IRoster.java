@@ -12,7 +12,7 @@ public interface IRoster {
     /**
      * returns the professor of the course that this roster belongs to
      *
-     * @param requester the user who requests this information. Should be professor of the course or admin.
+     * @param requester the user who requests this information. Should be professor/ta of the course or admin.
      * @return the account fo the professor of this course
      * @throws NoPermissionException if the requester does not have the permission to complete this request
      */
@@ -21,7 +21,7 @@ public interface IRoster {
     /**
      * returns the Ta of the course that this roster belongs to
      *
-     * @param requester the user who requests this information. Requester be ta of the course or admin
+     * @param requester the user who requests this information. Requester be professor/ ta of the course or admin
      * @return the account fo the Ta of this course
      * @throws NoPermissionException if the requester does not have the permission to complete this request
      */

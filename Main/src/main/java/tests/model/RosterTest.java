@@ -23,17 +23,17 @@ class RosterTest
 
     static Iterator<ILoginToken> getProfessor_valid_provider()
     {
-        return LoginTokenProvider.provider.provide("admin,professor");
+        return LoginTokenProvider.provider.provide("admin,professor,ta");
     }
 
     static Iterator<ILoginToken> getProfessor_invalid_provider()
     {
-        return LoginTokenProvider.provider.provide("ta,student");
+        return LoginTokenProvider.provider.provide("student");
     }
 
     static Iterator<ILoginToken> getStudents_valid_provider()
     {
-        return LoginTokenProvider.provider.provide("admin,professor,professor,ta");
+        return LoginTokenProvider.provider.provide("admin,professor,ta");
     }
 
     static Iterator<ILoginToken> getStudents_invalid_provider()
