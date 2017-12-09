@@ -33,6 +33,9 @@ public class Account implements IAccount, IJsonable, Comparable<IAccount>
         this.courseList = courseList;
     }
 
+    /**
+     * a default construct used by AccountInter to create an account object before all courses are loaded to the system.
+     */
     protected Account()
     {
         courseList = new ArrayList<>();
@@ -105,6 +108,10 @@ public class Account implements IAccount, IJsonable, Comparable<IAccount>
         return userName.hashCode();
     }
 
+    /**
+     * converts an account object into a json object that is used by the storage services to store the account
+     * @return
+     */
     @Override
     public JsonObject toJson()
     {

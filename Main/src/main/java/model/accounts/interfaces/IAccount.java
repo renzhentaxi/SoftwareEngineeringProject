@@ -7,6 +7,10 @@ import services.login.interfaces.ILoginToken;
 
 import java.util.List;
 
+/**
+ * represents an account in the system
+ * Each account is uniquely identified by its userName
+ */
 public interface IAccount
 {
 
@@ -34,7 +38,7 @@ public interface IAccount
     /**
      * returns a readonly list of the courses that are associated with the user
      *
-     * @param requester the user who requests courseList
+     * @param requester the user who requests courseList. The requester needs to be either the owner of the account or an admin
      * @return a readonly list of courses
      * @throws NoPermissionException if the user who requested does not have the permission to get the course list
      */
